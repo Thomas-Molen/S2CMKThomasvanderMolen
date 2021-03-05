@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/ErrorSprite.png</File>
+    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/GuiFont.spritefont</File>
+    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/IdlePinkMan.png</File>
+    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/PinkWallpaper.png</File>
+    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/splash.png</File>
+    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/StoneGround.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

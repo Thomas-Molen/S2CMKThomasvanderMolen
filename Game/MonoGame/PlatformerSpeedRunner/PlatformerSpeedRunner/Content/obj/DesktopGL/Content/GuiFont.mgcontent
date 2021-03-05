@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/GuiFont.spritefont</SourceFile>
+  <SourceTime>2020-08-10T16:17:28+02:00</SourceTime>
+  <DestFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/GuiFont.xnb</DestFile>
+  <DestTime>2021-03-03T14:50:13.9831381+01:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2020-08-10T16:17:54+02:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
