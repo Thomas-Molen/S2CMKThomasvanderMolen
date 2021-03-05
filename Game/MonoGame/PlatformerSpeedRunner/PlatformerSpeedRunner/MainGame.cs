@@ -14,6 +14,10 @@ namespace PlatformerSpeedRunner
 {
     public class MainGame : Game
     {
+        //debug
+        private Vector2 debugTextPosition = new Vector2(20, 60);
+        private Vector2 debugMousePosition = new Vector2(20, 80);
+
         private BaseGameState currentGameState;
 
         private GraphicsDeviceManager graphics;
@@ -175,6 +179,9 @@ namespace PlatformerSpeedRunner
 
             spriteBatch.DrawString(font, "player: " + playerName, playerNamePosition, Color.Black);
             spriteBatch.DrawString(font, "score: " + playerScore, playerScorePosition, Color.Black);
+            MouseState mouseState = Mouse.GetState();
+            spriteBatch.DrawString(font, "mouse: " + mouseState.X + " , " + mouseState.Y, debugMousePosition, Color.Black);
+            spriteBatch.DrawString(font, "debug: " + currentGameState.debugText, debugTextPosition, Color.Black);
 
             spriteBatch.End();
 

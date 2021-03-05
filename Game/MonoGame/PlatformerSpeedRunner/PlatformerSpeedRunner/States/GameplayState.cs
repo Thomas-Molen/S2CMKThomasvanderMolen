@@ -18,14 +18,14 @@ namespace PlatformerSpeedRunner.States
 {
     public class GameplayState : BaseGameState
     {
+        private int TimeCharged;
+
         //textures
         private const string player = "IdlePinkMan";
         private const string backgroundTexture = "PinkWallpaper";
         private const string stoneGroundTexture = "StoneGround";
 
         private PlayerSprite playerSprite;
-
-        private bool gravityState = true;
 
         private List<StoneGroundSprite> stoneGroundList = new List<StoneGroundSprite>();
 
@@ -34,13 +34,13 @@ namespace PlatformerSpeedRunner.States
             playerSprite = new PlayerSprite(LoadTexture(player));
 
             AddGameObject(new SplashImage(LoadTexture(backgroundTexture)));
-            AddGameObject(playerSprite);
             AddStoneGround(0, 653);
             AddStoneGround(200, 653);
             AddStoneGround(400, 653);
             AddStoneGround(600, 653);
             AddStoneGround(800, 653);
             AddStoneGround(1000, 653);
+            AddGameObject(playerSprite);
 
             //spawnposition of player
             var playerX = baseViewportWidth / 2 - playerSprite.Width / 2;
@@ -69,13 +69,26 @@ namespace PlatformerSpeedRunner.States
 
                 if (cmd is GameplayInputCommand.PlayerMoveNone)
                 {
-                    playerSprite.MoveNone();
+                    playerSprite.NoDirection();
                 }
 
-                if (cmd is GameplayInputCommand.PlayerLMB)
+                if (cmd is GameplayInputCommand.PlayerLMBHold)
                 {
-                    playerSprite.Grapple();
-                    gravityState = false;
+                    TimeCharged += 1;
+                }
+                if (cmd is GameplayInputCommand.PlayerLMBRelease)
+                {
+                    if (TimeCharged >= 30)
+                    {
+                        playerSprite.Grapple(30);
+                    }
+                    else if (TimeCharged < 10)
+                    { }
+                    else
+                    {
+                        playerSprite.Grapple(TimeCharged);
+                    }
+                    TimeCharged = 0;
                 }
 
                 //DEBUG
@@ -93,8 +106,9 @@ namespace PlatformerSpeedRunner.States
 
         public override void UpdateGameState(GameTime gameTime)
         {
-            playerSprite.PlayerPhysics(gravityState);
-            gravityState = true;
+            playerSprite.PlayerPhysics();
+
+            debugText = playerSprite.Position.ToString();
 
             KeepPlayerInBounds();
             DetectCollisions();
@@ -106,8 +120,8 @@ namespace PlatformerSpeedRunner.States
 
             playerGroundDetector.DetectCollisions(playerSprite, (stoneGround, player) =>
             {
-                gravityState = false;
-                playerSprite.YVelocityNone();
+                playerSprite.Position = new Vector2(playerSprite.Position.X, stoneGround.GetHeight() - playerSprite.Height);
+                playerSprite.yVelocity = 0;
             });
         }
 
@@ -119,28 +133,26 @@ namespace PlatformerSpeedRunner.States
             stoneGround.Position = new Vector2(posX, posY);
         }
 
-        //TODO BROKEN
         private void KeepPlayerInBounds()
         {
             if (playerSprite.Position.X < 0)
             {
                 playerSprite.Position = new Vector2(0, playerSprite.Position.Y);
-                playerSprite.YVelocityNone();
-                playerSprite.XVelocityNone();
+                playerSprite.yVelocity = 0;
+                playerSprite.xVelocity = 0;
             }
 
             if (playerSprite.Position.X > baseViewportWidth - playerSprite.Width)
             {
                 playerSprite.Position = new Vector2(baseViewportWidth - playerSprite.Width, playerSprite.Position.Y);
-                playerSprite.YVelocityNone();
-                playerSprite.XVelocityNone();
+                playerSprite.yVelocity = 0;
+                playerSprite.xVelocity = 0;
             }
 
             if (playerSprite.Position.Y < 0)
             {
                 playerSprite.Position = new Vector2(playerSprite.Position.X, 0);
-                playerSprite.YVelocityNone();
-                playerSprite.XVelocityNone();
+                playerSprite.yVelocity = 0;
             }
         }
 

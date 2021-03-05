@@ -10,11 +10,9 @@ namespace PlatformerSpeedRunner.Objects
 {
     class PlayerSprite : BaseGameObject
     {
-        private float xVelocity = 0.0f;
-        private float yVelocity = 0.0f;
-        private float xMomentum = 0.0f;
-        private float yMomentum = 0.0f;
-        private const float playerSpeed = 5.0f;
+        public float xVelocity = 0.0f;
+        public float yVelocity = 0.0f;
+        private const float playerSpeed = 3.0f;
         private const float playerGravity = 0.3f;
 
         private const int BBPosX = 1;
@@ -28,121 +26,77 @@ namespace PlatformerSpeedRunner.Objects
             AddBoundingBox(new BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
         }
 
-        public void PlayerPhysics(bool gravityState)
+        public void PlayerPhysics()
         {
-            if (gravityState)
+            GravityEffect();        
+
+            if (xVelocity > 15)
             {
-                GravityEffect();
+                xVelocity = 15;
             }
-            //Friction();
-            //AirDrag();
-            if (xVelocity + xMomentum <= 10)
+            else if (xVelocity < -15)
             {
-                Position = new Vector2(Position.X + xVelocity + xMomentum, Position.Y);
+                xVelocity = -15;
             }
-            else
-            {
-                Position = new Vector2(Position.X + 10, Position.Y);
-            }
-            if (yVelocity + yMomentum <= 10)
-            {
-                Position = new Vector2(Position.X, Position.Y + yVelocity + yMomentum);
-            }
-            else
-            {
-                Position = new Vector2(Position.X, Position.Y + 10);
-            }
-            
+
+            Position = new Vector2(Position.X + xVelocity, Position.Y + yVelocity);           
         }
 
         public void MoveLeft()
         {
-            if (xMomentum >= -playerSpeed)
+            if (xVelocity >= -playerSpeed)
             {
-                xMomentum -= playerSpeed / 4;
+                xVelocity -= playerSpeed / 4;
             }
         }
 
         public void MoveRight()
         {
-            if (xMomentum <= playerSpeed)
+            if (xVelocity <= playerSpeed)
             {
-                xMomentum += playerSpeed / 4;
+                xVelocity += playerSpeed / 4;
             }
         }
 
-        public void MoveNone()
+        public void NoDirection()
         {
-            xMomentum = 0;
+            if (xVelocity > 0)
+            {
+                xVelocity += -playerSpeed / 15;
+            }
+            if (xVelocity < 0)
+            {
+                xVelocity += playerSpeed / 15;
+            }
+            if (xVelocity > 0 && xVelocity < 0.5)
+            {
+                xVelocity = 0;
+            }
         }
 
         private void GravityEffect()
         {
-            if (yVelocity <= 12)
+            if (yVelocity <= 20)
             {
                 yVelocity += playerGravity;
             }
         }
 
-        public void YVelocityNone()
+        public void OnGround(float yPosition)
         {
-            yVelocity = 0;
-            yMomentum = 0;
+            Position = new Vector2(Position.X, yPosition);
         }
 
-        public void XVelocityNone()
-        {
-            xVelocity = 0;
-            xMomentum = 0;
-        }
-
-        public void Grapple()
+        public void Grapple(int timeCharged)
         {
             MouseState mouseState = Mouse.GetState();
 
+            //Position = new Vector2(mouseState.X, mouseState.Y);
             float xGrappleDistance = mouseState.X - Position.X;
             float yGrappleDistance = mouseState.Y - Position.Y;
-            if (xGrappleDistance != 0)
-            {
-                if (xVelocity < 5)
-                {
-                    xVelocity += xGrappleDistance / 100;
-                }
-            }
-            
-            if (yGrappleDistance != 0)
-            {
-                if (yMomentum < 5)
-                {
-                    yMomentum += yGrappleDistance / 100;
-                }
-            }
-        }
 
-        private void AirDrag()
-        {
-            if (xVelocity > 0)
-            {
-                xVelocity += -0.5f;
-            }
-            else if (xVelocity < 0)
-            {
-                xVelocity += 0.5f;
-            }
-
-            if (yMomentum > 0)
-            {
-                yMomentum += -0.5f;
-            }
-            else if (yMomentum < 0)
-            {
-                yMomentum += 0.5f;
-            }
-        }
-
-        private void Friction()
-        {
-            Decimal.Round(Convert.ToDecimal(xVelocity), MidpointRounding.ToZero);
+            yVelocity += (yGrappleDistance / 100) * timeCharged/10;
+            xVelocity += (xGrappleDistance / 100) * timeCharged/10;
         }
     }
 }

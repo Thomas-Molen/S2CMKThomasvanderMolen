@@ -14,7 +14,7 @@ namespace PlatformerSpeedRunner.States.Base
 {
     public abstract class BaseGameState
     {
-        private const string fallBackTexture = "ErrorSprite";
+        public string debugText;
 
         protected bool debug = false;
 
@@ -60,19 +60,10 @@ namespace PlatformerSpeedRunner.States.Base
         public event EventHandler<Events> OnEventNotification;
 
 
-        //TODO: REMOVE THIS HAS NO REAL USE OVER GETTING THE ERROR THROWN
         protected Texture2D LoadTexture(string textureName)
         {
-            try
-            {
-                var texture = baseContentManager.Load<Texture2D>(textureName);
-                return texture;
-            }
-            catch (Microsoft.Xna.Framework.Content.ContentLoadException)
-            {
-                var texture = baseContentManager.Load<Texture2D>(fallBackTexture);
-                return texture;
-            }
+             var texture = baseContentManager.Load<Texture2D>(textureName);
+             return texture;
         }
 
         protected void NotifyEvent(Events eventType, object argument = null)
@@ -93,6 +84,11 @@ namespace PlatformerSpeedRunner.States.Base
         protected void AddGameObject(BaseGameObject gameObject)
         {
             gameObjects.Add(gameObject);
+        }
+
+        protected void RemoveGameObject(BaseGameObject gameObject)
+        {
+            gameObjects.Remove(gameObject);
         }
 
         public void Render(SpriteBatch spriteBatch)

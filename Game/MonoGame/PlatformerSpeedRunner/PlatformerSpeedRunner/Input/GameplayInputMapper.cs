@@ -15,11 +15,11 @@ namespace PlatformerSpeedRunner.Input
                 commands.Add(new GameplayInputCommand.GameExit());
             }
 
-            if (state.IsKeyDown(Keys.Left))
+            if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
             {
                 commands.Add(new GameplayInputCommand.PlayerMoveLeft());
             }
-            else if (state.IsKeyDown(Keys.Right))
+            else if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
             {
                 commands.Add(new GameplayInputCommand.PlayerMoveRight());
             }
@@ -48,7 +48,12 @@ namespace PlatformerSpeedRunner.Input
 
             if (state.LeftButton == ButtonState.Pressed)
             {
-                commands.Add(new GameplayInputCommand.PlayerLMB());
+                commands.Add(new GameplayInputCommand.PlayerLMBHold());
+            }
+
+            if (state.LeftButton == ButtonState.Released)
+            {
+                commands.Add(new GameplayInputCommand.PlayerLMBRelease());
             }
 
             return commands;

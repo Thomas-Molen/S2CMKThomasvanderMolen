@@ -19,5 +19,10 @@ namespace PlatformerSpeedRunner.Objects
             baseTexture = texture;
             AddBoundingBox(new BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
         }
+
+        public float GetHeight()
+        {
+            return Position.Y;
+        }
     }
 }
