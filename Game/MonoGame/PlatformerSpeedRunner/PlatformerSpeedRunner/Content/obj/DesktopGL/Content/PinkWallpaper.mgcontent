@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/PinkWallpaper.png</SourceFile>
-  <SourceTime>2021-03-01T15:51:51.2545424+01:00</SourceTime>
+  <SourceTime>2021-03-08T10:02:56.5447956+01:00</SourceTime>
   <DestFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/PinkWallpaper.xnb</DestFile>
-  <DestTime>2021-03-01T15:54:07.9346181+01:00</DestTime>
+  <DestTime>2021-03-08T10:02:59.1839887+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

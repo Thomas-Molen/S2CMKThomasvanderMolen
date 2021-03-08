@@ -9,6 +9,7 @@ using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.Objects.Base;
 using PlatformerSpeedRunner.Input.Base;
 using Microsoft.Xna.Framework;
+using PlatformerSpeedRunner.Objects;
 
 namespace PlatformerSpeedRunner.States.Base
 {
@@ -17,6 +18,10 @@ namespace PlatformerSpeedRunner.States.Base
         public string debugText;
 
         protected bool debug = false;
+
+        public PlayerSprite playerSprite;
+
+        public SplashImage splashImage;
 
         private ContentManager baseContentManager;
         protected int baseViewportHeight;

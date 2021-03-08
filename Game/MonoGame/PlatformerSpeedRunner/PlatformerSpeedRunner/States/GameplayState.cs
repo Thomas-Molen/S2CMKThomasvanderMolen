@@ -11,6 +11,7 @@ using PlatformerSpeedRunner.States.Base;
 using PlatformerSpeedRunner.Objects;
 using PlatformerSpeedRunner.Input;
 using PlatformerSpeedRunner.Input.Base;
+using PlatformerSpeedRunner.Camera;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
@@ -25,21 +26,21 @@ namespace PlatformerSpeedRunner.States
         private const string backgroundTexture = "PinkWallpaper";
         private const string stoneGroundTexture = "StoneGround";
 
-        private PlayerSprite playerSprite;
-
         private List<StoneGroundSprite> stoneGroundList = new List<StoneGroundSprite>();
 
         public override void LoadContent()
         {
             playerSprite = new PlayerSprite(LoadTexture(player));
+            splashImage = new SplashImage(LoadTexture(backgroundTexture));
 
-            AddGameObject(new SplashImage(LoadTexture(backgroundTexture)));
+            AddGameObject(splashImage);
             AddStoneGround(0, 653);
             AddStoneGround(200, 653);
             AddStoneGround(400, 653);
             AddStoneGround(600, 653);
             AddStoneGround(800, 653);
-            AddStoneGround(1000, 653);
+            AddStoneGround(1000, 950);
+            AddStoneGround(1200, 950);
             AddGameObject(playerSprite);
 
             //spawnposition of player
@@ -135,24 +136,17 @@ namespace PlatformerSpeedRunner.States
 
         private void KeepPlayerInBounds()
         {
-            if (playerSprite.Position.X < 0)
+            if (playerSprite.Position.X - playerSprite.Width / 2 < 0)
             {
-                playerSprite.Position = new Vector2(0, playerSprite.Position.Y);
+                playerSprite.Position = new Vector2(0 + playerSprite.Width / 2, playerSprite.Position.Y);
                 playerSprite.yVelocity = 0;
-                playerSprite.xVelocity = 0;
-            }
-
-            if (playerSprite.Position.X > baseViewportWidth - playerSprite.Width)
-            {
-                playerSprite.Position = new Vector2(baseViewportWidth - playerSprite.Width, playerSprite.Position.Y);
-                playerSprite.yVelocity = 0;
-                playerSprite.xVelocity = 0;
+                playerSprite.xVelocity = playerSprite.xVelocity/2;
             }
 
             if (playerSprite.Position.Y < 0)
             {
                 playerSprite.Position = new Vector2(playerSprite.Position.X, 0);
-                playerSprite.yVelocity = 0;
+                playerSprite.yVelocity = playerSprite.yVelocity/2;
             }
         }
 

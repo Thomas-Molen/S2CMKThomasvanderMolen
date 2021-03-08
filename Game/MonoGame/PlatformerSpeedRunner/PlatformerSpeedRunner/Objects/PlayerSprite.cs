@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace PlatformerSpeedRunner.Objects
 {
-    class PlayerSprite : BaseGameObject
+    public class PlayerSprite : BaseGameObject
     {
         public float xVelocity = 0.0f;
         public float yVelocity = 0.0f;
@@ -28,7 +28,7 @@ namespace PlatformerSpeedRunner.Objects
 
         public void PlayerPhysics()
         {
-            GravityEffect();        
+            GravityEffect();
 
             if (xVelocity > 15)
             {
@@ -91,10 +91,16 @@ namespace PlatformerSpeedRunner.Objects
         {
             MouseState mouseState = Mouse.GetState();
 
-            //Position = new Vector2(mouseState.X, mouseState.Y);
-            float xGrappleDistance = mouseState.X - Position.X;
             float yGrappleDistance = mouseState.Y - Position.Y;
-
+            float xGrappleDistance;
+            if (mouseState.X > Program.width/2)
+            {
+                xGrappleDistance = mouseState.X;
+            }
+            else
+            {
+                xGrappleDistance = mouseState.X - Program.width/2;
+            }
             yVelocity += (yGrappleDistance / 100) * timeCharged/10;
             xVelocity += (xGrappleDistance / 100) * timeCharged/10;
         }

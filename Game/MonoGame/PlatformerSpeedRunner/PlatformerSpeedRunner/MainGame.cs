@@ -8,6 +8,7 @@ using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.Objects;
 using PlatformerSpeedRunner.States;
 using PlatformerSpeedRunner.States.Base;
+using PlatformerSpeedRunner.Camera;
 using System.Data;
 
 namespace PlatformerSpeedRunner
@@ -18,6 +19,7 @@ namespace PlatformerSpeedRunner
         private Vector2 debugTextPosition = new Vector2(20, 60);
         private Vector2 debugMousePosition = new Vector2(20, 80);
 
+        //components
         private BaseGameState currentGameState;
 
         private GraphicsDeviceManager graphics;
@@ -25,7 +27,9 @@ namespace PlatformerSpeedRunner
 
         private SpriteFont font;
 
-        //Database Temporary
+        private CameraHelper camera;
+
+        //Database
         MySqlConnection sqlConnection;
         MySqlDataAdapter sqlDataAdapter;
         DataSet dataSet;
@@ -39,16 +43,19 @@ namespace PlatformerSpeedRunner
         private RenderTarget2D renderTarget;
         private Rectangle renderScaleRectangle;
 
-        private const int designedResolutionWidth = 1080;
-        private const int designedResolutionHeight = 720;
+        private int designedResolutionWidth;
+        private int designedResolutionHeight;
+        private float designedResolutionAspectRatio;
 
-        private const float designedResolutionAspectRatio = designedResolutionWidth / (float)designedResolutionHeight;
-
-        public MainGame()
+        public MainGame(int width, int height)
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            designedResolutionWidth = width;
+            designedResolutionHeight = height;
+            designedResolutionAspectRatio = width / (float)height;
         }
 
         protected override void Initialize()
@@ -66,6 +73,8 @@ namespace PlatformerSpeedRunner
 
             playerName = GetData("SELECT user_name FROM `users` WHERE user_number = 1", "user_name");
             playerScore = GetData("SELECT score FROM `users` WHERE user_number = 1", "score");
+
+            camera = new CameraHelper();
 
             base.Initialize();
         }
@@ -100,13 +109,12 @@ namespace PlatformerSpeedRunner
 
             //TODO CHANGE THIS TO THE BOOT SCREEN
             SwitchGameState(new GameplayState());
-            // TODO: use this.Content to load your game content here
         }
 
         //switch state logic
-        private void CurrentGameState_OnStateSwitched(object sender, BaseGameState e)
+        private void CurrentGameState_OnStateSwitched(object sender, BaseGameState gameState)
         {
-            SwitchGameState(e);
+            SwitchGameState(gameState);
         }
 
         private void currentGameState_OnEventNotification(object sender, Enum.Events e)
@@ -147,10 +155,9 @@ namespace PlatformerSpeedRunner
         {
             currentGameState.HandleInput();
 
-            // TODO: Add your update logic here
-
-
             currentGameState.Update(gameTime);
+            camera.Follow(currentGameState.playerSprite);
+            UpdateCameraBasedPositions();
             base.Update(gameTime);
         }
 
@@ -172,6 +179,27 @@ namespace PlatformerSpeedRunner
             return dataSet.Tables[0].Rows[0][selectName].ToString();
         }
 
+        private void UpdateCameraBasedPositions()
+        {
+            currentGameState.splashImage.Position = SetCameraBasedVector(0, 0);
+
+            playerNamePosition = SetCameraBasedVector(0, 0);
+            playerScorePosition = SetCameraBasedVector(0, 20);
+            debugMousePosition = SetCameraBasedVector(0, 40);
+            debugTextPosition = SetCameraBasedVector(0, 60);
+        }
+
+        private Vector2 SetCameraBasedVector(int xOffset, int yOffset)
+        {
+            return new Vector2(
+                -camera.transform.Translation.X + xOffset,
+                -camera.transform.Translation.Y + yOffset);
+
+            //return new Vector2(
+            //    currentGameState.playerSprite.Position.X - Program.width/2 + currentGameState.playerSprite.Width/2 + xOffset,
+            //    currentGameState.playerSprite.Height/2 + yOffset);
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             //renders to the target
@@ -179,7 +207,7 @@ namespace PlatformerSpeedRunner
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix: camera.transform);
 
             currentGameState.Render(spriteBatch);
 

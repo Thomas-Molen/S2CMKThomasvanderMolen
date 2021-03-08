@@ -4,10 +4,12 @@ namespace PlatformerSpeedRunner
 {
     public static class Program
     {
-        [STAThread]
+        public const int width = 1920;
+        public const int height = 1080;
+
         static void Main()
         {
-            using (var game = new MainGame())
+            using (var game = new MainGame(width, height))
                 game.Run();
         }
     }
