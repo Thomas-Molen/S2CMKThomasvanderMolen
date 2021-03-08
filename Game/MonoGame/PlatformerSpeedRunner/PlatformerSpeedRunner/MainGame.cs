@@ -161,8 +161,14 @@ namespace PlatformerSpeedRunner
             sqlDataAdapter = new MySqlDataAdapter(sqlString, sqlConnection);
             dataSet = new DataSet();
 
-            sqlDataAdapter.Fill(dataSet, "depth");
-
+            try
+            {
+                sqlDataAdapter.Fill(dataSet, "depth");
+            }
+            catch (System.Exception)
+            {
+                return "no database information could be recovered"; //when you probably don't have a connection to database
+            }
             return dataSet.Tables[0].Rows[0][selectName].ToString();
         }
 
