@@ -41,6 +41,14 @@ namespace PlatformerSpeedRunner.States
             AddStoneGround(800, 653);
             AddStoneGround(1000, 950);
             AddStoneGround(1200, 950);
+
+            AddStoneGround(100, 400);
+            AddStoneGround(100, 335);
+            AddStoneGround(100, 270);
+            AddStoneGround(100, 205);
+            AddStoneGround(100, 140);
+            AddStoneGround(100, 75);
+
             AddGameObject(playerSprite);
 
             //spawnposition of player
@@ -102,6 +110,11 @@ namespace PlatformerSpeedRunner.States
                 {
                     debug = false;
                 }
+
+                if (cmd is GameplayInputCommand.PlayerMoveUp)
+                {
+                    playerSprite.yVelocity = -10;
+                }
             });
         }
 
@@ -109,7 +122,8 @@ namespace PlatformerSpeedRunner.States
         {
             playerSprite.PlayerPhysics();
 
-            debugText = playerSprite.Position.ToString();
+            MouseState mouseState = Mouse.GetState();
+            debugText = Convert.ToInt32(mouseState.X) + "," + Convert.ToInt32(mouseState.Y);
 
             KeepPlayerInBounds();
             DetectCollisions();
@@ -120,9 +134,35 @@ namespace PlatformerSpeedRunner.States
             var playerGroundDetector = new CollisionDetector<StoneGroundSprite, PlayerSprite>(stoneGroundList);
 
             playerGroundDetector.DetectCollisions(playerSprite, (stoneGround, player) =>
-            {
-                playerSprite.Position = new Vector2(playerSprite.Position.X, stoneGround.GetHeight() - playerSprite.Height);
-                playerSprite.yVelocity = 0;
+            {//top, bottom, right, left
+                if (Convert.ToInt32(player.Position.Y + player.Height) <= stoneGround.Position.Y + 20 &&
+                    Convert.ToInt32(player.Position.X + player.Width) > stoneGround.Position.X &&
+                    Convert.ToInt32(player.Position.X) < stoneGround.Position.X + stoneGround.Width)
+                {
+                    player.Position = new Vector2(player.Position.X, stoneGround.Position.Y - player.Height);
+                    player.yVelocity = 0;
+                }
+                else if (Convert.ToInt32(player.Position.Y) >= stoneGround.Position.Y + stoneGround.Height - 20 &&
+                        Convert.ToInt32(player.Position.X) <= stoneGround.Position.X + stoneGround.Width &&
+                        Convert.ToInt32(player.Position.X + player.Width) >= stoneGround.Position.X)
+                {
+                    player.Position = new Vector2(player.Position.X, stoneGround.Position.Y + stoneGround.Height);
+                    player.yVelocity = 1;
+                }
+                else if (Convert.ToInt32(player.Position.X) >= stoneGround.Position.X + stoneGround.Width/4 &&
+                        Convert.ToInt32(player.Position.Y + player.Height) > stoneGround.Position.Y &&
+                        Convert.ToInt32(player.Position.Y) < stoneGround.Position.Y + stoneGround.Height)
+                {
+                    player.Position = new Vector2(stoneGround.Position.X + stoneGround.Width, player.Position.Y);
+                    player.xVelocity = 0;
+                }
+                else if (Convert.ToInt32(player.Position.X + player.Width) < stoneGround.Position.X + stoneGround.Width/4 &&
+                        Convert.ToInt32(player.Position.Y + player.Height) > stoneGround.Position.Y &&
+                        Convert.ToInt32(player.Position.Y) < stoneGround.Position.Y + stoneGround.Height)
+                {
+                    player.Position = new Vector2(stoneGround.Position.X - player.Width, player.Position.Y);
+                    player.xVelocity = 0;
+                }
             });
         }
 

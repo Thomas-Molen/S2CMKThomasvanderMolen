@@ -9,20 +9,15 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class StoneGroundSprite : BaseGameObject
     {
-        private const int BBPosX = 1;
-        private const int BBPosY = 1;
-        private const int BBWidth = 200;
-        private const int BBHeight = 67;
+        private const int BBPosX = 0;
+        private const int BBPosY = 0;
+        private const int BBWidth = 201;
+        private const int BBHeight = 68;
 
         public StoneGroundSprite(Texture2D texture)
         {
             baseTexture = texture;
             AddBoundingBox(new BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
-        }
-
-        public float GetHeight()
-        {
-            return Position.Y;
         }
     }
 }

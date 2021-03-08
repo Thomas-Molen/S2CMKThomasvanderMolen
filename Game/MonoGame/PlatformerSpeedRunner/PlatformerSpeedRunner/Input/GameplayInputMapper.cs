@@ -9,12 +9,13 @@ namespace PlatformerSpeedRunner.Input
         public override IEnumerable<BaseInputCommand> GetKeyboardState(KeyboardState state)
         {
             var commands = new List<GameplayInputCommand>();
-
+            //options
             if (state.IsKeyDown(Keys.Escape))
             {
                 commands.Add(new GameplayInputCommand.GameExit());
             }
 
+            //movement
             if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
             {
                 commands.Add(new GameplayInputCommand.PlayerMoveLeft());
@@ -26,6 +27,11 @@ namespace PlatformerSpeedRunner.Input
             else
             {
                 commands.Add(new GameplayInputCommand.PlayerMoveNone());
+            }
+
+            if (state.IsKeyDown(Keys.W))
+            {
+                commands.Add(new GameplayInputCommand.PlayerMoveUp());
             }
 
             //DEBUG BOUNDINGBOXES

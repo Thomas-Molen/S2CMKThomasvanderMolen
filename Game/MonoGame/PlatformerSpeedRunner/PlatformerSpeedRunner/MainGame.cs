@@ -16,8 +16,8 @@ namespace PlatformerSpeedRunner
     public class MainGame : Game
     {
         //debug
-        private Vector2 debugTextPosition = new Vector2(20, 60);
-        private Vector2 debugMousePosition = new Vector2(20, 80);
+        private Vector2 debugTextPosition;
+        private Vector2 debugPlayerPosition;
 
         //components
         private BaseGameState currentGameState;
@@ -35,9 +35,9 @@ namespace PlatformerSpeedRunner
         DataSet dataSet;
 
         private string playerName;
-        private Vector2 playerNamePosition = new Vector2(20, 20);
+        private Vector2 playerNamePosition;
         private string playerScore;
-        private Vector2 playerScorePosition = new Vector2(20, 40);
+        private Vector2 playerScorePosition;
 
         //set the proper window scaling
         private RenderTarget2D renderTarget;
@@ -185,7 +185,7 @@ namespace PlatformerSpeedRunner
 
             playerNamePosition = SetCameraBasedVector(0, 0);
             playerScorePosition = SetCameraBasedVector(0, 20);
-            debugMousePosition = SetCameraBasedVector(0, 40);
+            debugPlayerPosition = SetCameraBasedVector(0, 40);
             debugTextPosition = SetCameraBasedVector(0, 60);
         }
 
@@ -213,8 +213,7 @@ namespace PlatformerSpeedRunner
 
             spriteBatch.DrawString(font, "player: " + playerName, playerNamePosition, Color.Black);
             spriteBatch.DrawString(font, "score: " + playerScore, playerScorePosition, Color.Black);
-            MouseState mouseState = Mouse.GetState();
-            spriteBatch.DrawString(font, "mouse: " + mouseState.X + " , " + mouseState.Y, debugMousePosition, Color.Black);
+            spriteBatch.DrawString(font, "player: " + currentGameState.playerSprite.Position.ToString(), debugPlayerPosition, Color.Black);
             spriteBatch.DrawString(font, "debug: " + currentGameState.debugText, debugTextPosition, Color.Black);
 
             spriteBatch.End();

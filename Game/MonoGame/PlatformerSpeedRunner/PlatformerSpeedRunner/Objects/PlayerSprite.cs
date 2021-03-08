@@ -15,10 +15,13 @@ namespace PlatformerSpeedRunner.Objects
         private const float playerSpeed = 3.0f;
         private const float playerGravity = 0.3f;
 
-        private const int BBPosX = 1;
-        private const int BBPosY = 1;
-        private const int BBWidth = 50;
-        private const int BBHeight = 60;
+        private const int maxXVelocity = 15;
+        private const int maxYVelocity = 20;
+
+        private const int BBPosX = 0;
+        private const int BBPosY = 0;
+        private const int BBWidth = 51;
+        private const int BBHeight = 61;
 
         public PlayerSprite(Texture2D texture)
         {
@@ -30,13 +33,21 @@ namespace PlatformerSpeedRunner.Objects
         {
             GravityEffect();
 
-            if (xVelocity > 15)
+            if (xVelocity > maxXVelocity)
             {
-                xVelocity = 15;
+                xVelocity = maxXVelocity;
             }
-            else if (xVelocity < -15)
+            else if (xVelocity < -maxXVelocity)
             {
-                xVelocity = -15;
+                xVelocity = -maxXVelocity;
+            }
+            if (yVelocity > maxYVelocity)
+            {
+                yVelocity = maxYVelocity;
+            }
+            else if (yVelocity < -maxYVelocity)
+            {
+                yVelocity = -maxYVelocity;
             }
 
             Position = new Vector2(Position.X + xVelocity, Position.Y + yVelocity);           
@@ -76,7 +87,7 @@ namespace PlatformerSpeedRunner.Objects
 
         private void GravityEffect()
         {
-            if (yVelocity <= 20)
+            if (yVelocity < maxYVelocity)
             {
                 yVelocity += playerGravity;
             }
@@ -93,16 +104,17 @@ namespace PlatformerSpeedRunner.Objects
 
             float yGrappleDistance = mouseState.Y - Position.Y;
             float xGrappleDistance;
-            if (mouseState.X > Program.width/2)
+            if (Position.X + Width/2 < Program.width / 2 && mouseState.X < Program.width / 2)
             {
-                xGrappleDistance = mouseState.X;
+                xGrappleDistance = mouseState.X - Position.X;
             }
+
             else
             {
-                xGrappleDistance = mouseState.X - Program.width/2;
+                xGrappleDistance = mouseState.X - Program.width / 2;
             }
-            yVelocity += (yGrappleDistance / 100) * timeCharged/10;
-            xVelocity += (xGrappleDistance / 100) * timeCharged/10;
+            yVelocity += (yGrappleDistance / 100) * timeCharged / 10;
+            xVelocity += (xGrappleDistance / 100) * timeCharged / 10;
         }
     }
 }
