@@ -87,5 +87,10 @@ namespace PlatformerSpeedRunner.Objects.Base
             boundingBoxTexture = new Texture2D(graphicsDevice, 1, 1);
             boundingBoxTexture.SetData<Color>(new Color[] { Color.White });
         }
+
+        private void ChangeTexture(Texture2D Texture)
+        {
+            baseTexture = Texture;
+        }
     }
 }

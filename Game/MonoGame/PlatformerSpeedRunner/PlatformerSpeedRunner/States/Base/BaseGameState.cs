@@ -17,7 +17,7 @@ namespace PlatformerSpeedRunner.States.Base
     {
         public string debugText;
 
-        protected bool debug = false;
+        protected bool debug = true;
 
         public PlayerSprite playerSprite;
 
@@ -100,12 +100,12 @@ namespace PlatformerSpeedRunner.States.Base
         {
             foreach (var gameObject in gameObjects.OrderBy(a => a.zIndex))
             {
-                gameObject.Render(spriteBatch);
-
+                //gameObject.Render(spriteBatch);
                 if (debug)
                 {
                     gameObject.RenderBoundingBoxes(spriteBatch);
                 }
+                gameObject.Render(spriteBatch);
             }
         }
     }

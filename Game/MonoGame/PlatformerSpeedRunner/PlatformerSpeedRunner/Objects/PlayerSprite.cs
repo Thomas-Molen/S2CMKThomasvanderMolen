@@ -15,13 +15,13 @@ namespace PlatformerSpeedRunner.Objects
         private const float playerSpeed = 3.0f;
         private const float playerGravity = 0.3f;
 
-        private const int maxXVelocity = 15;
-        private const int maxYVelocity = 20;
+        private const int maxXVelocity = 10;
+        private const int maxYVelocity = 15;
 
-        private const int BBPosX = 0;
+        private const int BBPosX = 1;
         private const int BBPosY = 0;
-        private const int BBWidth = 51;
-        private const int BBHeight = 61;
+        private const int BBWidth = 42;
+        private const int BBHeight = 55;
 
         public PlayerSprite(Texture2D texture)
         {
@@ -52,12 +52,12 @@ namespace PlatformerSpeedRunner.Objects
 
             Position = new Vector2(Position.X + xVelocity, Position.Y + yVelocity);           
         }
-
+        
         public void MoveLeft()
         {
             if (xVelocity >= -playerSpeed)
             {
-                xVelocity -= playerSpeed / 4;
+                xVelocity -= playerSpeed / 3;
             }
         }
 
@@ -65,7 +65,7 @@ namespace PlatformerSpeedRunner.Objects
         {
             if (xVelocity <= playerSpeed)
             {
-                xVelocity += playerSpeed / 4;
+                xVelocity += playerSpeed / 3;
             }
         }
 
@@ -108,13 +108,23 @@ namespace PlatformerSpeedRunner.Objects
             {
                 xGrappleDistance = mouseState.X - Position.X;
             }
-
+            else if (Position.X + Width / 2 < Program.width / 2 && mouseState.X > Program.width / 2)
+            {
+                xGrappleDistance = mouseState.X - Position.X;
+            }
             else
             {
                 xGrappleDistance = mouseState.X - Program.width / 2;
             }
-            yVelocity += (yGrappleDistance / 100) * timeCharged / 10;
-            xVelocity += (xGrappleDistance / 100) * timeCharged / 10;
+            if (yGrappleDistance < -700)
+            {
+                yVelocity += (-700 / 135) * timeCharged / 10;
+            }
+            else
+            {
+                yVelocity += (yGrappleDistance / 135) * timeCharged / 10;
+            }
+            xVelocity += (xGrappleDistance / 150) * timeCharged / 10;
         }
     }
 }
