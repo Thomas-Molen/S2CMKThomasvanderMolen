@@ -6,20 +6,32 @@ namespace RaceWorkshop
 {
     class Season
     {
-        TeamContainer teamContainer = new TeamContainer();
+        private List<Team> teamsInSeason;
 
-        private int numberOfRaces;
-        private string champion;
-        private int year;
+        public int numberOfRaces { get; private set; }
+        public string champion { get; private set; }
+        public int year { get; private set; }
+
+        public Season(int NumberOfRaces = 0, string Champion = "", int Year = 0)
+        {
+            numberOfRaces = NumberOfRaces;
+            champion = Champion;
+            year = Year;
+            teamsInSeason = new List<Team>();
+        }
 
         public void AddTeam(Team team)
         {
-            teamContainer.AddTeam(team);
+            teamsInSeason.Add(team);
         }
 
-        public void RemoveTeam(Team team)
+        public void RemoveTeam(Team TeamToRemove)
         {
-            teamContainer.RemoveTeam(team);
+            if (!teamsInSeason.Contains(TeamToRemove))
+            {
+                throw new ArgumentOutOfRangeException("Team does not exist in current context: " + TeamToRemove.Name);
+            }
+            teamsInSeason.Remove(TeamToRemove);
         }
 
         public void AddChampion(string Champion)

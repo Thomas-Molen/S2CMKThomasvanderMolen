@@ -6,20 +6,30 @@ namespace RaceWorkshop
 {
     class TeamContainer
     {
-        private List<Team> teams = new List<Team>();
-        public void AddTeam(Team team)
+        private List<Team> teams;
+
+        public TeamContainer()
         {
-            teams.Add(team);
+            teams = new List<Team>();
         }
 
-        public void RemoveTeam(Team team)
+        public void AddTeam(Team TeamToAdd)
         {
+            teams.Add(TeamToAdd);
+        }
+
+        public void RemoveTeam(Team TeamToRemove)
+        {
+            if (!teams.Contains(TeamToRemove))
+            {
+                throw new ArgumentOutOfRangeException("Team does not exist in current context: " + TeamToRemove.Name);
+            }
             teams.Remove(team);
         }
 
-        public Array GetAllTeams()
+        public IEnumerable<Team> GetAllTeams()
         {
-            return teams.ToArray();
+            return teams.AsReadOnly();
         }
     }
 }

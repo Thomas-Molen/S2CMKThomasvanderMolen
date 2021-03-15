@@ -23,6 +23,8 @@ namespace PlatformerSpeedRunner.Objects.Base
         public int Width { get { return baseTexture.Width; } }
         public int Height { get { return baseTexture.Height; } }
 
+        public Enum.Animations animationState;
+
         public virtual Vector2 Position
         {
             get { return basePosition; }

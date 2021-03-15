@@ -14,17 +14,30 @@ using PlatformerSpeedRunner.Input.Base;
 using PlatformerSpeedRunner.Camera;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using PlatformerSpeedRunner.Helper;
 
 namespace PlatformerSpeedRunner.States
 {
     public class GameplayState : BaseGameState
     {
+        private AnimationHelper animationHelper = new AnimationHelper();
+
         private int TimeCharged;
         private Vector2 spawnPoint = new Vector2(200, 745);
 
         //textures
         private const string player = "IdlePinkMan";
         private const string backgroundTexture = "PinkWallpaper";
+
+        private const string woodenBoxLarge = "WoodenBoxLarge";
+        private const string grassLeft = "GrassLeft";
+        private const string grassRight = "GrassRight";
+        private const string grassMiddle = "GrassMiddle";
+        private const string grassSoilLeft = "GrassSoilLeft";
+        private const string grassSoilRight = "GrassSoilRight";
+        private const string grassSoilMiddle = "GrassSoilMiddle";
+        private const string spike = "Spike";
+        private const string stoneCubeLarge = "StoneCubeLarge";
 
         private List<ObjectSprite> TopsCollisionList = new List<ObjectSprite>();
         private List<ObjectSprite> SidesCollisionList = new List<ObjectSprite>();
@@ -42,52 +55,55 @@ namespace PlatformerSpeedRunner.States
             AddGameObject(splashImage);
 
             //First ground grass
-            AddObject("WoodenBoxLarge", 475, 705, 100, 100, FullCollisionList);
-            AddObject("GrassLeft", 0, 803, 164, 184, TopsCollisionList);
-            AddObject("GrassMiddle", 164, 803, 128, 184, TopsCollisionList);
-            AddObject("GrassMiddle", 292, 803, 128, 184, TopsCollisionList);
-            AddObject("GrassRight", 420, 803, 140, 184, TopsCollisionList);
-            AddObject("GrassLeft", 572, 623, 164, 184, FullCollisionList);
-            AddObject("GrassRight", 736, 623, 156, 184, FullCollisionList);
+            AddObject(woodenBoxLarge, 475, 705, 100, 100, FullCollisionList);
+            AddObject(grassLeft, 0, 803, 164, 184, TopsCollisionList);
+            AddObject(grassMiddle, 164, 803, 128, 184, TopsCollisionList);
+            AddObject(grassMiddle, 292, 803, 128, 184, TopsCollisionList);
+            AddObject(grassRight, 420, 803, 140, 184, TopsCollisionList);
+            AddObject(grassLeft, 572, 623, 164, 184, FullCollisionList);
+            AddObject(grassRight, 736, 623, 156, 184, FullCollisionList);
             //spikes
-            AddObject("Spike", 889, 861, 35, 35, DeathCollisionList);
-            AddObject("Spike", 919, 861, 35, 35, DeathCollisionList);
-            AddObject("Spike", 949, 861, 35, 35, DeathCollisionList);
-            AddObject("Spike", 979, 861, 35, 35, DeathCollisionList);
-            AddObject("Spike", 1009, 861, 35, 35, DeathCollisionList);
-            AddObject("Spike", 1039, 861, 35, 35, DeathCollisionList);
+            AddObject(spike, 889, 861, 35, 35, DeathCollisionList);
+            AddObject(spike, 919, 861, 35, 35, DeathCollisionList);
+            AddObject(spike, 949, 861, 35, 35, DeathCollisionList);
+            AddObject(spike, 979, 861, 35, 35, DeathCollisionList);
+            AddObject(spike, 1009, 861, 35, 35, DeathCollisionList);
+            AddObject(spike, 1039, 861, 35, 35, DeathCollisionList);
             //Grass under spikes
-            AddObject("GrassLeft", 880, 892);
-            AddObject("GrassRight", 1044, 892);
+            AddObject(grassLeft, 880, 892);
+            AddObject(grassRight, 1044, 892);
             //First hill soil
-            AddObject("GrassSoilLeft", 572, 807);
-            AddObject("GrassSoilLeft", 572, 927);
-            AddObject("GrassSoilLeft", 572, 1047);
-            AddObject("GrassSoilRight", 736, 807, 156, 120, SidesCollisionList);
-            AddObject("GrassSoilRight", 736, 927);
-            AddObject("GrassSoilRight", 736, 1047);
+            AddObject(grassSoilLeft, 572, 807);
+            AddObject(grassSoilLeft, 572, 927);
+            AddObject(grassSoilLeft, 572, 1047);
+            AddObject(grassSoilRight, 736, 807, 156, 120, SidesCollisionList);
+            AddObject(grassSoilRight, 736, 927);
+            AddObject(grassSoilRight, 736, 1047);
             //First ground soil
-            AddObject("GrassSoilLeft", 0, 987);
-            AddObject("GrassSoilMiddle", 164, 987);
-            AddObject("GrassSoilMiddle", 292, 987);
-            AddObject("GrassSoilRight", 420, 987);
+            AddObject(grassSoilLeft, 0, 987);
+            AddObject(grassSoilMiddle, 164, 987);
+            AddObject(grassSoilMiddle, 292, 987);
+            AddObject(grassSoilRight, 420, 987);
             //post spikes hill
-            AddObject("GrassLeft", 1071, 536, 164, 184, FullCollisionList);
-            AddObject("GrassSoilLeft", 1071, 720, 164, 120, SidesCollisionList);
-            AddObject("GrassSoilLeft", 1071, 840);
-            AddObject("GrassSoilLeft", 1071, 960);
-            AddObject("GrassRight", 1235, 536, 156, 120, FullCollisionList);
-            AddObject("GrassSoilRight", 1235, 720, 156, 120, SidesCollisionList);
-            AddObject("GrassSoilRight", 1235, 840, 156, 120, SidesCollisionList);
-            AddObject("GrassSoilRight", 1235, 960, 156, 120, SidesCollisionList);
+            AddObject(grassLeft, 1071, 536, 164, 184, FullCollisionList);
+            AddObject(grassSoilLeft, 1071, 720, 164, 120, SidesCollisionList);
+            AddObject(grassSoilLeft, 1071, 840);
+            AddObject(grassSoilLeft, 1071, 960);
+            AddObject(grassRight, 1235, 536, 156, 120, FullCollisionList);
+            AddObject(grassSoilRight, 1235, 720, 156, 120, SidesCollisionList);
+            AddObject(grassSoilRight, 1235, 840, 156, 120, SidesCollisionList);
+            AddObject(grassSoilRight, 1235, 960, 156, 120, SidesCollisionList);
             AddRockHead(1400, 536, 1400, 1800);
             //cave rock thing
-            AddObject("StoneCubeLarge", 2100, 27, 128, 128, SidesCollisionList);
-            AddObject("StoneCubeLarge", 2100, 155, 128, 128, SidesCollisionList);
-            AddObject("StoneCubeLarge", 2100, 283, 128, 128, SidesCollisionList);
-            AddObject("StoneCubeLarge", 2100, 411, 128, 128, FullCollisionList);
+            AddObject(stoneCubeLarge, 2100, 27, 128, 128, SidesCollisionList);
+            AddObject(stoneCubeLarge, 2100, 155, 128, 128, SidesCollisionList);
+            AddObject(stoneCubeLarge, 2100, 283, 128, 128, SidesCollisionList);
+            AddObject(stoneCubeLarge, 2100, 411, 128, 128, FullCollisionList);
 
-            AddObject("StoneCubeLarge", 2300, 900, 128, 128, FullCollisionList);
+            AddObject(stoneCubeLarge, 2300, 900, 128, 128, FullCollisionList);
+            AddObject(stoneCubeLarge, 2428, 900, 128, 128, TopsCollisionList);
+            AddObject(stoneCubeLarge, 2556, 900, 128, 128, TopsCollisionList);
+            AddObject(stoneCubeLarge, 2684, 900, 128, 128, FullCollisionList);
 
             AddGameObject(playerSprite);
         }
@@ -156,6 +172,7 @@ namespace PlatformerSpeedRunner.States
         public override void UpdateGameState(GameTime gameTime)
         {
             playerSprite.PlayerPhysics();
+            playerSprite.PlayerAnimation(LoadTexture(animationHelper.RunAnimation(playerSprite.GetAnimationState())));
 
             foreach (RockHeadSprite rockhead in RockheadCollisionList)
             {

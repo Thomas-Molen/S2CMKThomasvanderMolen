@@ -6,11 +6,16 @@ namespace RaceWorkshop
 {
     class RaceDiscipline
     {
-        List<Season> seasons = new List<Season>();
+        List<Season> seasons;
 
-        private string name;
-        private int since;
-        private bool active;
+        public string name { get; set; }
+        public int since { get; set; }
+        public bool isActive { get; set; }
+
+        public RaceDiscipline()
+        {
+            seasons = new List<Season>();
+        }
 
         public void AddSeason(Season season)
         {

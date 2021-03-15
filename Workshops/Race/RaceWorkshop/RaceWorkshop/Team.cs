@@ -6,12 +6,12 @@ namespace RaceWorkshop
 {
     class Team
     {
-        private string name;
-        private string city;
-        private string country;
-        private string mainSponsor;
-        private int foundingYear;
-        private string director;
+        public string name { get; set; }
+        public string city { get; set; }
+        public string country { get; set; }
+        public string mainSponsor { get; set; }
+        public int foundingYear { get; set; }
+        public string director { get; set; }
 
         public void UpdateTeam(string Name, string City, string Country, string MainSponsor, int FoundingYear, string Director)
         {
