@@ -23,7 +23,8 @@ namespace PlatformerSpeedRunner.States
         private AnimationHelper animationHelper = new AnimationHelper();
 
         private int TimeCharged;
-        private Vector2 spawnPoint = new Vector2(200, 745);
+        //private Vector2 spawnPoint = new Vector2(200, 745); TODO THIS IS THE REAL SPAWNPOINT
+        private Vector2 spawnPoint = new Vector2(2600, 845);
 
         //textures
         private const string player = "IdlePinkMan";
@@ -38,37 +39,41 @@ namespace PlatformerSpeedRunner.States
         private const string grassSoilMiddle = "GrassSoilMiddle";
         private const string spike = "Spike";
         private const string stoneCubeLarge = "StoneCubeLarge";
+        private const string stoneSlabVertical = "StoneSlabVertical";
+        private const string stoneSlabHorizontal = "StoneSlabHorizontal";
 
         private List<ObjectSprite> TopsCollisionList = new List<ObjectSprite>();
         private List<ObjectSprite> SidesCollisionList = new List<ObjectSprite>();
         private List<ObjectSprite> FullCollisionList = new List<ObjectSprite>();
         private List<ObjectSprite> DeathCollisionList = new List<ObjectSprite>();
-        private List<RockHeadSprite> RockheadCollisionList = new List<RockHeadSprite>();
+        private List<RockHeadSprite> RockHeadCollisionList = new List<RockHeadSprite>();
+        private List<SpikeHeadSprite> SpikeHeadCollisionList = new List<SpikeHeadSprite>();
 
         public override void LoadContent()
         {
             playerSprite = new PlayerSprite(LoadTexture(player));
             playerSprite.Position = spawnPoint;
+            chargeCircleSprite = new ChargeCircleSprite(LoadTexture("ChargingCircle1"));
 
             splashImage = new SplashImage(LoadTexture(backgroundTexture));
 
             AddGameObject(splashImage);
 
             //First ground grass
-            AddObject(woodenBoxLarge, 475, 705, 100, 100, FullCollisionList);
-            AddObject(grassLeft, 0, 803, 164, 184, TopsCollisionList);
-            AddObject(grassMiddle, 164, 803, 128, 184, TopsCollisionList);
-            AddObject(grassMiddle, 292, 803, 128, 184, TopsCollisionList);
-            AddObject(grassRight, 420, 803, 140, 184, TopsCollisionList);
-            AddObject(grassLeft, 572, 623, 164, 184, FullCollisionList);
-            AddObject(grassRight, 736, 623, 156, 184, FullCollisionList);
+            AddObject(woodenBoxLarge, 475, 705, FullCollisionList);
+            AddObject(grassLeft, 0, 803, TopsCollisionList);
+            AddObject(grassMiddle, 164, 803, TopsCollisionList);
+            AddObject(grassMiddle, 292, 803, TopsCollisionList);
+            AddObject(grassRight, 420, 803, TopsCollisionList);
+            AddObject(grassLeft, 572, 623, FullCollisionList);
+            AddObject(grassRight, 736, 623, FullCollisionList);
             //spikes
-            AddObject(spike, 889, 861, 35, 35, DeathCollisionList);
-            AddObject(spike, 919, 861, 35, 35, DeathCollisionList);
-            AddObject(spike, 949, 861, 35, 35, DeathCollisionList);
-            AddObject(spike, 979, 861, 35, 35, DeathCollisionList);
-            AddObject(spike, 1009, 861, 35, 35, DeathCollisionList);
-            AddObject(spike, 1039, 861, 35, 35, DeathCollisionList);
+            AddObject(spike, 889, 861, DeathCollisionList);
+            AddObject(spike, 919, 861, DeathCollisionList);
+            AddObject(spike, 949, 861, DeathCollisionList);
+            AddObject(spike, 979, 861, DeathCollisionList);
+            AddObject(spike, 1009, 861, DeathCollisionList);
+            AddObject(spike, 1039, 861, DeathCollisionList);
             //Grass under spikes
             AddObject(grassLeft, 880, 892);
             AddObject(grassRight, 1044, 892);
@@ -76,7 +81,7 @@ namespace PlatformerSpeedRunner.States
             AddObject(grassSoilLeft, 572, 807);
             AddObject(grassSoilLeft, 572, 927);
             AddObject(grassSoilLeft, 572, 1047);
-            AddObject(grassSoilRight, 736, 807, 156, 120, SidesCollisionList);
+            AddObject(grassSoilRight, 736, 807, SidesCollisionList);
             AddObject(grassSoilRight, 736, 927);
             AddObject(grassSoilRight, 736, 1047);
             //First ground soil
@@ -85,25 +90,77 @@ namespace PlatformerSpeedRunner.States
             AddObject(grassSoilMiddle, 292, 987);
             AddObject(grassSoilRight, 420, 987);
             //post spikes hill
-            AddObject(grassLeft, 1071, 536, 164, 184, FullCollisionList);
-            AddObject(grassSoilLeft, 1071, 720, 164, 120, SidesCollisionList);
+            AddObject(grassLeft, 1071, 536, FullCollisionList);
+            AddObject(grassSoilLeft, 1071, 720, SidesCollisionList);
             AddObject(grassSoilLeft, 1071, 840);
             AddObject(grassSoilLeft, 1071, 960);
-            AddObject(grassRight, 1235, 536, 156, 120, FullCollisionList);
-            AddObject(grassSoilRight, 1235, 720, 156, 120, SidesCollisionList);
-            AddObject(grassSoilRight, 1235, 840, 156, 120, SidesCollisionList);
-            AddObject(grassSoilRight, 1235, 960, 156, 120, SidesCollisionList);
+            AddObject(grassRight, 1235, 536, FullCollisionList);
+            AddObject(grassSoilRight, 1235, 720, SidesCollisionList);
+            AddObject(grassSoilRight, 1235, 840, SidesCollisionList);
+            AddObject(grassSoilRight, 1235, 960, SidesCollisionList);
             AddRockHead(1400, 536, 1400, 1800);
-            //cave rock thing
-            AddObject(stoneCubeLarge, 2100, 27, 128, 128, SidesCollisionList);
-            AddObject(stoneCubeLarge, 2100, 155, 128, 128, SidesCollisionList);
-            AddObject(stoneCubeLarge, 2100, 283, 128, 128, SidesCollisionList);
-            AddObject(stoneCubeLarge, 2100, 411, 128, 128, FullCollisionList);
-
-            AddObject(stoneCubeLarge, 2300, 900, 128, 128, FullCollisionList);
-            AddObject(stoneCubeLarge, 2428, 900, 128, 128, TopsCollisionList);
-            AddObject(stoneCubeLarge, 2556, 900, 128, 128, TopsCollisionList);
-            AddObject(stoneCubeLarge, 2684, 900, 128, 128, FullCollisionList);
+            //cave rock thing ceiling
+            AddObject(stoneCubeLarge, 1973, 27, FullCollisionList);
+            AddObject(stoneCubeLarge, 2101, 27);
+            AddObject(stoneCubeLarge, 2037, 155, FullCollisionList);
+            AddObject(stoneCubeLarge, 2165, 155);
+            AddObject(stoneCubeLarge, 2292, 155);
+            AddObject(stoneCubeLarge, 2229, 27);
+            AddObject(stoneCubeLarge, 2420, 118);
+            AddObject(stoneCubeLarge, 2420, -10);
+            AddObject(stoneSlabVertical, 2357, -37);
+            AddObject(stoneCubeLarge, 2037, 283, FullCollisionList);
+            AddObject(stoneCubeLarge, 2100, 411, FullCollisionList);
+            AddObject(stoneSlabHorizontal, 2228, 411, FullCollisionList);
+            AddObject(stoneCubeLarge, 2165, 283);
+            AddObject(stoneCubeLarge, 2292, 283, SidesCollisionList);
+            AddObject(stoneCubeLarge, 2420, 246, FullCollisionList);
+            AddObject(stoneSlabVertical, 2548, 132, FullCollisionList);
+            AddObject(stoneSlabVertical, 2548, -60);
+            AddObject(stoneSlabVertical, 2612, 55, FullCollisionList);
+            AddObject(stoneSlabVertical, 2612, -137);
+            AddObject(stoneCubeLarge, 2676, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 2804, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 2932, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 2676, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3060, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3188, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3316, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3444, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3572, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3700, 27, TopsCollisionList);
+            //cave rock thing floor
+            AddObject(stoneSlabHorizontal, 2236, 900, FullCollisionList);
+            AddObject(stoneCubeLarge, 2300, 964, SidesCollisionList);
+            AddObject(stoneCubeLarge, 2428, 900, FullCollisionList);
+            AddObject(stoneCubeLarge, 2428, 1028);
+            AddObject(stoneCubeLarge, 2556, 964, FullCollisionList);
+            AddObject(stoneSlabHorizontal, 2684, 1012, FullCollisionList);
+            //cave spikes
+            AddObject(spike, 2876, 1030, DeathCollisionList);
+            AddObject(spike, 2906, 1030, DeathCollisionList);
+            AddObject(spike, 2936, 1030, DeathCollisionList);
+            AddObject(spike, 2966, 1030, DeathCollisionList);
+            AddObject(spike, 2996, 1030, DeathCollisionList);
+            AddObject(spike, 3026, 1030, DeathCollisionList);
+            AddObject(spike, 3056, 1030, DeathCollisionList);
+            AddObject(spike, 3086, 1030, DeathCollisionList);
+            AddObject(spike, 3116, 1030, DeathCollisionList);
+            AddObject(spike, 3146, 1030, DeathCollisionList);
+            AddObject(spike, 3176, 1030, DeathCollisionList);
+            AddObject(spike, 3206, 1030, DeathCollisionList);
+            AddObject(spike, 3236, 1030, DeathCollisionList);
+            AddObject(spike, 3266, 1030, DeathCollisionList);
+            AddObject(spike, 3296, 1030, DeathCollisionList);
+            AddObject(spike, 3326, 1030, DeathCollisionList);
+            AddObject(spike, 3356, 1030, DeathCollisionList);
+            AddObject(spike, 3386, 1030, DeathCollisionList);
+            AddObject(spike, 3416, 1030, DeathCollisionList);
+            AddObject(stoneSlabHorizontal, 2875, 1060);
+            AddObject(stoneSlabHorizontal, 3067, 1060);
+            AddObject(stoneSlabHorizontal, 3259, 1060);
+            AddSpikeHead(2950, 450, 400, 900);
+            AddSpikeHead(3200, 700, 400, 900);
 
             AddGameObject(playerSprite);
         }
@@ -134,10 +191,32 @@ namespace PlatformerSpeedRunner.States
 
                 if (cmd is GameplayInputCommand.PlayerLMBHold)
                 {
+                    AddGameObject(chargeCircleSprite);
                     TimeCharged += 1;
+
+                    chargeCircleSprite.Position = new Vector2(playerSprite.Position.X, playerSprite.Position.Y - 10);
+
+                    if (TimeCharged < 10)
+                    {
+                        chargeCircleSprite.ChangeTexture(LoadTexture("ChargingCircle1"));
+                    }
+                    else if (TimeCharged < 20)
+                    {
+                        chargeCircleSprite.ChangeTexture(LoadTexture("ChargingCircle2"));
+                    }
+                    else if (TimeCharged < 30)
+                    {
+                        chargeCircleSprite.ChangeTexture(LoadTexture("ChargingCircle3"));
+                    }
+                    else if (TimeCharged >= 30)
+                    {
+                        chargeCircleSprite.ChangeTexture(LoadTexture("ChargingCircle4"));
+                    }
                 }
                 if (cmd is GameplayInputCommand.PlayerLMBRelease)
                 {
+                    chargeCircleSprite.Position = new Vector2(chargeCircleSprite.Position.X, chargeCircleSprite.Position.Y + 2000);
+                    RemoveGameObject(chargeCircleSprite);
                     if (TimeCharged >= 30)
                     {
                         playerSprite.Grapple(30);
@@ -174,9 +253,13 @@ namespace PlatformerSpeedRunner.States
             playerSprite.PlayerPhysics();
             playerSprite.PlayerAnimation(LoadTexture(animationHelper.RunAnimation(playerSprite.GetAnimationState())));
 
-            foreach (RockHeadSprite rockhead in RockheadCollisionList)
+            foreach (RockHeadSprite rockHead in RockHeadCollisionList)
             {
-                rockhead.Movement();
+                rockHead.Movement();
+            }
+            foreach (SpikeHeadSprite spikeHead in SpikeHeadCollisionList)
+            {
+                spikeHead.Movement();
             }
 
             MouseState mouseState = Mouse.GetState();
@@ -247,7 +330,10 @@ namespace PlatformerSpeedRunner.States
                         Convert.ToInt32(player.Position.X + player.Width) >= Object.Position.X)
                 {
                     player.Position = new Vector2(player.Position.X, Object.Position.Y + Object.Height);
-                    player.yVelocity = 0.1f;
+                    if (player.yVelocity < 0)
+                    {
+                        player.yVelocity = 0.1f;
+                    }
                 }
             });
 
@@ -281,10 +367,17 @@ namespace PlatformerSpeedRunner.States
 
             playerDeathDetector.DetectCollisions(playerSprite, (Object, player) =>
             {
-                player.Position = spawnPoint;
+                RespawnPlayer();
             });
 
-            var playerRockHeadDetector = new CollisionDetector<RockHeadSprite, PlayerSprite>(RockheadCollisionList);
+            var playerSpikeHeadDetector = new CollisionDetector<SpikeHeadSprite, PlayerSprite>(SpikeHeadCollisionList);
+
+            playerSpikeHeadDetector.DetectCollisions(playerSprite, (Object, player) =>
+            {
+                RespawnPlayer();
+            });
+
+            var playerRockHeadDetector = new CollisionDetector<RockHeadSprite, PlayerSprite>(RockHeadCollisionList);
 
             playerRockHeadDetector.DetectCollisions(playerSprite, (Object, player) =>
             {
@@ -338,6 +431,15 @@ namespace PlatformerSpeedRunner.States
             AddGameObject(Object);
             Object.Position = new Vector2(PosX, PosY);
         }
+
+        private void AddObject(string TextureName, int PosX, int PosY, List<ObjectSprite> CollisionList)
+        {
+            ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName), true);
+            CollisionList.Add(Object);
+            AddGameObject(Object);
+            Object.Position = new Vector2(PosX, PosY);
+        }
+
         private void AddObject(string TextureName, int PosX, int PosY, int BoundingBoxWidth, int BoundingBoxHeight, int BoundingBoxOffSetX, int BoundingBoxOffSetY, List<ObjectSprite> CollisionList)
         {
             ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName), BoundingBoxWidth, BoundingBoxHeight, BoundingBoxOffSetX, BoundingBoxOffSetY);
@@ -348,7 +450,7 @@ namespace PlatformerSpeedRunner.States
 
         private void AddObject(string TextureName, int PosX, int PosY)
         {
-            ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName));
+            ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName), false);
             AddGameObject(Object);
             Object.Position = new Vector2(PosX, PosY);
         }
@@ -356,9 +458,17 @@ namespace PlatformerSpeedRunner.States
         private void AddRockHead(int PosX, int PosY, int MinPosX, int MaxPosX)
         {
             RockHeadSprite rockHead = new RockHeadSprite(LoadTexture("RockHeadIdle"), MinPosX, MaxPosX);
-            RockheadCollisionList.Add(rockHead);
+            RockHeadCollisionList.Add(rockHead);
             AddGameObject(rockHead);
             rockHead.Position = new Vector2(PosX, PosY);
+        }
+
+        private void AddSpikeHead(int PosX, int PosY, int MinPosY, int MaxPosY)
+        {
+            SpikeHeadSprite spikeHead = new SpikeHeadSprite(LoadTexture("SpikeHead"), MinPosY, MaxPosY);
+            SpikeHeadCollisionList.Add(spikeHead);
+            AddGameObject(spikeHead);
+            spikeHead.Position = new Vector2(PosX, PosY);
         }
 
         private void KeepPlayerInBounds()
@@ -376,8 +486,15 @@ namespace PlatformerSpeedRunner.States
 
             if (playerSprite.Position.Y > Program.height)
             {
-                playerSprite.Position = spawnPoint;
+                RespawnPlayer();
             }
+        }
+
+        private void RespawnPlayer()
+        {
+            playerSprite.xVelocity = 0;
+            playerSprite.yVelocity = 0;
+            playerSprite.Position = spawnPoint;
         }
 
         protected override void SetInputManager()

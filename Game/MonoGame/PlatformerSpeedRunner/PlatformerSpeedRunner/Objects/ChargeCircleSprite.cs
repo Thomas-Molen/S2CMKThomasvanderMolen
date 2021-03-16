@@ -9,5 +9,10 @@ namespace PlatformerSpeedRunner.Objects
         {
             baseTexture = texture;
         }
+
+        public void ChangeTexture(Texture2D texture)
+        {
+            baseTexture = texture;
+        }
     }
 }

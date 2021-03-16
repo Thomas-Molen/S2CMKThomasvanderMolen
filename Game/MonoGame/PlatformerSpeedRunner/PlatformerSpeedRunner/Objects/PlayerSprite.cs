@@ -50,7 +50,7 @@ namespace PlatformerSpeedRunner.Objects
 
         public void PlayerPhysics()
         {
-            //animationState = Enum.Animations.Idle;
+            CheckAnimationState();
             GravityEffect();
 
             if (xVelocity > maxXVelocity)
@@ -75,7 +75,6 @@ namespace PlatformerSpeedRunner.Objects
         
         public void MoveLeft()
         {
-            animationState = Animations.RunningLeft;
             if (xVelocity >= -playerSpeed)
             {
                 xVelocity -= playerSpeed / 3;
@@ -84,7 +83,6 @@ namespace PlatformerSpeedRunner.Objects
 
         public void MoveRight()
         {
-            animationState = Animations.RunningRight;
             if (xVelocity <= playerSpeed)
             {
                 xVelocity += playerSpeed / 3;
@@ -93,18 +91,6 @@ namespace PlatformerSpeedRunner.Objects
 
         public void NoDirection()
         {
-            if (xVelocity == 0 && yVelocity == 0)
-            {
-                animationState = Animations.Idle;
-            }
-            else if (yVelocity > 0)
-            {
-                animationState = Animations.Falling;
-            }
-            else
-            {
-                animationState = Animations.Jumping;
-            }
             if (xVelocity > 0)
             {
                 xVelocity += -playerSpeed / 15;
@@ -163,26 +149,40 @@ namespace PlatformerSpeedRunner.Objects
 
         public Animation GetAnimationState()
         {
-            switch (animationState)
+            return animationState switch
             {
-                case Animations.Idle:
-                    return IdleAnimation;
-                case Animations.RunningRight:
-                    return RunningRightAnimation;
-                case Animations.RunningLeft:
-                    return RunningLeftAnimation;
-                case Animations.Falling:
-                    return FallingRightAnimation;
-                case Animations.Jumping:
-                    return JumpingRightAnimation;
-                default:
-                    return IdleAnimation;
-            }
+                Animations.Idle => IdleAnimation,
+                Animations.RunningRight => RunningRightAnimation,
+                Animations.RunningLeft => RunningLeftAnimation,
+                Animations.Falling => FallingRightAnimation,
+                Animations.Jumping => JumpingRightAnimation,
+                _ => IdleAnimation,
+            };
         }
 
         public void PlayerAnimation(Texture2D texture)
         {
             baseTexture = texture;
+        }
+
+        private void CheckAnimationState()
+        {
+            if (xVelocity == 0 && yVelocity == 0 && animationState != Animations.Idle)
+            {
+                animationState = Animations.Idle;
+            }
+            else if (yVelocity < 0 && animationState != Animations.Jumping)
+            {
+                animationState = Animations.Jumping;
+            }
+            else if (yVelocity > 0 && animationState != Animations.Falling)
+            {
+                animationState = Animations.Falling;
+            }
+            else if (xVelocity > 0 && yVelocity == 0 && animationState != Animations.RunningRight)
+            {
+                animationState = Animations.RunningRight;
+            }
         }
     }
 }

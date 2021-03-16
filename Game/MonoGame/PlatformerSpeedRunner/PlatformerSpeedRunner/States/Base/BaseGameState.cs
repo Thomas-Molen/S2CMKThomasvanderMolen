@@ -21,6 +21,8 @@ namespace PlatformerSpeedRunner.States.Base
 
         public PlayerSprite playerSprite;
 
+        public ChargeCircleSprite chargeCircleSprite;
+
         public SplashImage splashImage;
 
         private ContentManager baseContentManager;

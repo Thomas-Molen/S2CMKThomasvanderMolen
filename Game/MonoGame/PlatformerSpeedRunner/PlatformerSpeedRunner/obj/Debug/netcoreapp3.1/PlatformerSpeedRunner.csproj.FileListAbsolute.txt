@@ -145,3 +145,14 @@ D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\Platf
 D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Player\FallingRight.xnb
 D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\FallingRight.xnb
 D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\JumpingRight.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\ChargingCircle.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Player\CharginCircle1.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Player\CharginCircle2.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Player\CharginCircle3.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Player\CharginCircle4.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\ChargingCircle1.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\ChargingCircle2.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\ChargingCircle3.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\ChargingCircle4.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Enemies\SpikeHead.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\SpikeHead.xnb

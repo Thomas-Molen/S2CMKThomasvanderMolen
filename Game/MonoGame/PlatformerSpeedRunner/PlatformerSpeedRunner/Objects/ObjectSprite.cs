@@ -32,9 +32,18 @@ namespace PlatformerSpeedRunner.Objects
             AddBoundingBox(new BoundingBox(new Vector2(BoundingBoxOffSetX, BoundingBoxOffSetY), BBWidth, BBHeight));
         }
 
-        public ObjectSprite(Texture2D texture)
+        public ObjectSprite(Texture2D texture, bool BoundingBox)
         {
             baseTexture = texture;
+
+            if (BoundingBox)
+            {
+                BBWidth = Width + 1;
+                BBHeight = Height + 1;
+
+                AddBoundingBox(new BoundingBox(new Vector2(0, 0), BBWidth, BBHeight));
+            }
         }
+
     }
 }
