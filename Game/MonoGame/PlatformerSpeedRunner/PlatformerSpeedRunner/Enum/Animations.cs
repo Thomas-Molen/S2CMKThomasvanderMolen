@@ -9,8 +9,11 @@ namespace PlatformerSpeedRunner.Enum
         Idle,
         RunningRight,
         RunningLeft,
-        Jumping,
+        JumpingRight,
+        JumpingLeft,
         DoubleJump,
-        Falling,
+        FallingRight,
+        FallingLeft,
+        Death
     }
 }

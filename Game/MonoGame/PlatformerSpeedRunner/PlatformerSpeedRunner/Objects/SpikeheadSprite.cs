@@ -9,8 +9,10 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class SpikeHeadSprite : BaseGameObject
     {
-        private const int BBWidth = 129;
-        private const int BBHeight = 129;
+        private const int BBWidth1 = 75;
+        private const int BBHeight1 = 129;
+        private const int BBWidth2 = 129;
+        private const int BBHeight2 = 75;
         private int minPosY;
         private int maxPosY;
 
@@ -28,7 +30,8 @@ namespace PlatformerSpeedRunner.Objects
 
             yVelocity = movementSpeed;
 
-            AddBoundingBox(new BoundingBox(new Vector2(0, 0), BBWidth, BBHeight));
+            AddBoundingBox(new BoundingBox(new Vector2(30, 0), BBWidth1, BBHeight1));
+            AddBoundingBox(new BoundingBox(new Vector2(0, 30), BBWidth2, BBHeight2));
         }
 
         public void Movement()

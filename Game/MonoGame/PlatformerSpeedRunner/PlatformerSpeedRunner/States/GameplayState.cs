@@ -23,24 +23,26 @@ namespace PlatformerSpeedRunner.States
         private AnimationHelper animationHelper = new AnimationHelper();
 
         private int TimeCharged;
-        //private Vector2 spawnPoint = new Vector2(200, 745); TODO THIS IS THE REAL SPAWNPOINT
-        private Vector2 spawnPoint = new Vector2(2600, 845);
+        //TODO THIS IS THE REAL SPAWNPOINT
+        //private Vector2 spawnPoint = new Vector2(200, 745);
+        private Vector2 spawnPoint = new Vector2(3900, 800);
 
         //textures
-        private const string player = "IdlePinkMan";
-        private const string backgroundTexture = "PinkWallpaper";
+        private const string player = "Player\\Idle\\IdlePinkMan";
+        private const string backgroundTexture = "Backgrounds\\PinkWallpaper";
 
-        private const string woodenBoxLarge = "WoodenBoxLarge";
-        private const string grassLeft = "GrassLeft";
-        private const string grassRight = "GrassRight";
-        private const string grassMiddle = "GrassMiddle";
-        private const string grassSoilLeft = "GrassSoilLeft";
-        private const string grassSoilRight = "GrassSoilRight";
-        private const string grassSoilMiddle = "GrassSoilMiddle";
-        private const string spike = "Spike";
-        private const string stoneCubeLarge = "StoneCubeLarge";
-        private const string stoneSlabVertical = "StoneSlabVertical";
-        private const string stoneSlabHorizontal = "StoneSlabHorizontal";
+        private const string woodenBoxLarge = "Terrain\\WoodenBoxLarge";
+        private const string grassLeft = "Terrain\\GrassLeft";
+        private const string grassRight = "Terrain\\GrassRight";
+        private const string grassMiddle = "Terrain\\GrassMiddle";
+        private const string grassSoilLeft = "Terrain\\GrassSoilLeft";
+        private const string grassSoilRight = "Terrain\\GrassSoilRight";
+        private const string grassSoilMiddle = "Terrain\\GrassSoilMiddle";
+        private const string spike = "Enemies\\Spike";
+        private const string stoneCubeLarge = "Terrain\\StoneCubeLarge";
+        private const string stoneSlabVertical = "Terrain\\StoneSlabVertical";
+        private const string stoneSlabHorizontal = "Terrain\\StoneSlabHorizontal";
+        private const string checkPointTexture = "Terrain\\CheckPoint";
 
         private List<ObjectSprite> TopsCollisionList = new List<ObjectSprite>();
         private List<ObjectSprite> SidesCollisionList = new List<ObjectSprite>();
@@ -48,12 +50,13 @@ namespace PlatformerSpeedRunner.States
         private List<ObjectSprite> DeathCollisionList = new List<ObjectSprite>();
         private List<RockHeadSprite> RockHeadCollisionList = new List<RockHeadSprite>();
         private List<SpikeHeadSprite> SpikeHeadCollisionList = new List<SpikeHeadSprite>();
+        private List<CheckPoint> CheckPointCollisionList = new List<CheckPoint>();
 
         public override void LoadContent()
         {
             playerSprite = new PlayerSprite(LoadTexture(player));
             playerSprite.Position = spawnPoint;
-            chargeCircleSprite = new ChargeCircleSprite(LoadTexture("ChargingCircle1"));
+            chargeCircleSprite = new ChargeCircleSprite(LoadTexture("Player\\Charging\\ChargingCircle1"));
 
             splashImage = new SplashImage(LoadTexture(backgroundTexture));
 
@@ -161,7 +164,16 @@ namespace PlatformerSpeedRunner.States
             AddObject(stoneSlabHorizontal, 3259, 1060);
             AddSpikeHead(2950, 450, 400, 900);
             AddSpikeHead(3200, 700, 400, 900);
+            //post spikes
+            AddObject(stoneCubeLarge, 3450, 980, FullCollisionList);
+            AddObject(stoneCubeLarge, 3578, 980, FullCollisionList);
+            AddObject(stoneSlabVertical, 3706, 920, FullCollisionList);
+            AddObject(stoneCubeLarge, 3770, 920, FullCollisionList);
+            AddObject(stoneCubeLarge, 3898, 920, FullCollisionList);
+            AddObject(stoneCubeLarge, 3770, 1048);
+            AddObject(stoneCubeLarge, 3898, 1048, SidesCollisionList);
 
+            AddCheckPoint(3800, 848);
             AddGameObject(playerSprite);
         }
 
@@ -198,19 +210,19 @@ namespace PlatformerSpeedRunner.States
 
                     if (TimeCharged < 10)
                     {
-                        chargeCircleSprite.ChangeTexture(LoadTexture("ChargingCircle1"));
+                        chargeCircleSprite.ChangeTexture(LoadTexture("Player\\Charging\\ChargingCircle1"));
                     }
                     else if (TimeCharged < 20)
                     {
-                        chargeCircleSprite.ChangeTexture(LoadTexture("ChargingCircle2"));
+                        chargeCircleSprite.ChangeTexture(LoadTexture("Player\\Charging\\ChargingCircle2"));
                     }
                     else if (TimeCharged < 30)
                     {
-                        chargeCircleSprite.ChangeTexture(LoadTexture("ChargingCircle3"));
+                        chargeCircleSprite.ChangeTexture(LoadTexture("Player\\Charging\\ChargingCircle3"));
                     }
                     else if (TimeCharged >= 30)
                     {
-                        chargeCircleSprite.ChangeTexture(LoadTexture("ChargingCircle4"));
+                        chargeCircleSprite.ChangeTexture(LoadTexture("Player\\Charging\\ChargingCircle4"));
                     }
                 }
                 if (cmd is GameplayInputCommand.PlayerLMBRelease)
@@ -262,8 +274,9 @@ namespace PlatformerSpeedRunner.States
                 spikeHead.Movement();
             }
 
-            MouseState mouseState = Mouse.GetState();
-            debugText = Convert.ToInt32(mouseState.X) + "," + Convert.ToInt32(mouseState.Y);
+            //MouseState mouseState = Mouse.GetState();
+            //debugText = Convert.ToInt32(mouseState.X) + "," + Convert.ToInt32(mouseState.Y);
+            debugText = playerSprite.animationState.ToString();
 
             KeepPlayerInBounds();
             DetectCollisions();
@@ -385,7 +398,7 @@ namespace PlatformerSpeedRunner.States
                     Convert.ToInt32(player.Position.X + player.Width) > Object.Position.X &&
                     Convert.ToInt32(player.Position.X) < Object.Position.X + Object.Width)
                 {
-                    Object.ChangeTexture(LoadTexture("RockHeadMad"));
+                    Object.ChangeTexture(LoadTexture("Enemies\\RockHeadMad"));
 
                     player.Position = new Vector2(player.Position.X + Object.xVelocity, Object.Position.Y - player.Height);
                     player.yVelocity = 0;
@@ -421,17 +434,21 @@ namespace PlatformerSpeedRunner.States
                     }
                 }
             });
+
+            var playerCheckPointDetector = new CollisionDetector<CheckPoint, PlayerSprite>(CheckPointCollisionList);
+
+            playerCheckPointDetector.DetectCollisions(playerSprite, (Object, player) =>
+            {
+                if (Object.activated == false)
+                {
+                    Object.ChangeTexture(LoadTexture("Terrain\\CheckPointActivated"));
+                    spawnPoint = new Vector2(Object.Position.X + 45, Object.Position.Y);
+                    Object.activated = true;
+                }
+            });
         }
 
         //creating objects in world
-        private void AddObject(string TextureName, int PosX, int PosY, int BoundingBoxWidth, int BoundingBoxHeight, List<ObjectSprite> CollisionList)
-        {
-            ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName), BoundingBoxWidth, BoundingBoxHeight);
-            CollisionList.Add(Object);
-            AddGameObject(Object);
-            Object.Position = new Vector2(PosX, PosY);
-        }
-
         private void AddObject(string TextureName, int PosX, int PosY, List<ObjectSprite> CollisionList)
         {
             ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName), true);
@@ -457,7 +474,7 @@ namespace PlatformerSpeedRunner.States
 
         private void AddRockHead(int PosX, int PosY, int MinPosX, int MaxPosX)
         {
-            RockHeadSprite rockHead = new RockHeadSprite(LoadTexture("RockHeadIdle"), MinPosX, MaxPosX);
+            RockHeadSprite rockHead = new RockHeadSprite(LoadTexture("Enemies\\RockHeadIdle"), MinPosX, MaxPosX);
             RockHeadCollisionList.Add(rockHead);
             AddGameObject(rockHead);
             rockHead.Position = new Vector2(PosX, PosY);
@@ -465,10 +482,18 @@ namespace PlatformerSpeedRunner.States
 
         private void AddSpikeHead(int PosX, int PosY, int MinPosY, int MaxPosY)
         {
-            SpikeHeadSprite spikeHead = new SpikeHeadSprite(LoadTexture("SpikeHead"), MinPosY, MaxPosY);
+            SpikeHeadSprite spikeHead = new SpikeHeadSprite(LoadTexture("Enemies\\SpikeHead"), MinPosY, MaxPosY);
             SpikeHeadCollisionList.Add(spikeHead);
             AddGameObject(spikeHead);
             spikeHead.Position = new Vector2(PosX, PosY);
+        }
+
+        private void AddCheckPoint(int PosX, int PosY)
+        {
+            CheckPoint checkPoint = new CheckPoint(LoadTexture(checkPointTexture));
+            CheckPointCollisionList.Add(checkPoint);
+            AddGameObject(checkPoint);
+            checkPoint.Position = new Vector2(PosX, PosY);
         }
 
         private void KeepPlayerInBounds()

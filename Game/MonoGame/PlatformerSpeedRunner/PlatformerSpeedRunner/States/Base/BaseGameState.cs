@@ -17,7 +17,7 @@ namespace PlatformerSpeedRunner.States.Base
     {
         public string debugText;
 
-        protected bool debug = true;
+        protected bool debug = false;
 
         public PlayerSprite playerSprite;
 
@@ -42,7 +42,7 @@ namespace PlatformerSpeedRunner.States.Base
 
             baseContentManager = contentManager;
 
-            contentManager.Load<SpriteFont>("GuiFont");
+            contentManager.Load<SpriteFont>("Fonts\\GuiFont");
 
             SetInputManager();
         }

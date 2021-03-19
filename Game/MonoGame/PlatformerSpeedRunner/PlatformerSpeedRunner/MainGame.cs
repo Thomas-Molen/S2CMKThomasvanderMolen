@@ -69,7 +69,7 @@ namespace PlatformerSpeedRunner
             renderTarget = new RenderTarget2D(graphics.GraphicsDevice, designedResolutionWidth, designedResolutionHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.DiscardContents);
             renderScaleRectangle = GetScaleRectangle();
 
-            font = Content.Load<SpriteFont>("GuiFont");
+            font = Content.Load<SpriteFont>("Fonts\\GuiFont");
 
             playerName = GetData("SELECT user_name FROM `users` WHERE user_number = 1", "user_name");
             playerScore = GetData("SELECT score FROM `users` WHERE user_number = 1", "score");

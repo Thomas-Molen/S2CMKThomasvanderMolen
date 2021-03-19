@@ -28,12 +28,22 @@ namespace PlatformerSpeedRunner.Objects
         private Animation RunningRightAnimation;
         private Animation RunningLeftAnimation;
         private Animation FallingRightAnimation;
+        private Animation FallingLeftAnimation;
         private Animation JumpingRightAnimation;
-        private string[] IdleAnimationArray = { "PlayerIdle1", "PlayerIdle2", "PlayerIdle3", "PlayerIdle4", "PlayerIdle5", "PlayerIdle6", "PlayerIdle7", "PlayerIdle8", "PlayerIdle9", "PlayerIdle10", "PlayerIdle11" };
-        private string[] RunningRightAnimationArray = { "PlayerRunningRight1", "PlayerRunningRight2", "PlayerRunningRight3", "PlayerRunningRight4", "PlayerRunningRight5", "PlayerRunningRight6", "PlayerRunningRight7", "PlayerRunningRight8", "PlayerRunningRight9", "PlayerRunningRight10", "PlayerRunningRight11", "PlayerRunningRight12"};
-        private string[] RunningLeftAnimationArray = { "PlayerRunningLeft1", "PlayerRunningLeft2", "PlayerRunningLeft3", "PlayerRunningLeft4", "PlayerRunningLeft5", "PlayerRunningLeft6", "PlayerRunningLeft7", "PlayerRunningLeft8", "PlayerRunningLeft9", "PlayerRunningLeft10", "PlayerRunningLeft11", "PlayerRunningLeft12" };
-        private string[] FallingRightAnimationArray = { "FallingRight" };
-        private string[] JumpingRightAnimationArray = { "JumpingRight" };
+        private Animation JumpingLeftAnimation;
+        private Animation DeathAnimation;
+        private const string idlePrefix = "Player\\Idle\\PlayerIdle";
+        private string[] IdleAnimationArray = { idlePrefix + 1, idlePrefix + 2, idlePrefix+3, idlePrefix+4, idlePrefix + 5, idlePrefix + 6, idlePrefix + 7, idlePrefix + 8, idlePrefix + 9, idlePrefix + 10, idlePrefix + 11 };
+        private const string runningRightPrefix = "Player\\Running\\PlayerRunningRight";
+        private string[] RunningRightAnimationArray = { runningRightPrefix + 1, runningRightPrefix + 2, runningRightPrefix + 3, runningRightPrefix + 4, runningRightPrefix + 5, runningRightPrefix + 6, runningRightPrefix + 7, runningRightPrefix + 8, runningRightPrefix + 9, runningRightPrefix + 10, runningRightPrefix + 11, runningRightPrefix + 12 };
+        private const string runningLeftPrefix = "Player\\Running\\PlayerRunningLeft";
+        private string[] RunningLeftAnimationArray = { runningLeftPrefix + 1, runningLeftPrefix + 2, runningLeftPrefix + 3, runningLeftPrefix + 4, runningLeftPrefix + 5, runningLeftPrefix + 6, runningLeftPrefix + 7, runningLeftPrefix + 8, runningLeftPrefix + 9, runningLeftPrefix + 10, runningLeftPrefix + 11, runningLeftPrefix + 12 };
+        private string[] FallingRightAnimationArray = { "Player\\FallingRight" };
+        private string[] FallingLeftAnimationArray = { "Player\\FallingLeft" };
+        private string[] JumpingRightAnimationArray = { "Player\\JumpingRight" };
+        private string[] JumpingLeftAnimationArray = { "Player\\JumpingLeft" };
+        private const string deathAnimationPrefix = "Player\\Death\\Death";
+        private string[] DeathAnimationArray = { deathAnimationPrefix + 1, deathAnimationPrefix + 2, deathAnimationPrefix + 3, deathAnimationPrefix + 4, deathAnimationPrefix + 5, deathAnimationPrefix + 6 };
 
         public PlayerSprite(Texture2D texture)
         {
@@ -45,7 +55,10 @@ namespace PlatformerSpeedRunner.Objects
             RunningLeftAnimation = new Animation(RunningLeftAnimationArray, 24);
             IdleAnimation = new Animation(IdleAnimationArray, 55);
             FallingRightAnimation = new Animation(FallingRightAnimationArray, 1);
+            FallingLeftAnimation = new Animation(FallingLeftAnimationArray, 1);
             JumpingRightAnimation = new Animation(JumpingRightAnimationArray, 1);
+            JumpingLeftAnimation = new Animation(JumpingLeftAnimationArray, 1);
+            DeathAnimation = new Animation(DeathAnimationArray, 12);
         }
 
         public void PlayerPhysics()
@@ -151,11 +164,14 @@ namespace PlatformerSpeedRunner.Objects
         {
             return animationState switch
             {
+                Animations.Death => DeathAnimation,
                 Animations.Idle => IdleAnimation,
                 Animations.RunningRight => RunningRightAnimation,
                 Animations.RunningLeft => RunningLeftAnimation,
-                Animations.Falling => FallingRightAnimation,
-                Animations.Jumping => JumpingRightAnimation,
+                Animations.FallingRight => FallingRightAnimation,
+                Animations.FallingLeft => FallingLeftAnimation,
+                Animations.JumpingRight => JumpingRightAnimation,
+                Animations.JumpingLeft => JumpingLeftAnimation,
                 _ => IdleAnimation,
             };
         }
@@ -171,17 +187,29 @@ namespace PlatformerSpeedRunner.Objects
             {
                 animationState = Animations.Idle;
             }
-            else if (yVelocity < 0 && animationState != Animations.Jumping)
+            else if (yVelocity < 0 && xVelocity >= 0 &&animationState != Animations.JumpingRight)
             {
-                animationState = Animations.Jumping;
+                animationState = Animations.JumpingRight;
             }
-            else if (yVelocity > 0 && animationState != Animations.Falling)
+            else if (yVelocity < 0 && xVelocity <= 0 && animationState != Animations.JumpingRight)
             {
-                animationState = Animations.Falling;
+                animationState = Animations.JumpingLeft;
+            }
+            else if (yVelocity > 0 && xVelocity >= 0 && animationState != Animations.FallingRight)
+            {
+                animationState = Animations.FallingRight;
+            }
+            else if (yVelocity > 0 && xVelocity <= 0 && animationState != Animations.FallingRight)
+            {
+                animationState = Animations.FallingLeft;
             }
             else if (xVelocity > 0 && yVelocity == 0 && animationState != Animations.RunningRight)
             {
                 animationState = Animations.RunningRight;
+            }
+            else if (xVelocity < 0 && yVelocity == 0 && animationState != Animations.RunningLeft)
+            {
+                animationState = Animations.RunningLeft;
             }
         }
     }
