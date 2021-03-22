@@ -127,3 +127,5 @@ D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\Platf
 D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Player\Death\Death6.xnb
 D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Terrain\CheckPoint.xnb
 D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Terrain\CheckPointActivated.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Terrain\EndFlag.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\ErrorSprite.xnb

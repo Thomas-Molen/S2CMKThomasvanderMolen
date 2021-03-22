@@ -108,7 +108,7 @@ namespace PlatformerSpeedRunner
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //TODO CHANGE THIS TO THE BOOT SCREEN
-            SwitchGameState(new GameplayState());
+            SwitchGameState(new SplashState());
         }
 
         //switch state logic
@@ -156,8 +156,10 @@ namespace PlatformerSpeedRunner
             currentGameState.HandleInput();
 
             currentGameState.Update(gameTime);
+
             camera.Follow(currentGameState.playerSprite);
             UpdateCameraBasedPositions();
+
             base.Update(gameTime);
         }
 
@@ -211,10 +213,13 @@ namespace PlatformerSpeedRunner
 
             currentGameState.Render(spriteBatch);
 
-            spriteBatch.DrawString(font, "player: " + playerName, playerNamePosition, Color.Black);
-            spriteBatch.DrawString(font, "score: " + playerScore, playerScorePosition, Color.Black);
-            spriteBatch.DrawString(font, "player: " + currentGameState.playerSprite.Position.ToString(), debugPlayerPosition, Color.Black);
-            spriteBatch.DrawString(font, "debug: " + currentGameState.debugText, debugTextPosition, Color.Black);
+            if (currentGameState.playerSprite != null)
+            {
+                spriteBatch.DrawString(font, "player: " + playerName, playerNamePosition, Color.Black);
+                spriteBatch.DrawString(font, "score: " + playerScore, playerScorePosition, Color.Black);
+                spriteBatch.DrawString(font, "player: " + currentGameState.playerSprite.Position.ToString(), debugPlayerPosition, Color.Black);
+                spriteBatch.DrawString(font, "debug: " + currentGameState.debugText, debugTextPosition, Color.Black);
+            }
 
             spriteBatch.End();
 

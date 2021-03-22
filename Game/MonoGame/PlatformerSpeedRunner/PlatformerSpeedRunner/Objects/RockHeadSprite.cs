@@ -11,22 +11,22 @@ namespace PlatformerSpeedRunner.Objects
     {
         private const int BBWidth = 129;
         private const int BBHeight = 129;
-        private int minPosX;
-        private int maxPosX;
+        private int minPos;
+        private int maxPos;
 
         private int movementSpeed = 2;
-        public int xVelocity;
+        public int velocity;
 
         Texture2D idleTexture;
 
-        public RockHeadSprite(Texture2D texture, int inputMinPosX, int inputMaxPosX)
+        public RockHeadSprite(Texture2D texture, int inputMinPos, int inputMaxPos)
         {
             baseTexture = texture;
             idleTexture = texture;
-            minPosX = inputMinPosX;
-            maxPosX = inputMaxPosX;
+            minPos = inputMinPos;
+            maxPos = inputMaxPos;
 
-            xVelocity = movementSpeed;
+            velocity = movementSpeed;
 
             AddBoundingBox(new BoundingBox(new Vector2(0, 0), BBWidth, BBHeight));
         }
@@ -38,15 +38,15 @@ namespace PlatformerSpeedRunner.Objects
                 baseTexture = idleTexture;
             }
 
-            if (Position.X >= maxPosX)
+            if (Position.X >= maxPos)
             {
-                xVelocity = -movementSpeed;
+                velocity = -movementSpeed;
             }
-            else if (Position.X <= minPosX)
+            else if (Position.X <= minPos)
             {
-                xVelocity = movementSpeed;
+                velocity = movementSpeed;
             }
-            Position = new Vector2(Position.X + xVelocity, Position.Y);
+            Position = new Vector2(Position.X + velocity, Position.Y);
         }
 
         public void ChangeTexture(Texture2D texture)

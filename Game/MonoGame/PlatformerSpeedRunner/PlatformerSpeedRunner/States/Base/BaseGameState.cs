@@ -23,6 +23,8 @@ namespace PlatformerSpeedRunner.States.Base
 
         public ChargeCircleSprite chargeCircleSprite;
 
+        public ObjectSprite endFlag;
+
         public SplashImage splashImage;
 
         private ContentManager baseContentManager;
@@ -34,6 +36,8 @@ namespace PlatformerSpeedRunner.States.Base
         protected InputManager InputManager { get; set; }
 
         protected abstract void SetInputManager();
+
+        private const string fallBackTexture = "ErrorSprite";
 
         public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight)
         {
@@ -69,8 +73,16 @@ namespace PlatformerSpeedRunner.States.Base
 
         protected Texture2D LoadTexture(string textureName)
         {
-             var texture = baseContentManager.Load<Texture2D>(textureName);
-             return texture;
+            try
+            {
+                var texture = baseContentManager.Load<Texture2D>(textureName);
+                return texture;
+            }
+            catch (Microsoft.Xna.Framework.Content.ContentLoadException)
+            {
+                var texture = baseContentManager.Load<Texture2D>(fallBackTexture);
+                return texture;
+            }
         }
 
         protected void NotifyEvent(Events eventType, object argument = null)
