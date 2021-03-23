@@ -6,6 +6,7 @@ using System;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using PlatformerSpeedRunner.Helper;
+using PlatformerSpeedRunner.Camera;
 
 namespace PlatformerSpeedRunner.Objects
 {
@@ -133,33 +134,21 @@ namespace PlatformerSpeedRunner.Objects
             Position = new Vector2(Position.X, yPosition);
         }
 
-        public void Grapple(int timeCharged)
+        public void Grapple(int timeCharged, CameraHelper camera)
         {
             MouseState mouseState = Mouse.GetState();
 
             float yGrappleDistance = mouseState.Y - Position.Y;
-            float xGrappleDistance;
-            if (Position.X + Width/2 < Program.width / 2 && mouseState.X < Program.width / 2)
-            {
-                xGrappleDistance = mouseState.X - Position.X;
-            }
-            else if (Position.X + Width / 2 < Program.width / 2 && mouseState.X > Program.width / 2)
-            {
-                xGrappleDistance = mouseState.X - Position.X;
-            }
-            else
-            {
-                xGrappleDistance = mouseState.X - Program.width / 2;
-            }
+            
             if (yGrappleDistance < -700)
             {
-                yVelocity += (-700 / 135) * timeCharged / 10;
+                yVelocity += -700 / 135 * timeCharged / 10;
             }
             else
             {
-                yVelocity += (yGrappleDistance / 135) * timeCharged / 10;
+                yVelocity += yGrappleDistance / 135 * timeCharged / 10;
             }
-            xVelocity += (xGrappleDistance / 150) * timeCharged / 10;
+            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (Position.X + (Width / 2))) / 150 * timeCharged / 10;
         }
 
         public Animation GetAnimationState()

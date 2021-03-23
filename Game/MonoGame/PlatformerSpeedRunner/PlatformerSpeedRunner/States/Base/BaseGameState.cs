@@ -10,6 +10,7 @@ using PlatformerSpeedRunner.Objects.Base;
 using PlatformerSpeedRunner.Input.Base;
 using Microsoft.Xna.Framework;
 using PlatformerSpeedRunner.Objects;
+using PlatformerSpeedRunner.Camera;
 
 namespace PlatformerSpeedRunner.States.Base
 {
@@ -27,6 +28,8 @@ namespace PlatformerSpeedRunner.States.Base
 
         public SplashImage splashImage;
 
+        public CameraHelper camera;
+
         private ContentManager baseContentManager;
         protected int baseViewportHeight;
         protected int baseViewportWidth;
@@ -39,8 +42,9 @@ namespace PlatformerSpeedRunner.States.Base
 
         private const string fallBackTexture = "ErrorSprite";
 
-        public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight)
+        public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight, CameraHelper inputCamera)
         {
+            camera = inputCamera;
             baseViewportHeight = viewportHeight;
             baseViewportWidth = viewportWidth;
 
@@ -60,6 +64,7 @@ namespace PlatformerSpeedRunner.States.Base
         public void Update(GameTime gameTime)
         {
             UpdateGameState(gameTime);
+            debugText = camera.transform.Translation.X.ToString();
         }
 
         public abstract void HandleInput();
@@ -85,7 +90,7 @@ namespace PlatformerSpeedRunner.States.Base
             }
         }
 
-        protected void NotifyEvent(Events eventType, object argument = null)
+        protected void NotifyEvent(Events eventType)
         {
             OnEventNotification?.Invoke(this, eventType);
 

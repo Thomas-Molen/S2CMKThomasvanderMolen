@@ -53,10 +53,11 @@ namespace PlatformerSpeedRunner.States
         private readonly List<CheckPoint> CheckPointCollisionList = new List<CheckPoint>();
         private readonly List<ObjectSprite> EndFlagCollisionList = new List<ObjectSprite>();
 
-        private int xGameBorderMin = 22;
+        private int xGameBorderMin = 23;
         private int xGameBorderMax = 5980;
         private int yGameBorderMax = Program.height;
         private int yGameBorderMin = 25;
+
         public override void LoadContent()
         {
             playerSprite = new PlayerSprite(LoadTexture(player));
@@ -263,13 +264,13 @@ namespace PlatformerSpeedRunner.States
                     RemoveGameObject(chargeCircleSprite);
                     if (TimeCharged >= 30)
                     {
-                        playerSprite.Grapple(30);
+                        playerSprite.Grapple(30, camera);
                     }
                     else if (TimeCharged < 10)
                     { }
                     else
                     {
-                        playerSprite.Grapple(TimeCharged);
+                        playerSprite.Grapple(TimeCharged, camera);
                     }
                     TimeCharged = 0;
                 }

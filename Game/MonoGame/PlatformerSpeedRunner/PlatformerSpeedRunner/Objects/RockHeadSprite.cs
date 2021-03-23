@@ -11,13 +11,12 @@ namespace PlatformerSpeedRunner.Objects
     {
         private const int BBWidth = 129;
         private const int BBHeight = 129;
-        private int minPos;
-        private int maxPos;
+        private readonly int minPos;
+        private readonly int maxPos;
 
-        private int movementSpeed = 2;
+        private readonly int movementSpeed = 2;
         public int velocity;
-
-        Texture2D idleTexture;
+        private readonly Texture2D idleTexture;
 
         public RockHeadSprite(Texture2D texture, int inputMinPos, int inputMaxPos)
         {

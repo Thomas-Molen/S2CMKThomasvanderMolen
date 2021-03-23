@@ -22,7 +22,7 @@ namespace PlatformerSpeedRunner
         //components
         private BaseGameState currentGameState;
 
-        private GraphicsDeviceManager graphics;
+        private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
         private SpriteFont font;
@@ -43,9 +43,9 @@ namespace PlatformerSpeedRunner
         private RenderTarget2D renderTarget;
         private Rectangle renderScaleRectangle;
 
-        private int designedResolutionWidth;
-        private int designedResolutionHeight;
-        private float designedResolutionAspectRatio;
+        private readonly int designedResolutionWidth;
+        private readonly int designedResolutionHeight;
+        private readonly float designedResolutionAspectRatio;
 
         public MainGame(int width, int height)
         {
@@ -108,7 +108,7 @@ namespace PlatformerSpeedRunner
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //TODO CHANGE THIS TO THE BOOT SCREEN
-            SwitchGameState(new SplashState());
+            SwitchGameState(new GameplayState());
         }
 
         //switch state logic
@@ -138,7 +138,7 @@ namespace PlatformerSpeedRunner
 
             currentGameState = gameState;
 
-            currentGameState.Initialize(Content, graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height);
+            currentGameState.Initialize(Content, graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height, camera);
 
             currentGameState.LoadContent();
 
@@ -219,6 +219,7 @@ namespace PlatformerSpeedRunner
                 spriteBatch.DrawString(font, "score: " + playerScore, playerScorePosition, Color.Black);
                 spriteBatch.DrawString(font, "player: " + currentGameState.playerSprite.Position.ToString(), debugPlayerPosition, Color.Black);
                 spriteBatch.DrawString(font, "debug: " + currentGameState.debugText, debugTextPosition, Color.Black);
+                //spriteBatch.DrawString(font, "debug: " + camera.transform.Translation.X, debugTextPosition, Color.Black);
             }
 
             spriteBatch.End();
