@@ -19,10 +19,5 @@ namespace PlatformerSpeedRunner.Objects
             baseTexture = texture;
             AddBoundingBox(new BoundingBox(new Vector2(0, 0), BBWidth, BBHeight));
         }
-
-        public void ChangeTexture(Texture2D texture)
-        {
-            baseTexture = texture;
-        }
     }
 }

@@ -156,11 +156,6 @@ namespace PlatformerSpeedRunner.Objects
             };
         }
 
-        public void ChangeTexture(Texture2D texture)
-        {
-            baseTexture = texture;
-        }
-
         private void CheckAnimationState()
         {
             if (xVelocity == 0 && yVelocity == 0 && AnimationState != Animations.Idle)

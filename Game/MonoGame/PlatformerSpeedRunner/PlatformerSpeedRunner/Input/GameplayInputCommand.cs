@@ -5,7 +5,7 @@ using PlatformerSpeedRunner.Input.Base;
 
 namespace PlatformerSpeedRunner.Input
 {
-    public class GameplayInputCommand : BaseInputCommand
+    public class GameplayInputCommand
     {
         public class GameExit : GameplayInputCommand { }
         public class PlayerMoveLeft : GameplayInputCommand { }

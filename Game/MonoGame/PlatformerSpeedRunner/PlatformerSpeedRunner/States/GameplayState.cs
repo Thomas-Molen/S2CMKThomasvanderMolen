@@ -22,7 +22,7 @@ namespace PlatformerSpeedRunner.States
     {
         private PlayerSprite playerSprite;
         private AnimationHelper animationHelper;
-        private ChargeCircleSprite chargeCircleSprite;
+        private ObjectSprite chargeCircleSprite;
         private ObjectSprite endFlag;
 
         private int TimeCharged;
@@ -68,7 +68,7 @@ namespace PlatformerSpeedRunner.States
                 Position = spawnPoint
             };
 
-            chargeCircleSprite = new ChargeCircleSprite(LoadTexture("Player\\Charging\\ChargingCircle1"));
+            chargeCircleSprite = new ObjectSprite(LoadTexture("Player\\Charging\\ChargingCircle1"));
 
             endFlag = new ObjectSprite(LoadTexture("Terrain\\EndFlag"), true);
             EndFlagCollisionList.Add(endFlag);
@@ -510,7 +510,7 @@ namespace PlatformerSpeedRunner.States
 
         private void AddObject(string TextureName, int PosX, int PosY)
         {
-            ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName), false);
+            ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName));
             AddGameObject(Object);
             Object.Position = new Vector2(PosX, PosY);
         }

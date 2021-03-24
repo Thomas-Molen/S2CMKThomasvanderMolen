@@ -5,7 +5,7 @@ using PlatformerSpeedRunner.Input.Base;
 
 namespace PlatformerSpeedRunner.Input
 {
-    public class SplashInputCommand : BaseInputCommand
+    public class SplashInputCommand
     {
         public class GameSelect : SplashInputCommand { }
     }

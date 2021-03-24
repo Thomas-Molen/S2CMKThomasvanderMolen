@@ -47,10 +47,5 @@ namespace PlatformerSpeedRunner.Objects
             }
             Position = new Vector2(Position.X + velocity, Position.Y);
         }
-
-        public void ChangeTexture(Texture2D texture)
-        {
-            baseTexture = texture;
-        }
     }
 }
