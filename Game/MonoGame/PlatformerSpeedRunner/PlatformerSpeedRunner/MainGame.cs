@@ -39,13 +39,8 @@ namespace PlatformerSpeedRunner
         private string playerScore;
         private Vector2 playerScorePosition;
 
-        //set the proper window scaling
-        private RenderTarget2D renderTarget;
-        private Rectangle renderScaleRectangle;
-
         private readonly int designedResolutionWidth;
         private readonly int designedResolutionHeight;
-        private readonly float designedResolutionAspectRatio;
 
         public MainGame(int width, int height)
         {
@@ -55,7 +50,6 @@ namespace PlatformerSpeedRunner
 
             designedResolutionWidth = width;
             designedResolutionHeight = height;
-            designedResolutionAspectRatio = width / (float)height;
         }
 
         protected override void Initialize()
@@ -66,9 +60,6 @@ namespace PlatformerSpeedRunner
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
 
-            renderTarget = new RenderTarget2D(graphics.GraphicsDevice, designedResolutionWidth, designedResolutionHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.DiscardContents);
-            renderScaleRectangle = GetScaleRectangle();
-
             font = Content.Load<SpriteFont>("Fonts\\GuiFont");
 
             playerName = GetData("SELECT user_name FROM `users` WHERE user_number = 1", "user_name");
@@ -77,30 +68,6 @@ namespace PlatformerSpeedRunner
             camera = new CameraHelper();
 
             base.Initialize();
-        }
-
-        //add black bars where neccesary
-        private Rectangle GetScaleRectangle()
-        {
-            var variance = 0.5;
-            var actualAspectRatio = Window.ClientBounds.Width / (float)Window.ClientBounds.Height;
-            Rectangle scaleRectangle;
-            
-            if (actualAspectRatio <= designedResolutionAspectRatio)
-            {
-                var presentHeight = (int)(Window.ClientBounds.Width / designedResolutionAspectRatio + variance);
-                var barHeight = (Window.ClientBounds.Height - presentHeight) / 2;
-
-                scaleRectangle = new Rectangle(0, barHeight, Window.ClientBounds.Width, presentHeight);
-            }
-            else
-            {
-                var presentWidth = (int)(Window.ClientBounds.Height * designedResolutionAspectRatio + variance);
-                var barWidth = (Window.ClientBounds.Width - presentWidth) / 2;
-
-                scaleRectangle = new Rectangle(barWidth, 0, presentWidth, Window.ClientBounds.Height);
-            }
-            return scaleRectangle;
         }
 
         protected override void LoadContent()
@@ -117,7 +84,7 @@ namespace PlatformerSpeedRunner
             SwitchGameState(gameState);
         }
 
-        private void currentGameState_OnEventNotification(object sender, Enum.Events e)
+        private void CurrentGameState_OnEventNotification(object sender, Enum.Events e)
         {
             switch (e)
             {
@@ -132,7 +99,7 @@ namespace PlatformerSpeedRunner
             if (currentGameState != null)
             {
                 currentGameState.OnStateSwitched -= CurrentGameState_OnStateSwitched;
-                currentGameState.OnEventNotification -= currentGameState_OnEventNotification;
+                currentGameState.OnEventNotification -= CurrentGameState_OnEventNotification;
                 currentGameState.UnloadContent();
             }
 
@@ -143,7 +110,7 @@ namespace PlatformerSpeedRunner
             currentGameState.LoadContent();
 
             currentGameState.OnStateSwitched += CurrentGameState_OnStateSwitched;
-            currentGameState.OnEventNotification += currentGameState_OnEventNotification;
+            currentGameState.OnEventNotification += CurrentGameState_OnEventNotification;
         }
 
         protected override void UnloadContent()
@@ -157,7 +124,6 @@ namespace PlatformerSpeedRunner
 
             currentGameState.Update(gameTime);
 
-            camera.Follow(currentGameState.playerSprite);
             UpdateCameraBasedPositions();
 
             base.Update(gameTime);
@@ -183,7 +149,7 @@ namespace PlatformerSpeedRunner
 
         private void UpdateCameraBasedPositions()
         {
-            currentGameState.splashImage.Position = SetCameraBasedVector(0, 0);
+            currentGameState.backgroundImage.Position = SetCameraBasedVector(0, 0);
 
             playerNamePosition = SetCameraBasedVector(0, 0);
             playerScorePosition = SetCameraBasedVector(0, 20);
@@ -196,16 +162,12 @@ namespace PlatformerSpeedRunner
             return new Vector2(
                 -camera.transform.Translation.X + xOffset,
                 -camera.transform.Translation.Y + yOffset);
-
-            //return new Vector2(
-            //    currentGameState.playerSprite.Position.X - Program.width/2 + currentGameState.playerSprite.Width/2 + xOffset,
-            //    currentGameState.playerSprite.Height/2 + yOffset);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             //renders to the target
-            GraphicsDevice.SetRenderTarget(renderTarget);
+            GraphicsDevice.SetRenderTarget(null);
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
@@ -213,25 +175,10 @@ namespace PlatformerSpeedRunner
 
             currentGameState.Render(spriteBatch);
 
-            if (currentGameState.playerSprite != null)
-            {
-                spriteBatch.DrawString(font, "player: " + playerName, playerNamePosition, Color.Black);
-                spriteBatch.DrawString(font, "score: " + playerScore, playerScorePosition, Color.Black);
-                spriteBatch.DrawString(font, "player: " + currentGameState.playerSprite.Position.ToString(), debugPlayerPosition, Color.Black);
-                spriteBatch.DrawString(font, "debug: " + currentGameState.debugText, debugTextPosition, Color.Black);
-                //spriteBatch.DrawString(font, "debug: " + camera.transform.Translation.X, debugTextPosition, Color.Black);
-            }
-
-            spriteBatch.End();
-
-            //render scaled content
-            graphics.GraphicsDevice.SetRenderTarget(null);
-
-            graphics.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
-
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
-
-            spriteBatch.Draw(renderTarget, renderScaleRectangle, Color.White);
+            spriteBatch.DrawString(font, "player: " + playerName, playerNamePosition, Color.Black);
+            spriteBatch.DrawString(font, "score: " + playerScore, playerScorePosition, Color.Black);
+            //    spriteBatch.DrawString(font, "player: " + currentGameState.playerSprite.Position.ToString(), debugPlayerPosition, Color.Black);
+            //    spriteBatch.DrawString(font, "debug: " + currentGameState.debugText, debugTextPosition, Color.Black);
 
             spriteBatch.End();
 

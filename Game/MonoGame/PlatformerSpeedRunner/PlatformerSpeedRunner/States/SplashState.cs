@@ -14,9 +14,9 @@ namespace PlatformerSpeedRunner.States
     {
         public override void LoadContent()
         {
-            splashImage = new SplashImage(LoadTexture("Backgrounds\\splash"));
+            backgroundImage = new BackgroundSprite(LoadTexture("Backgrounds\\splash"));
 
-            AddGameObject(splashImage);
+            AddGameObject(backgroundImage);
         }
 
         public override void HandleInput()

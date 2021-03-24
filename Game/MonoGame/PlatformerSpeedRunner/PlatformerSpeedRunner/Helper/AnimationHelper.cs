@@ -7,9 +7,14 @@ namespace PlatformerSpeedRunner.Helper
 {
     public class AnimationHelper
     {
-        public string RunAnimation(Animation animation)
+        public string GetAnimation (Animation animation)
         {
             return animation.GetAnimationSprite();
+        }
+
+        public Animation CreateAnimation (string[] animationsArray, int animationDuration)
+        {
+            return new Animation(animationsArray, animationDuration);
         }
     }
 }

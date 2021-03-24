@@ -18,19 +18,16 @@ namespace PlatformerSpeedRunner.States.Base
     {
         public string debugText;
 
-        protected bool debug = false;
+        private protected bool debug = false;
 
-        public PlayerSprite playerSprite;
+        
 
-        public ChargeCircleSprite chargeCircleSprite;
-
-        public ObjectSprite endFlag;
-
-        public SplashImage splashImage;
+        public BackgroundSprite backgroundImage;
 
         public CameraHelper camera;
 
         private ContentManager baseContentManager;
+
         protected int baseViewportHeight;
         protected int baseViewportWidth;
 

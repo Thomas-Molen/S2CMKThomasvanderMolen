@@ -13,6 +13,7 @@ namespace PlatformerSpeedRunner.Objects
     public class PlayerSprite : BaseGameObject
     {
         public CameraMode cameraState = CameraMode.Horizontal;
+        private AnimationHelper animationHelper = new AnimationHelper();
 
         public float xVelocity = 0.0f;
         public float yVelocity = 0.0f;
@@ -35,6 +36,7 @@ namespace PlatformerSpeedRunner.Objects
         private readonly Animation JumpingRightAnimation;
         private readonly Animation JumpingLeftAnimation;
         private readonly Animation DeathAnimation;
+
         private const string idlePrefix = "Player\\Idle\\PlayerIdle";
         private readonly string[] IdleAnimationArray = { idlePrefix + 1, idlePrefix + 2, idlePrefix+3, idlePrefix+4, idlePrefix + 5, idlePrefix + 6, idlePrefix + 7, idlePrefix + 8, idlePrefix + 9, idlePrefix + 10, idlePrefix + 11 };
         private const string runningRightPrefix = "Player\\Running\\PlayerRunningRight";
@@ -52,16 +54,16 @@ namespace PlatformerSpeedRunner.Objects
         {
             baseTexture = texture;
             AddBoundingBox(new BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
-            animationState = Animations.Idle;
+            AnimationState = Animations.Idle;
 
-            RunningRightAnimation = new Animation(RunningRightAnimationArray, 24);
-            RunningLeftAnimation = new Animation(RunningLeftAnimationArray, 24);
-            IdleAnimation = new Animation(IdleAnimationArray, 55);
-            FallingRightAnimation = new Animation(FallingRightAnimationArray, 1);
-            FallingLeftAnimation = new Animation(FallingLeftAnimationArray, 1);
-            JumpingRightAnimation = new Animation(JumpingRightAnimationArray, 1);
-            JumpingLeftAnimation = new Animation(JumpingLeftAnimationArray, 1);
-            DeathAnimation = new Animation(DeathAnimationArray, 12);
+            RunningRightAnimation = animationHelper.CreateAnimation(RunningRightAnimationArray, 24);
+            RunningLeftAnimation = animationHelper.CreateAnimation(RunningLeftAnimationArray, 24);
+            IdleAnimation = animationHelper.CreateAnimation(IdleAnimationArray, 55);
+            FallingRightAnimation = animationHelper.CreateAnimation(FallingRightAnimationArray, 1);
+            FallingLeftAnimation = animationHelper.CreateAnimation(FallingLeftAnimationArray, 1);
+            JumpingRightAnimation = animationHelper.CreateAnimation(JumpingRightAnimationArray, 1);
+            JumpingLeftAnimation = animationHelper.CreateAnimation(JumpingLeftAnimationArray, 1);
+            DeathAnimation = animationHelper.CreateAnimation(DeathAnimationArray, 12);
         }
 
         public void PlayerPhysics()
@@ -153,7 +155,7 @@ namespace PlatformerSpeedRunner.Objects
 
         public Animation GetAnimationState()
         {
-            return animationState switch
+            return AnimationState switch
             {
                 Animations.Death => DeathAnimation,
                 Animations.Idle => IdleAnimation,
@@ -167,40 +169,40 @@ namespace PlatformerSpeedRunner.Objects
             };
         }
 
-        public void PlayerAnimation(Texture2D texture)
+        public void ChangeTexture(Texture2D texture)
         {
             baseTexture = texture;
         }
 
         private void CheckAnimationState()
         {
-            if (xVelocity == 0 && yVelocity == 0 && animationState != Animations.Idle)
+            if (xVelocity == 0 && yVelocity == 0 && AnimationState != Animations.Idle)
             {
-                animationState = Animations.Idle;
+                AnimationState = Animations.Idle;
             }
-            else if (yVelocity < 0 && xVelocity >= 0 &&animationState != Animations.JumpingRight)
+            else if (yVelocity < 0 && xVelocity >= 0 &&AnimationState != Animations.JumpingRight)
             {
-                animationState = Animations.JumpingRight;
+                AnimationState = Animations.JumpingRight;
             }
-            else if (yVelocity < 0 && xVelocity <= 0 && animationState != Animations.JumpingRight)
+            else if (yVelocity < 0 && xVelocity <= 0 && AnimationState != Animations.JumpingRight)
             {
-                animationState = Animations.JumpingLeft;
+                AnimationState = Animations.JumpingLeft;
             }
-            else if (yVelocity > 0 && xVelocity >= 0 && animationState != Animations.FallingRight)
+            else if (yVelocity > 0 && xVelocity >= 0 && AnimationState != Animations.FallingRight)
             {
-                animationState = Animations.FallingRight;
+                AnimationState = Animations.FallingRight;
             }
-            else if (yVelocity > 0 && xVelocity <= 0 && animationState != Animations.FallingRight)
+            else if (yVelocity > 0 && xVelocity <= 0 && AnimationState != Animations.FallingRight)
             {
-                animationState = Animations.FallingLeft;
+                AnimationState = Animations.FallingLeft;
             }
-            else if (xVelocity > 0 && yVelocity == 0 && animationState != Animations.RunningRight)
+            else if (xVelocity > 0 && yVelocity == 0 && AnimationState != Animations.RunningRight)
             {
-                animationState = Animations.RunningRight;
+                AnimationState = Animations.RunningRight;
             }
-            else if (xVelocity < 0 && yVelocity == 0 && animationState != Animations.RunningLeft)
+            else if (xVelocity < 0 && yVelocity == 0 && AnimationState != Animations.RunningLeft)
             {
-                animationState = Animations.RunningLeft;
+                AnimationState = Animations.RunningLeft;
             }
         }
     }

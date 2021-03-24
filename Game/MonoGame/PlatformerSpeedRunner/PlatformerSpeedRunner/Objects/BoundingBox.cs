@@ -4,31 +4,31 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class BoundingBox
     {
-        public Vector2 Position { get; set; }
-        public float Width { get; set; }
-        public float Height { get; set; }
+        public Vector2 position { get; set; }
+        public float width { get; set; }
+        public float height { get; set; }
 
-        public Rectangle Rectangle
+        public Rectangle rectangle
         {
             get
             {
-                return new Rectangle((int)Position.X, (int)Position.Y, (int)Width, (int)Height);
+                return new Rectangle((int)position.X, (int)position.Y, (int)width, (int)height);
             }
         }
 
         public BoundingBox(Vector2 position, float width, float height)
         {
-            Position = position;
-            Width = width;
-            Height = height;
+            this.position = position;
+            this.width = width;
+            this.height = height;
         }
 
         public bool CollidesWith(BoundingBox otherBB)
         {
-            if (Position.X < otherBB.Position.X + otherBB.Width &&
-                Position.X + Width > otherBB.Position.X &&
-                Position.Y < otherBB.Position.Y + otherBB.Height &&
-                Position.Y + Height > otherBB.Position.Y)
+            if (position.X < otherBB.position.X + otherBB.width &&
+                position.X + width > otherBB.position.X &&
+                position.Y < otherBB.position.Y + otherBB.height &&
+                position.Y + height > otherBB.position.Y)
             {
                 return true;
             }

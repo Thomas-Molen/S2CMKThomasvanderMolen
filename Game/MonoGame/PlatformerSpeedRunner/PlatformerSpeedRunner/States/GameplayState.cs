@@ -20,7 +20,10 @@ namespace PlatformerSpeedRunner.States
 {
     public class GameplayState : BaseGameState
     {
-        private readonly AnimationHelper animationHelper = new AnimationHelper();
+        private PlayerSprite playerSprite;
+        private AnimationHelper animationHelper;
+        private ChargeCircleSprite chargeCircleSprite;
+        private ObjectSprite endFlag;
 
         private int TimeCharged;
         //TODO THIS IS THE REAL SPAWNPOINT
@@ -29,7 +32,6 @@ namespace PlatformerSpeedRunner.States
 
         //textures
         private const string player = "Player\\Idle\\IdlePinkMan";
-        private const string backgroundTexture = "Backgrounds\\PinkWallpaper";
 
         private const string woodenBoxLarge = "Terrain\\WoodenBoxLarge";
         private const string grassLeft = "Terrain\\GrassLeft";
@@ -60,8 +62,11 @@ namespace PlatformerSpeedRunner.States
 
         public override void LoadContent()
         {
-            playerSprite = new PlayerSprite(LoadTexture(player));
-            playerSprite.Position = spawnPoint;
+            animationHelper = new AnimationHelper();
+            playerSprite = new PlayerSprite(LoadTexture(player))
+            {
+                Position = spawnPoint
+            };
 
             chargeCircleSprite = new ChargeCircleSprite(LoadTexture("Player\\Charging\\ChargingCircle1"));
 
@@ -69,9 +74,9 @@ namespace PlatformerSpeedRunner.States
             EndFlagCollisionList.Add(endFlag);
             endFlag.Position = new Vector2(5720, 950);
 
-            splashImage = new SplashImage(LoadTexture(backgroundTexture));
+            backgroundImage = new BackgroundSprite(LoadTexture("Backgrounds\\PinkWallpaper"));
 
-            AddGameObject(splashImage);
+            AddGameObject(backgroundImage);
 
             //First ground grass
             AddObject(woodenBoxLarge, 475, 705, FullCollisionList);
@@ -302,7 +307,7 @@ namespace PlatformerSpeedRunner.States
             }
 
             playerSprite.PlayerPhysics();
-            playerSprite.PlayerAnimation(LoadTexture(animationHelper.RunAnimation(playerSprite.GetAnimationState())));
+            playerSprite.ChangeTexture(LoadTexture(animationHelper.GetAnimation(playerSprite.GetAnimationState())));
 
             foreach (RockHeadSprite rockHead in RockHeadCollisionList)
             {
@@ -318,6 +323,7 @@ namespace PlatformerSpeedRunner.States
 
             KeepPlayerInBounds();
             DetectCollisions();
+            camera.Follow(playerSprite);
         }
 
         private void DetectCollisions()
@@ -497,14 +503,6 @@ namespace PlatformerSpeedRunner.States
         private void AddObject(string TextureName, int PosX, int PosY, List<ObjectSprite> CollisionList)
         {
             ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName), true);
-            CollisionList.Add(Object);
-            AddGameObject(Object);
-            Object.Position = new Vector2(PosX, PosY);
-        }
-
-        private void AddObject(string TextureName, int PosX, int PosY, int BoundingBoxWidth, int BoundingBoxHeight, int BoundingBoxOffSetX, int BoundingBoxOffSetY, List<ObjectSprite> CollisionList)
-        {
-            ObjectSprite Object = new ObjectSprite(LoadTexture(TextureName), BoundingBoxWidth, BoundingBoxHeight, BoundingBoxOffSetX, BoundingBoxOffSetY);
             CollisionList.Add(Object);
             AddGameObject(Object);
             Object.Position = new Vector2(PosX, PosY);

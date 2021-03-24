@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace PlatformerSpeedRunner.Objects
 {
-    public class SplashImage : BaseGameObject
+    public class BackgroundSprite : BaseGameObject
     {
-        public SplashImage(Texture2D texture)
+        public BackgroundSprite(Texture2D texture)
         {
             baseTexture = texture;
         }

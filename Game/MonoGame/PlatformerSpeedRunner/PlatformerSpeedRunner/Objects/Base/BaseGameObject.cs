@@ -16,14 +16,11 @@ namespace PlatformerSpeedRunner.Objects.Base
         protected List<BoundingBox> boundingBoxes = new List<BoundingBox>();
 
         public int zIndex;
-        public event EventHandler<BaseGameStateEvent> OnObjectChanged;
-
-        public bool Destroyed { get; private set; }
 
         public int Width { get { return baseTexture.Width; } }
         public int Height { get { return baseTexture.Height; } }
 
-        public Enum.Animations animationState { get; set; }
+        public Animations AnimationState { get; set; }
 
         public virtual Vector2 Position
         {
@@ -36,7 +33,7 @@ namespace PlatformerSpeedRunner.Objects.Base
 
                 foreach (var bb in boundingBoxes)
                 {
-                    bb.Position = new Vector2(bb.Position.X + deltaX, bb.Position.Y + deltaY);
+                    bb.position = new Vector2(bb.position.X + deltaX, bb.position.Y + deltaY);
                 }
             }
         }
@@ -65,18 +62,8 @@ namespace PlatformerSpeedRunner.Objects.Base
 
             foreach (var bb in boundingBoxes)
             {
-                spriteBatch.Draw(boundingBoxTexture, bb.Rectangle, Color.Red);
+                spriteBatch.Draw(boundingBoxTexture, bb.rectangle, Color.Red);
             }
-        }
-
-        public void Destroy()
-        {
-            Destroyed = true;
-        }
-
-        public void SendEvent(BaseGameStateEvent e)
-        {
-            OnObjectChanged?.Invoke(this, e);
         }
 
         public void AddBoundingBox(BoundingBox bb)
@@ -88,11 +75,6 @@ namespace PlatformerSpeedRunner.Objects.Base
         {
             boundingBoxTexture = new Texture2D(graphicsDevice, 1, 1);
             boundingBoxTexture.SetData<Color>(new Color[] { Color.White });
-        }
-
-        private void ChangeTexture(Texture2D Texture)
-        {
-            baseTexture = Texture;
         }
     }
 }
