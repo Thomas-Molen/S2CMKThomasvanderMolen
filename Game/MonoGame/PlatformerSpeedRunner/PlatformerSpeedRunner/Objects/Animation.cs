@@ -9,38 +9,44 @@ namespace PlatformerSpeedRunner.Objects
     public class Animation
     {
         private int animationLength;
-        private int animationLocation = 0;
         private int animationLoopDuration;
         private int loopDurationHelper = 0;
-        private string[] animationSprites;
+        private string animationPrefix;
+        private int animationSuffix = 1;
 
-        public Animation(string[] AnimationArray, int AnimationloopDuration)
+        public Animation(string AnimationPrefix, int AnimationLength, int AnimationloopDuration)
         {
-            animationLength = AnimationArray.Length - 1;
-            animationSprites = AnimationArray;
+            animationLength = AnimationLength;
+            animationPrefix = AnimationPrefix;
             animationLoopDuration = AnimationloopDuration;
         }
 
         public string GetAnimationSprite()
         {
-            string result = animationSprites[animationLocation];
-            if (animationLocation == animationLength)
+            if (animationLength == 1)
             {
-                animationLocation = 0;
+                return animationPrefix;
             }
             else
             {
-                if (loopDurationHelper >= animationLoopDuration/animationLength)
+                if (animationSuffix == animationLength)
                 {
-                    animationLocation++;
-                    loopDurationHelper = 0;
+                    animationSuffix = 1;
                 }
                 else
                 {
-                    loopDurationHelper++;
+                    if (loopDurationHelper >= animationLoopDuration / animationLength)
+                    {
+                        animationSuffix++;
+                        loopDurationHelper = 0;
+                    }
+                    else
+                    {
+                        loopDurationHelper++;
+                    }
                 }
             }
-            return result;
+            return animationPrefix + animationSuffix;
         }
     }
 }

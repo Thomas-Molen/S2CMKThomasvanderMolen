@@ -12,9 +12,9 @@ namespace PlatformerSpeedRunner.Helper
             return animation.GetAnimationSprite();
         }
 
-        public Animation CreateAnimation (string[] animationsArray, int animationDuration)
+        public Animation CreateAnimation (string animationPrefix, int animationLength = 1, int animationLoopDuration = 1)
         {
-            return new Animation(animationsArray, animationDuration);
+            return new Animation(animationPrefix, animationLength, animationLoopDuration);
         }
     }
 }

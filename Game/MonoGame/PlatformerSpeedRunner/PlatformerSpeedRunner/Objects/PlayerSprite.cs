@@ -37,33 +37,20 @@ namespace PlatformerSpeedRunner.Objects
         private readonly Animation JumpingLeftAnimation;
         private readonly Animation DeathAnimation;
 
-        private const string idlePrefix = "Player\\Idle\\PlayerIdle";
-        private readonly string[] IdleAnimationArray = { idlePrefix + 1, idlePrefix + 2, idlePrefix+3, idlePrefix+4, idlePrefix + 5, idlePrefix + 6, idlePrefix + 7, idlePrefix + 8, idlePrefix + 9, idlePrefix + 10, idlePrefix + 11 };
-        private const string runningRightPrefix = "Player\\Running\\PlayerRunningRight";
-        private readonly string[] RunningRightAnimationArray = { runningRightPrefix + 1, runningRightPrefix + 2, runningRightPrefix + 3, runningRightPrefix + 4, runningRightPrefix + 5, runningRightPrefix + 6, runningRightPrefix + 7, runningRightPrefix + 8, runningRightPrefix + 9, runningRightPrefix + 10, runningRightPrefix + 11, runningRightPrefix + 12 };
-        private const string runningLeftPrefix = "Player\\Running\\PlayerRunningLeft";
-        private readonly string[] RunningLeftAnimationArray = { runningLeftPrefix + 1, runningLeftPrefix + 2, runningLeftPrefix + 3, runningLeftPrefix + 4, runningLeftPrefix + 5, runningLeftPrefix + 6, runningLeftPrefix + 7, runningLeftPrefix + 8, runningLeftPrefix + 9, runningLeftPrefix + 10, runningLeftPrefix + 11, runningLeftPrefix + 12 };
-        private readonly string[] FallingRightAnimationArray = { "Player\\FallingRight" };
-        private readonly string[] FallingLeftAnimationArray = { "Player\\FallingLeft" };
-        private readonly string[] JumpingRightAnimationArray = { "Player\\JumpingRight" };
-        private readonly string[] JumpingLeftAnimationArray = { "Player\\JumpingLeft" };
-        private const string deathAnimationPrefix = "Player\\Death\\Death";
-        private readonly string[] DeathAnimationArray = { deathAnimationPrefix + 1, deathAnimationPrefix + 2, deathAnimationPrefix + 3, deathAnimationPrefix + 4, deathAnimationPrefix + 5, deathAnimationPrefix + 6 };
-
         public PlayerSprite(Texture2D texture)
         {
             baseTexture = texture;
             AddBoundingBox(new BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
             AnimationState = Animations.Idle;
 
-            RunningRightAnimation = animationHelper.CreateAnimation(RunningRightAnimationArray, 24);
-            RunningLeftAnimation = animationHelper.CreateAnimation(RunningLeftAnimationArray, 24);
-            IdleAnimation = animationHelper.CreateAnimation(IdleAnimationArray, 55);
-            FallingRightAnimation = animationHelper.CreateAnimation(FallingRightAnimationArray, 1);
-            FallingLeftAnimation = animationHelper.CreateAnimation(FallingLeftAnimationArray, 1);
-            JumpingRightAnimation = animationHelper.CreateAnimation(JumpingRightAnimationArray, 1);
-            JumpingLeftAnimation = animationHelper.CreateAnimation(JumpingLeftAnimationArray, 1);
-            DeathAnimation = animationHelper.CreateAnimation(DeathAnimationArray, 12);
+            RunningRightAnimation = animationHelper.CreateAnimation("Player\\Running\\PlayerRunningRight", 12, 24);
+            RunningLeftAnimation = animationHelper.CreateAnimation("Player\\Running\\PlayerRunningLeft", 12, 24);
+            IdleAnimation = animationHelper.CreateAnimation("Player\\Idle\\PlayerIdle", 11, 55);
+            FallingRightAnimation = animationHelper.CreateAnimation("Player\\FallingRight");
+            FallingLeftAnimation = animationHelper.CreateAnimation("Player\\FallingLeft");
+            JumpingRightAnimation = animationHelper.CreateAnimation("Player\\JumpingRight");
+            JumpingLeftAnimation = animationHelper.CreateAnimation("Player\\JumpingLeft");
+            DeathAnimation = animationHelper.CreateAnimation("Player\\Death\\Death", 6, 12);
         }
 
         public void PlayerPhysics()
