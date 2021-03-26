@@ -27,12 +27,10 @@ namespace PlatformerSpeedRunner.States
 
         private int TimeCharged;
         //TODO THIS IS THE REAL SPAWNPOINT
-        //private Vector2 spawnPoint = new Vector2(200, 745);
-        private Vector2 spawnPoint = new Vector2(3900, 800);
+        private Vector2 spawnPoint = new Vector2(200, 745);
+        //private Vector2 spawnPoint = new Vector2(3900, 800);
 
         //textures
-        private const string player = "Player\\Idle\\IdlePinkMan";
-
         private const string woodenBoxLarge = "Terrain\\WoodenBoxLarge";
         private const string grassLeft = "Terrain\\GrassLeft";
         private const string grassRight = "Terrain\\GrassRight";
@@ -63,7 +61,7 @@ namespace PlatformerSpeedRunner.States
         public override void LoadContent()
         {
             animationHelper = new AnimationHelper();
-            playerSprite = new PlayerSprite(LoadTexture(player))
+            playerSprite = new PlayerSprite(LoadTexture("Player\\Idle\\IdlePinkMan"))
             {
                 Position = spawnPoint
             };
@@ -74,145 +72,9 @@ namespace PlatformerSpeedRunner.States
             EndFlagCollisionList.Add(endFlag);
             endFlag.Position = new Vector2(5720, 950);
 
-            backgroundImage = new BackgroundSprite(LoadTexture("Backgrounds\\PinkWallpaper"));
+            backgroundImage = new ObjectSprite(LoadTexture("Backgrounds\\PinkWallpaper"));
 
-            AddGameObject(backgroundImage);
-
-            //First ground grass
-            AddObject(woodenBoxLarge, 475, 705, FullCollisionList);
-            AddObject(grassLeft, 0, 803, TopsCollisionList);
-            AddObject(grassMiddle, 164, 803, TopsCollisionList);
-            AddObject(grassMiddle, 292, 803, TopsCollisionList);
-            AddObject(grassRight, 420, 803, TopsCollisionList);
-            AddObject(grassLeft, 572, 623, FullCollisionList);
-            AddObject(grassRight, 736, 623, FullCollisionList);
-            //spikes
-            AddObject(spike, 889, 861, DeathCollisionList);
-            AddObject(spike, 919, 861, DeathCollisionList);
-            AddObject(spike, 949, 861, DeathCollisionList);
-            AddObject(spike, 979, 861, DeathCollisionList);
-            AddObject(spike, 1009, 861, DeathCollisionList);
-            AddObject(spike, 1039, 861, DeathCollisionList);
-            //Grass under spikes
-            AddObject(grassLeft, 880, 892);
-            AddObject(grassRight, 1044, 892);
-            //First hill soil
-            AddObject(grassSoilLeft, 572, 807);
-            AddObject(grassSoilLeft, 572, 927);
-            AddObject(grassSoilLeft, 572, 1047);
-            AddObject(grassSoilRight, 736, 807, SidesCollisionList);
-            AddObject(grassSoilRight, 736, 927);
-            AddObject(grassSoilRight, 736, 1047);
-            //First ground soil
-            AddObject(grassSoilLeft, 0, 987);
-            AddObject(grassSoilMiddle, 164, 987);
-            AddObject(grassSoilMiddle, 292, 987);
-            AddObject(grassSoilRight, 420, 987);
-            //post spikes hill
-            AddObject(grassLeft, 1071, 536, FullCollisionList);
-            AddObject(grassSoilLeft, 1071, 720, SidesCollisionList);
-            AddObject(grassSoilLeft, 1071, 840);
-            AddObject(grassSoilLeft, 1071, 960);
-            AddObject(grassRight, 1235, 536, FullCollisionList);
-            AddObject(grassSoilRight, 1235, 720, SidesCollisionList);
-            AddObject(grassSoilRight, 1235, 840, SidesCollisionList);
-            AddObject(grassSoilRight, 1235, 960, SidesCollisionList);
-            AddRockHead(1400, 536, 1400, 1800);
-            //cave rock thing ceiling
-            AddObject(stoneCubeLarge, 1973, 27, FullCollisionList);
-            AddObject(stoneCubeLarge, 2101, 27);
-            AddObject(stoneCubeLarge, 2037, 155, FullCollisionList);
-            AddObject(stoneCubeLarge, 2165, 155);
-            AddObject(stoneCubeLarge, 2292, 155);
-            AddObject(stoneCubeLarge, 2229, 27);
-            AddObject(stoneCubeLarge, 2420, 118);
-            AddObject(stoneCubeLarge, 2420, -10);
-            AddObject(stoneSlabVertical, 2357, -37);
-            AddObject(stoneCubeLarge, 2037, 283, FullCollisionList);
-            AddObject(stoneCubeLarge, 2100, 411, FullCollisionList);
-            AddObject(stoneSlabHorizontal, 2228, 411, FullCollisionList);
-            AddObject(stoneCubeLarge, 2165, 283);
-            AddObject(stoneCubeLarge, 2292, 283, SidesCollisionList);
-            AddObject(stoneCubeLarge, 2420, 246, FullCollisionList);
-            AddObject(stoneSlabVertical, 2548, 132, FullCollisionList);
-            AddObject(stoneSlabVertical, 2548, -60);
-            AddObject(stoneSlabVertical, 2612, 55, FullCollisionList);
-            AddObject(stoneSlabVertical, 2612, -137);
-            AddObject(stoneCubeLarge, 2676, 27, TopsCollisionList);
-            AddObject(stoneCubeLarge, 2804, 27, TopsCollisionList);
-            AddObject(stoneCubeLarge, 2932, 27, TopsCollisionList);
-            AddObject(stoneCubeLarge, 2676, 27, TopsCollisionList);
-            AddObject(stoneCubeLarge, 3060, 27, TopsCollisionList);
-            AddObject(stoneCubeLarge, 3188, 27, TopsCollisionList);
-            AddObject(stoneCubeLarge, 3316, 27, TopsCollisionList);
-            AddObject(stoneCubeLarge, 3444, 27, TopsCollisionList);
-            AddObject(stoneCubeLarge, 3572, 27, TopsCollisionList);
-            AddObject(stoneCubeLarge, 3700, 27, TopsCollisionList);
-            //cave rock thing floor
-            AddObject(stoneSlabHorizontal, 2236, 900, FullCollisionList);
-            AddObject(stoneCubeLarge, 2300, 964, SidesCollisionList);
-            AddObject(stoneCubeLarge, 2428, 900, FullCollisionList);
-            AddObject(stoneCubeLarge, 2428, 1028);
-            AddObject(stoneCubeLarge, 2556, 964, FullCollisionList);
-            AddObject(stoneSlabHorizontal, 2684, 1012, FullCollisionList);
-            //cave spikes
-            AddObject(spike, 2876, 1030, DeathCollisionList);
-            AddObject(spike, 2906, 1030, DeathCollisionList);
-            AddObject(spike, 2936, 1030, DeathCollisionList);
-            AddObject(spike, 2966, 1030, DeathCollisionList);
-            AddObject(spike, 2996, 1030, DeathCollisionList);
-            AddObject(spike, 3026, 1030, DeathCollisionList);
-            AddObject(spike, 3056, 1030, DeathCollisionList);
-            AddObject(spike, 3086, 1030, DeathCollisionList);
-            AddObject(spike, 3116, 1030, DeathCollisionList);
-            AddObject(spike, 3146, 1030, DeathCollisionList);
-            AddObject(spike, 3176, 1030, DeathCollisionList);
-            AddObject(spike, 3206, 1030, DeathCollisionList);
-            AddObject(spike, 3236, 1030, DeathCollisionList);
-            AddObject(spike, 3266, 1030, DeathCollisionList);
-            AddObject(spike, 3296, 1030, DeathCollisionList);
-            AddObject(spike, 3326, 1030, DeathCollisionList);
-            AddObject(spike, 3356, 1030, DeathCollisionList);
-            AddObject(spike, 3386, 1030, DeathCollisionList);
-            AddObject(spike, 3416, 1030, DeathCollisionList);
-            AddObject(stoneSlabHorizontal, 2875, 1060);
-            AddObject(stoneSlabHorizontal, 3067, 1060);
-            AddObject(stoneSlabHorizontal, 3259, 1060);
-            AddSpikeHead(2950, 450, 400, 900);
-            AddSpikeHead(3200, 700, 400, 900);
-            //post spikes
-            AddObject(stoneCubeLarge, 3450, 980, FullCollisionList);
-            AddObject(stoneCubeLarge, 3578, 980, FullCollisionList);
-            AddObject(stoneSlabVertical, 3706, 920, FullCollisionList);
-            AddObject(stoneCubeLarge, 3770, 920, FullCollisionList);
-            AddObject(grassLeft, 4020, 1000, TopsCollisionList);
-            AddObject(stoneCubeLarge, 3898, 920, FullCollisionList);
-            AddObject(stoneCubeLarge, 3770, 1048);
-            AddObject(stoneCubeLarge, 3898, 1048);
-            //boss arena
-            AddObject(grassMiddle, 4184, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4312, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4440, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4568, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4696, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4184, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4312, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4440, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4568, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4696, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4824, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 4952, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 5080, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 5208, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 5336, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 5464, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 5592, 1000, TopsCollisionList);
-            AddObject(grassMiddle, 5720, 1000, TopsCollisionList);
-            AddObject(grassRight, 5848, 1000, TopsCollisionList);
-
-            AddCheckPoint(3800, 848);
-            AddGameObject(endFlag);
-            AddGameObject(playerSprite);
+            LoadObjects();
         }
 
         public override void HandleInput()
@@ -570,6 +432,147 @@ namespace PlatformerSpeedRunner.States
         protected override void SetInputManager()
         {
             InputManager = new InputManager(new GameplayInputMapper());
+        }
+
+        private void LoadObjects()
+        {
+            AddGameObject(backgroundImage);
+
+            //First ground grass
+            AddObject(woodenBoxLarge, 475, 705, FullCollisionList);
+            AddObject(grassLeft, 0, 803, TopsCollisionList);
+            AddObject(grassMiddle, 164, 803, TopsCollisionList);
+            AddObject(grassMiddle, 292, 803, TopsCollisionList);
+            AddObject(grassRight, 420, 803, TopsCollisionList);
+            AddObject(grassLeft, 572, 623, FullCollisionList);
+            AddObject(grassRight, 736, 623, FullCollisionList);
+            //spikes
+            AddObject(spike, 889, 861, DeathCollisionList);
+            AddObject(spike, 919, 861, DeathCollisionList);
+            AddObject(spike, 949, 861, DeathCollisionList);
+            AddObject(spike, 979, 861, DeathCollisionList);
+            AddObject(spike, 1009, 861, DeathCollisionList);
+            AddObject(spike, 1039, 861, DeathCollisionList);
+            //Grass under spikes
+            AddObject(grassLeft, 880, 892);
+            AddObject(grassRight, 1044, 892);
+            //First hill soil
+            AddObject(grassSoilLeft, 572, 807);
+            AddObject(grassSoilLeft, 572, 927);
+            AddObject(grassSoilLeft, 572, 1047);
+            AddObject(grassSoilRight, 736, 807, SidesCollisionList);
+            AddObject(grassSoilRight, 736, 927);
+            AddObject(grassSoilRight, 736, 1047);
+            //First ground soil
+            AddObject(grassSoilLeft, 0, 987);
+            AddObject(grassSoilMiddle, 164, 987);
+            AddObject(grassSoilMiddle, 292, 987);
+            AddObject(grassSoilRight, 420, 987);
+            //post spikes hill
+            AddObject(grassLeft, 1071, 536, FullCollisionList);
+            AddObject(grassSoilLeft, 1071, 720, SidesCollisionList);
+            AddObject(grassSoilLeft, 1071, 840);
+            AddObject(grassSoilLeft, 1071, 960);
+            AddObject(grassRight, 1235, 536, FullCollisionList);
+            AddObject(grassSoilRight, 1235, 720, SidesCollisionList);
+            AddObject(grassSoilRight, 1235, 840, SidesCollisionList);
+            AddObject(grassSoilRight, 1235, 960, SidesCollisionList);
+            AddRockHead(1400, 536, 1400, 1800);
+            //cave rock thing ceiling
+            AddObject(stoneCubeLarge, 1973, 27, FullCollisionList);
+            AddObject(stoneCubeLarge, 2101, 27);
+            AddObject(stoneCubeLarge, 2037, 155, FullCollisionList);
+            AddObject(stoneCubeLarge, 2165, 155);
+            AddObject(stoneCubeLarge, 2292, 155);
+            AddObject(stoneCubeLarge, 2229, 27);
+            AddObject(stoneCubeLarge, 2420, 118);
+            AddObject(stoneCubeLarge, 2420, -10);
+            AddObject(stoneSlabVertical, 2357, -37);
+            AddObject(stoneCubeLarge, 2037, 283, FullCollisionList);
+            AddObject(stoneCubeLarge, 2100, 411, FullCollisionList);
+            AddObject(stoneSlabHorizontal, 2228, 411, FullCollisionList);
+            AddObject(stoneCubeLarge, 2165, 283);
+            AddObject(stoneCubeLarge, 2292, 283, SidesCollisionList);
+            AddObject(stoneCubeLarge, 2420, 246, FullCollisionList);
+            AddObject(stoneSlabVertical, 2548, 132, FullCollisionList);
+            AddObject(stoneSlabVertical, 2548, -60);
+            AddObject(stoneSlabVertical, 2612, 55, FullCollisionList);
+            AddObject(stoneSlabVertical, 2612, -137);
+            AddObject(stoneCubeLarge, 2676, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 2804, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 2932, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 2676, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3060, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3188, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3316, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3444, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3572, 27, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3700, 27, TopsCollisionList);
+            //cave rock thing floor
+            AddObject(stoneSlabHorizontal, 2236, 900, FullCollisionList);
+            AddObject(stoneCubeLarge, 2300, 964, SidesCollisionList);
+            AddObject(stoneCubeLarge, 2428, 900, FullCollisionList);
+            AddObject(stoneCubeLarge, 2428, 1028);
+            AddObject(stoneCubeLarge, 2556, 964, FullCollisionList);
+            AddObject(stoneSlabHorizontal, 2684, 1012, FullCollisionList);
+            //cave spikes
+            AddObject(spike, 2876, 1030, DeathCollisionList);
+            AddObject(spike, 2906, 1030, DeathCollisionList);
+            AddObject(spike, 2936, 1030, DeathCollisionList);
+            AddObject(spike, 2966, 1030, DeathCollisionList);
+            AddObject(spike, 2996, 1030, DeathCollisionList);
+            AddObject(spike, 3026, 1030, DeathCollisionList);
+            AddObject(spike, 3056, 1030, DeathCollisionList);
+            AddObject(spike, 3086, 1030, DeathCollisionList);
+            AddObject(spike, 3116, 1030, DeathCollisionList);
+            AddObject(spike, 3146, 1030, DeathCollisionList);
+            AddObject(spike, 3176, 1030, DeathCollisionList);
+            AddObject(spike, 3206, 1030, DeathCollisionList);
+            AddObject(spike, 3236, 1030, DeathCollisionList);
+            AddObject(spike, 3266, 1030, DeathCollisionList);
+            AddObject(spike, 3296, 1030, DeathCollisionList);
+            AddObject(spike, 3326, 1030, DeathCollisionList);
+            AddObject(spike, 3356, 1030, DeathCollisionList);
+            AddObject(spike, 3386, 1030, DeathCollisionList);
+            AddObject(spike, 3416, 1030, DeathCollisionList);
+            AddObject(stoneSlabHorizontal, 2875, 1060);
+            AddObject(stoneSlabHorizontal, 3067, 1060);
+            AddObject(stoneSlabHorizontal, 3259, 1060);
+            AddSpikeHead(2950, 450, 400, 900);
+            AddSpikeHead(3200, 700, 400, 900);
+            //post spikes
+            AddObject(stoneCubeLarge, 3450, 980, FullCollisionList);
+            AddObject(stoneCubeLarge, 3578, 980, FullCollisionList);
+            AddObject(stoneSlabVertical, 3706, 920, FullCollisionList);
+            AddObject(stoneCubeLarge, 3770, 920, FullCollisionList);
+            AddObject(grassLeft, 4020, 1000, TopsCollisionList);
+            AddObject(stoneCubeLarge, 3898, 920, FullCollisionList);
+            AddObject(stoneCubeLarge, 3770, 1048);
+            AddObject(stoneCubeLarge, 3898, 1048);
+            //boss arena
+            AddObject(grassMiddle, 4184, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4312, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4440, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4568, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4696, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4184, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4312, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4440, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4568, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4696, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4824, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 4952, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 5080, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 5208, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 5336, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 5464, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 5592, 1000, TopsCollisionList);
+            AddObject(grassMiddle, 5720, 1000, TopsCollisionList);
+            AddObject(grassRight, 5848, 1000, TopsCollisionList);
+
+            AddCheckPoint(3800, 848);
+            AddGameObject(endFlag);
+            AddGameObject(playerSprite);
         }
     }
 }

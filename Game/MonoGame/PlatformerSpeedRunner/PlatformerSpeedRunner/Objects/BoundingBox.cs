@@ -5,8 +5,8 @@ namespace PlatformerSpeedRunner.Objects
     public class BoundingBox
     {
         public Vector2 position { get; set; }
-        public float width { get; set; }
-        public float height { get; set; }
+        private float width { get; set; }
+        private float height { get; set; }
 
         public Rectangle rectangle
         {

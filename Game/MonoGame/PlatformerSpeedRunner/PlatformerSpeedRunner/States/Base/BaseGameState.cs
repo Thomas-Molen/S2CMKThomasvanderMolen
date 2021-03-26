@@ -22,7 +22,7 @@ namespace PlatformerSpeedRunner.States.Base
 
         
 
-        public BackgroundSprite backgroundImage;
+        public ObjectSprite backgroundImage;
 
         public CameraHelper camera;
 

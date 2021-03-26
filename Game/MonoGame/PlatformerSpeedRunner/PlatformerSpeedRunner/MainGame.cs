@@ -10,6 +10,7 @@ using PlatformerSpeedRunner.States;
 using PlatformerSpeedRunner.States.Base;
 using PlatformerSpeedRunner.Camera;
 using System.Data;
+using System;
 
 namespace PlatformerSpeedRunner
 {
@@ -178,7 +179,8 @@ namespace PlatformerSpeedRunner
             spriteBatch.DrawString(font, "player: " + playerName, playerNamePosition, Color.Black);
             spriteBatch.DrawString(font, "score: " + playerScore, playerScorePosition, Color.Black);
             //    spriteBatch.DrawString(font, "player: " + currentGameState.playerSprite.Position.ToString(), debugPlayerPosition, Color.Black);
-            //    spriteBatch.DrawString(font, "debug: " + currentGameState.debugText, debugTextPosition, Color.Black);
+            //spriteBatch.DrawString(font, "debug: " + currentGameState.debugText, debugTextPosition, Color.Black);
+            //spriteBatch.DrawString(gameTime.TotalGameTime.ToString(), debugTextPosition, Color.Black);
 
             spriteBatch.End();
 

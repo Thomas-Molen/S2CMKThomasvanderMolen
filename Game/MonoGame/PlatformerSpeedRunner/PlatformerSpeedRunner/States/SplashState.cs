@@ -14,7 +14,7 @@ namespace PlatformerSpeedRunner.States
     {
         public override void LoadContent()
         {
-            backgroundImage = new BackgroundSprite(LoadTexture("Backgrounds\\splash"));
+            backgroundImage = new ObjectSprite(LoadTexture("Backgrounds\\splash"));
 
             AddGameObject(backgroundImage);
         }
