@@ -15,8 +15,6 @@ namespace PlatformerSpeedRunner.Objects.Base
         protected Vector2 basePosition = Vector2.One;
         protected List<BoundingBox> boundingBoxes = new List<BoundingBox>();
 
-        public int zIndex;
-
         public int Width { get { return baseTexture.Width; } }
         public int Height { get { return baseTexture.Height; } }
 

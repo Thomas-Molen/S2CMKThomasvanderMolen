@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Workshops\\Race\\RaceWorkshop2\\RaceWorkshop2\\RaceWorkshop2.csproj": {}
+    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint2\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\CircusTrein(v1).csproj": {}
   },
   "projects": {
-    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Workshops\\Race\\RaceWorkshop2\\RaceWorkshop2\\RaceWorkshop2.csproj": {
+    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint2\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\CircusTrein(v1).csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Workshops\\Race\\RaceWorkshop2\\RaceWorkshop2\\RaceWorkshop2.csproj",
-        "projectName": "RaceWorkshop2",
-        "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Workshops\\Race\\RaceWorkshop2\\RaceWorkshop2\\RaceWorkshop2.csproj",
+        "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint2\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\CircusTrein(v1).csproj",
+        "projectName": "CircusTrein(v1)",
+        "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint2\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\CircusTrein(v1).csproj",
         "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Workshops\\Race\\RaceWorkshop2\\RaceWorkshop2\\obj\\",
+        "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint2\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",

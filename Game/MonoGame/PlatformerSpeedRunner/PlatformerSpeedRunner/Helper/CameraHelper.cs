@@ -73,5 +73,10 @@ namespace PlatformerSpeedRunner.Camera
 
             transform = position * offset;
         }
+
+        public Vector2 GetCameraBasedPosition(Vector2 BasePosition)
+        {
+            return new Vector2(-transform.Translation.X + BasePosition.X, -transform.Translation.Y + BasePosition.Y);
+        }
     }
 }

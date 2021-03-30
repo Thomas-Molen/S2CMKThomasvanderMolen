@@ -24,6 +24,12 @@ namespace PlatformerSpeedRunner.States
         private AnimationHelper animationHelper;
         private ObjectSprite chargeCircleSprite;
         private ObjectSprite endFlag;
+        private TimeSpan startingTime;
+        private TimeSpan elapsedTime;
+        private TimeSpan checkPointTime = new TimeSpan(0);
+        private GameTime localGameTime;
+        private TextObject timerText;
+        private TextObject debugText;
 
         private int TimeCharged;
         //TODO THIS IS THE REAL SPAWNPOINT
@@ -73,6 +79,8 @@ namespace PlatformerSpeedRunner.States
             endFlag.Position = new Vector2(5720, 950);
 
             backgroundImage = new ObjectSprite(LoadTexture("Backgrounds\\PinkWallpaper"));
+
+            localGameTime = new GameTime();
 
             LoadObjects();
         }
@@ -162,6 +170,17 @@ namespace PlatformerSpeedRunner.States
 
         public override void UpdateGameState(GameTime gameTime)
         {
+            if (localGameTime.ElapsedGameTime == new TimeSpan(0))
+            {
+                startingTime = gameTime.TotalGameTime;
+                localGameTime = gameTime;
+            }
+            else
+            {
+                localGameTime = gameTime;
+            }
+            elapsedTime = gameTime.TotalGameTime - startingTime;
+
             if (playerSprite.Position.X >= 5000)
             {
                 playerSprite.cameraState = CameraMode.None;
@@ -181,14 +200,24 @@ namespace PlatformerSpeedRunner.States
             }
 
             MouseState mouseState = Mouse.GetState();
-            debugText = Convert.ToInt32(mouseState.X) + "," + Convert.ToInt32(mouseState.Y);
 
             KeepPlayerInBounds();
-            DetectCollisions();
+            DetectCollisions(gameTime);
             camera.Follow(playerSprite);
+            UpdateCameraBasedObjects(gameTime);
         }
 
-        private void DetectCollisions()
+        private void UpdateCameraBasedObjects(GameTime gameTime)
+        {
+            backgroundImage.Position = camera.GetCameraBasedPosition(new Vector2(0, 0));
+            timerText.Position = camera.GetCameraBasedPosition(timerText.originalPosition);
+            timerText.content = elapsedTime.ToString();
+
+            debugText.Position = camera.GetCameraBasedPosition(debugText.originalPosition);
+            debugText.content = checkPointTime.ToString();
+        }
+
+        private void DetectCollisions(GameTime gameTime)
         {
             var playerFullDetector = new CollisionDetector<ObjectSprite, PlayerSprite>(FullCollisionList);
 
@@ -348,8 +377,9 @@ namespace PlatformerSpeedRunner.States
                 if (Object.activated == false)
                 {
                     Object.ChangeTexture(LoadTexture("Terrain\\CheckPointActivated"));
-                    spawnPoint = new Vector2(Object.Position.X + 45, Object.Position.Y);
+                    spawnPoint = new Vector2(Object.Position.X, Object.Position.Y + (Object.Height - player.Height));
                     Object.activated = true;
+                    checkPointTime = elapsedTime;
                 }
             });
 
@@ -357,7 +387,7 @@ namespace PlatformerSpeedRunner.States
 
             playerEndFlagDetector.DetectCollisions(playerSprite, (Object, player) =>
             {
-                NotifyEvent(Events.GAME_QUIT);
+                SwitchState(new SplashState());
             });
         }
 
@@ -401,6 +431,13 @@ namespace PlatformerSpeedRunner.States
             checkPoint.Position = new Vector2(PosX, PosY);
         }
 
+        private TextObject AddText(string content, int PosX, int PosY)
+        {
+            TextObject textObject = new TextObject(content, new Vector2(PosX, PosY));
+            AddTextObject(textObject);
+            return textObject;
+        }
+
         private void KeepPlayerInBounds()
         {
             if (playerSprite.Position.X < xGameBorderMin)
@@ -427,6 +464,8 @@ namespace PlatformerSpeedRunner.States
             playerSprite.xVelocity = 0;
             playerSprite.yVelocity = 0;
             playerSprite.Position = spawnPoint;
+            startingTime += elapsedTime;
+            startingTime += -checkPointTime;
         }
 
         protected override void SetInputManager()
@@ -437,6 +476,10 @@ namespace PlatformerSpeedRunner.States
         private void LoadObjects()
         {
             AddGameObject(backgroundImage);
+            //GUI
+            timerText = AddText("Timer", 0, 20);
+            debugText = AddText("Debugging", 0, 40);
+
 
             //First ground grass
             AddObject(woodenBoxLarge, 475, 705, FullCollisionList);

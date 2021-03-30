@@ -16,11 +16,7 @@ namespace PlatformerSpeedRunner.States.Base
 {
     public abstract class BaseGameState
     {
-        public string debugText;
-
         private protected bool debug = false;
-
-        
 
         public ObjectSprite backgroundImage;
 
@@ -28,10 +24,13 @@ namespace PlatformerSpeedRunner.States.Base
 
         private ContentManager baseContentManager;
 
+        private SpriteFont font;
+
         protected int baseViewportHeight;
         protected int baseViewportWidth;
 
         private readonly List<BaseGameObject> gameObjects = new List<BaseGameObject>();
+        private readonly List<TextObject> textObjects = new List<TextObject>();
 
         protected InputManager InputManager { get; set; }
 
@@ -47,7 +46,7 @@ namespace PlatformerSpeedRunner.States.Base
 
             baseContentManager = contentManager;
 
-            contentManager.Load<SpriteFont>("Fonts\\GuiFont");
+            font = baseContentManager.Load<SpriteFont>("Fonts\\GuiFont");
 
             SetInputManager();
         }
@@ -61,7 +60,6 @@ namespace PlatformerSpeedRunner.States.Base
         public void Update(GameTime gameTime)
         {
             UpdateGameState(gameTime);
-            debugText = camera.transform.Translation.X.ToString();
         }
 
         public abstract void HandleInput();
@@ -112,16 +110,33 @@ namespace PlatformerSpeedRunner.States.Base
             gameObjects.Remove(gameObject);
         }
 
+        protected void AddTextObject(TextObject textObject)
+        {
+            textObjects.Add(textObject);
+        }
+
+        protected void RemoveTextObject(TextObject textObject)
+        {
+            textObjects.Remove(textObject);
+        }
+
         public void Render(SpriteBatch spriteBatch)
         {
-            foreach (var gameObject in gameObjects.OrderBy(a => a.zIndex))
+            foreach (var gameObject in gameObjects)
             {
-                //gameObject.Render(spriteBatch);
                 if (debug)
                 {
                     gameObject.RenderBoundingBoxes(spriteBatch);
                 }
                 gameObject.Render(spriteBatch);
+            }
+        }
+
+        public void RenderText(SpriteBatch spriteBatch)
+        {
+            foreach (var textObject in textObjects)
+            {
+                textObject.Render(spriteBatch, font);
             }
         }
     }
