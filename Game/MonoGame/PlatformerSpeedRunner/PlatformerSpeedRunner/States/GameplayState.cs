@@ -21,10 +21,10 @@ namespace PlatformerSpeedRunner.States
 {
     public class GameplayState : BaseGameState
     {
-        private CollisionHelper collisionHelper;
-        private Player playerSprite;
-        private AnimationHelper animationHelper;
-        private BasicObject chargeCircleSprite;
+        private Player player;
+        private CollisionHelper Collision;
+        private AnimationHelper Animation;
+        private BasicObject chargeCircle;
         private BasicObject endFlag;
         private TimeSpan startingTime;
         private TimeSpan elapsedTime;
@@ -71,11 +71,13 @@ namespace PlatformerSpeedRunner.States
 
         public override void LoadContent()
         {
-            collisionHelper = new CollisionHelper();
-            animationHelper = new AnimationHelper();
-            playerSprite = new Player(LoadTexture("Player\\Idle\\IdlePinkMan"));
+            currentState = GameState.Gameplay;
 
-            chargeCircleSprite = new BasicObject(LoadTexture("Player\\Charging\\ChargingCircle1"), new Vector2(0, 0));
+            Collision = new CollisionHelper();
+            Animation = new AnimationHelper();
+            player = new Player(LoadTexture("Player\\Idle\\IdlePinkMan"));
+
+            chargeCircle = new BasicObject(LoadTexture("Player\\Charging\\ChargingCircle1"), new Vector2(0, 0));
 
             endFlag = new BasicObject(LoadTexture("Terrain\\EndFlag"), new Vector2(5720, 950), true);
             EndFlagCollisionList.Add(endFlag);
@@ -91,55 +93,59 @@ namespace PlatformerSpeedRunner.States
         {
             InputManager.GetCommands(cmd =>
             {
+                if (cmd is GameplayInputCommand.Exit)
+                {
+                    Environment.Exit(1);
+                }
                 if (cmd is GameplayInputCommand.PlayerMoveLeft)
                 {
-                    playerSprite.MoveLeft();
+                    player.Movement.MoveLeft();
                 }
                 if (cmd is GameplayInputCommand.PlayerMoveRight)
                 {
-                    playerSprite.MoveRight();
+                    player.Movement.MoveRight();
                 }
                 if (cmd is GameplayInputCommand.PlayerMoveNone)
                 {
-                    playerSprite.NoDirection();
+                    player.Movement.NoDirection();
                 }
                 if (cmd is GameplayInputCommand.PlayerLMBHold)
                 {
-                    AddGameObject(chargeCircleSprite);
+                    AddGameObject(chargeCircle);
                     TimeCharged += 1;
 
-                    chargeCircleSprite.Position.SetPosition(new Vector2(playerSprite.Position.position.X, playerSprite.Position.position.Y - 10));
+                    chargeCircle.Position.SetPosition(new Vector2(player.Position.position.X, player.Position.position.Y - 10));
 
                     if (TimeCharged < 10)
                     {
-                        chargeCircleSprite.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle1"));
+                        chargeCircle.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle1"));
                     }
                     else if (TimeCharged < 20)
                     {
-                        chargeCircleSprite.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle2"));
+                        chargeCircle.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle2"));
                     }
                     else if (TimeCharged < 30)
                     {
-                        chargeCircleSprite.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle3"));
+                        chargeCircle.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle3"));
                     }
                     else if (TimeCharged >= 30)
                     {
-                        chargeCircleSprite.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle4"));
+                        chargeCircle.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle4"));
                     }
                 }
                 if (cmd is GameplayInputCommand.PlayerLMBRelease)
                 {
-                    chargeCircleSprite.Position.SetPosition(new Vector2(chargeCircleSprite.Position.position.X, chargeCircleSprite.Position.position.X + 2000));
-                    RemoveGameObject(chargeCircleSprite);
+                    chargeCircle.Position.SetPosition(new Vector2(chargeCircle.Position.position.X, chargeCircle.Position.position.X + 2000));
+                    RemoveGameObject(chargeCircle);
                     if (TimeCharged >= 30)
                     {
-                        playerSprite.Grapple(30, camera);
+                        player.Grapple(30, camera);
                     }
                     else if (TimeCharged < 10)
                     { }
                     else
                     {
-                        playerSprite.Grapple(TimeCharged, camera);
+                        player.Grapple(TimeCharged, camera);
                     }
                     TimeCharged = 0;
                 }
@@ -156,7 +162,7 @@ namespace PlatformerSpeedRunner.States
 
                 if (cmd is GameplayInputCommand.PlayerMoveUp)
                 {
-                    playerSprite.yVelocity = -10;
+                    player.Movement.yVelocity = -10;
                 }
             });
         }
@@ -174,14 +180,14 @@ namespace PlatformerSpeedRunner.States
             }
             elapsedTime = gameTime.TotalGameTime - startingTime;
 
-            if (playerSprite.Position.position.X >= 5000)
+            if (player.Position.position.X >= 5000)
             {
-                playerSprite.cameraState = CameraMode.None;
+                player.cameraState = CameraMode.None;
                 xGameBorderMin = 4050;
             }
 
-            playerSprite.PlayerPhysics();
-            playerSprite.Texture.SetTexture(LoadTexture(animationHelper.GetAnimation(playerSprite.GetAnimationState())));
+            player.PlayerUpdate();
+            player.Texture.SetTexture(LoadTexture(Animation.GetAnimation(player.GetAnimationState())));
 
             foreach (MovingRockHead rockHead in RockHeadCollisionList)
             {
@@ -196,7 +202,7 @@ namespace PlatformerSpeedRunner.States
 
             KeepPlayerInBounds();
             HandleCollisions();
-            camera.Follow(playerSprite);
+            camera.Follow(player);
             UpdateCameraBasedObjects(gameTime);
         }
 
@@ -212,30 +218,30 @@ namespace PlatformerSpeedRunner.States
 
         private void HandleCollisions()
         {
-            collisionHelper.PlayerFullDetector(playerSprite, FullCollisionList);
-            collisionHelper.PlayerTopDetector(playerSprite, TopsCollisionList);
-            collisionHelper.PlayerSideDetector(playerSprite, SidesCollisionList);
-            var returnRockHead = collisionHelper.PlayerRockHeadDetector(playerSprite, RockHeadCollisionList);
+            Collision.PlayerFullDetector(player, FullCollisionList);
+            Collision.PlayerTopDetector(player, TopsCollisionList);
+            Collision.PlayerSideDetector(player, SidesCollisionList);
+            var returnRockHead = Collision.PlayerRockHeadDetector(player, RockHeadCollisionList);
             if (returnRockHead != null)
             {
                 returnRockHead.Texture.SetTexture(LoadTexture("Enemies\\RockHeadMad"));
             }
-            if (collisionHelper.PlayerSpikeHeadDetector(playerSprite, SpikeHeadCollisionList))
+            if (Collision.PlayerSpikeHeadDetector(player, SpikeHeadCollisionList))
             {
                 RespawnPlayer();
             }
-            if (collisionHelper.PlayerDeathDetector(playerSprite, DeathCollisionList))
+            if (Collision.PlayerDeathDetector(player, DeathCollisionList))
             {
                 RespawnPlayer();
             }
-            var returnCheckPoint = collisionHelper.PlayerCheckPointDetector(playerSprite, CheckPointCollisionList);
+            var returnCheckPoint = Collision.PlayerCheckPointDetector(player, CheckPointCollisionList);
             if (returnCheckPoint != null)
             {
                 CheckPointActivation(returnCheckPoint);
             }
-            if (collisionHelper.PlayerEndFlagDetector(playerSprite, EndFlagCollisionList))
+            if (Collision.PlayerEndFlagDetector(player, EndFlagCollisionList))
             {
-                SwitchState(new SplashState());
+                SwitchState(new MenuState());
             }
         }
 
@@ -288,20 +294,20 @@ namespace PlatformerSpeedRunner.States
 
         private void KeepPlayerInBounds()
         {
-            if (playerSprite.Position.position.X < xGameBorderMin)
+            if (player.Position.position.X < xGameBorderMin)
             {
-                playerSprite.Position.SetPosition(new Vector2(xGameBorderMin, playerSprite.Position.position.Y));
+                player.Position.SetPosition(new Vector2(xGameBorderMin, player.Position.position.Y));
             }
-            if (playerSprite.Position.position.X + playerSprite.Texture.Width > xGameBorderMax)
+            if (player.Position.position.X + player.Texture.Width > xGameBorderMax)
             {
-                playerSprite.Position.SetPosition(new Vector2(xGameBorderMax - playerSprite.Texture.Width, playerSprite.Position.position.Y));
+                player.Position.SetPosition(new Vector2(xGameBorderMax - player.Texture.Width, player.Position.position.Y));
             }
-            if (playerSprite.Position.position.Y < yGameBorderMin)
+            if (player.Position.position.Y < yGameBorderMin)
             {
-                playerSprite.Position.SetPosition(new Vector2(playerSprite.Position.position.X, yGameBorderMin));
-                playerSprite.yVelocity /= 2;
+                player.Position.SetPosition(new Vector2(player.Position.position.X, yGameBorderMin));
+                player.Movement.yVelocity /= 2;
             }
-            if (playerSprite.Position.position.Y > yGameBorderMax)
+            if (player.Position.position.Y > yGameBorderMax)
             {
                 RespawnPlayer();
             }
@@ -309,9 +315,8 @@ namespace PlatformerSpeedRunner.States
 
         private void RespawnPlayer()
         {
-            playerSprite.xVelocity = 0;
-            playerSprite.yVelocity = 0;
-            playerSprite.Position.SetPosition(spawnPoint);
+            player.Movement.ResetVelocity();
+            player.Position.SetPosition(spawnPoint);
             startingTime += elapsedTime;
             startingTime += -checkPointTime;
         }
@@ -319,7 +324,7 @@ namespace PlatformerSpeedRunner.States
         private void CheckPointActivation(CheckPoint checkPoint)
         {
             checkPoint.Texture.SetTexture(LoadTexture("Terrain\\CheckPointActivated"));
-            spawnPoint = new Vector2(checkPoint.Position.position.X, checkPoint.Position.position.Y + (checkPoint.Texture.Height - playerSprite.Texture.Height));
+            spawnPoint = new Vector2(checkPoint.Position.position.X, checkPoint.Position.position.Y + (checkPoint.Texture.Height - player.Texture.Height));
             checkPoint.activated = true;
             checkPointTime = elapsedTime;
         }
@@ -471,7 +476,7 @@ namespace PlatformerSpeedRunner.States
 
             AddCheckPoint(3800, 848);
             AddGameObject(endFlag);
-            AddGameObject(playerSprite);
+            AddGameObject(player);
             RespawnPlayer();
         }
 
@@ -479,7 +484,7 @@ namespace PlatformerSpeedRunner.States
         {
             if (debug)
             {
-                playerSprite.BoundingBox.RenderBoundingBoxes(spriteBatch);
+                player.BoundingBox.RenderBoundingBoxes(spriteBatch);
                 foreach (var item in FullCollisionList)
                 {
                     item.BoundingBox.RenderBoundingBoxes(spriteBatch);

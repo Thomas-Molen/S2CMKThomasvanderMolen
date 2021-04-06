@@ -10,6 +10,11 @@ namespace PlatformerSpeedRunner.Input
         {
             var commands = new List<GameplayInputCommand>();
 
+            //Extra
+            if (state.IsKeyDown(Keys.Escape))
+            {
+                commands.Add(new GameplayInputCommand.Exit());
+            }
             //movement
             if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
             {

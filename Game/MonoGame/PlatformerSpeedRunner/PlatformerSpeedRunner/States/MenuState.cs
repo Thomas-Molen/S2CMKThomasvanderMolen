@@ -8,13 +8,16 @@ using PlatformerSpeedRunner.States.Base;
 using PlatformerSpeedRunner.Input;
 using PlatformerSpeedRunner.Input.Base;
 using System;
+using PlatformerSpeedRunner.Enum;
 
 namespace PlatformerSpeedRunner.States
 {
-    public class SplashState : BaseGameState
+    public class MenuState : BaseGameState
     {
         public override void LoadContent()
         {
+            currentState = GameState.MainMenu;
+
             backgroundImage = new BasicObject(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
             AddGameObject(backgroundImage);
         }

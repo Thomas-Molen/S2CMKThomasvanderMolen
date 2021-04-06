@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PlatformerSpeedRunner.Objects
 {
-    public class Animation
+    public class AnimationObject
     {
         private int animationLength;
         private int animationLoopDuration;
@@ -14,7 +14,7 @@ namespace PlatformerSpeedRunner.Objects
         private string animationPrefix;
         private int animationSuffix = 1;
 
-        public Animation(string AnimationPrefix, int AnimationLength, int AnimationloopDuration)
+        public AnimationObject(string AnimationPrefix, int AnimationLength, int AnimationloopDuration)
         {
             animationLength = AnimationLength;
             animationPrefix = AnimationPrefix;

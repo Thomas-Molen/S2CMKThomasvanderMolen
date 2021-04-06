@@ -12,31 +12,23 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class Player : RenderAbleObject
     {
-        private PlayerMovementHelper PlayerMovement = new PlayerMovementHelper();
+        public PlayerMovementHelper Movement = new PlayerMovementHelper();
         public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
         private AnimationHelper Animation = new AnimationHelper();
         public CameraMode cameraState = CameraMode.Horizontal;
         private Animations AnimationState;
 
-        public float xVelocity = 0.0f;
-        public float yVelocity = 0.0f;
-        private const float playerSpeed = 3.0f;
-        private const float playerGravity = 0.3f;
-
-        private const int maxXVelocity = 10;
-        private const int maxYVelocity = 15;
-
         private const int BBWidth = 45;
         private const int BBHeight = 55;
 
-        private readonly Animation IdleAnimation;
-        private readonly Animation RunningRightAnimation;
-        private readonly Animation RunningLeftAnimation;
-        private readonly Animation FallingRightAnimation;
-        private readonly Animation FallingLeftAnimation;
-        private readonly Animation JumpingRightAnimation;
-        private readonly Animation JumpingLeftAnimation;
-        private readonly Animation DeathAnimation;
+        private readonly AnimationObject IdleAnimation;
+        private readonly AnimationObject RunningRightAnimation;
+        private readonly AnimationObject RunningLeftAnimation;
+        private readonly AnimationObject FallingRightAnimation;
+        private readonly AnimationObject FallingLeftAnimation;
+        private readonly AnimationObject JumpingRightAnimation;
+        private readonly AnimationObject JumpingLeftAnimation;
+        private readonly AnimationObject DeathAnimation;
 
         public Player(Texture2D Texture)
         {
@@ -54,73 +46,10 @@ namespace PlatformerSpeedRunner.Objects
             DeathAnimation = Animation.CreateAnimation("Player\\Death\\Death", 6, 12);
         }
 
-        public void PlayerPhysics()
+        public void PlayerUpdate()
         {
             CheckAnimationState();
-            GravityEffect();
-
-            if (xVelocity > maxXVelocity)
-            {
-                xVelocity = maxXVelocity;
-            }
-            else if (xVelocity < -maxXVelocity)
-            {
-                xVelocity = -maxXVelocity;
-            }
-            if (yVelocity > maxYVelocity)
-            {
-                yVelocity = maxYVelocity;
-            }
-            else if (yVelocity < -maxYVelocity)
-            {
-                yVelocity = -maxYVelocity;
-            }
-            Position.SetPosition(new Vector2(Position.position.X + xVelocity, Position.position.Y + yVelocity));           
-        }
-        
-        public void MoveLeft()
-        {
-            if (xVelocity >= -playerSpeed)
-            {
-                xVelocity -= playerSpeed / 3;
-            }
-        }
-
-        public void MoveRight()
-        {
-            if (xVelocity <= playerSpeed)
-            {
-                xVelocity += playerSpeed / 3;
-            }
-        }
-
-        public void NoDirection()
-        {
-            if (xVelocity > 0)
-            {
-                xVelocity += -playerSpeed / 15;
-            }
-            if (xVelocity < 0)
-            {
-                xVelocity += playerSpeed / 15;
-            }
-            if (xVelocity > 0 && xVelocity < 0.5)
-            {
-                xVelocity = 0;
-            }
-        }
-
-        private void GravityEffect()
-        {
-            if (yVelocity < maxYVelocity)
-            {
-                yVelocity += playerGravity;
-            }
-        }
-
-        public void OnGround(float yPosition)
-        {
-            Position.SetPosition(new Vector2(Position.position.X, yPosition));
+            Movement.PlayerPhysics(this);
         }
 
         public void Grapple(int timeCharged, CameraHelper camera)
@@ -131,16 +60,16 @@ namespace PlatformerSpeedRunner.Objects
             
             if (yGrappleDistance < -700)
             {
-                yVelocity += -700 / 135 * timeCharged / 10;
+                Movement.yVelocity += -700 / 135 * timeCharged / 10;
             }
             else
             {
-                yVelocity += yGrappleDistance / 135 * timeCharged / 10;
+                Movement.yVelocity += yGrappleDistance / 135 * timeCharged / 10;
             }
-            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (Position.position.X + (Texture.Width / 2))) / 150 * timeCharged / 10;
+            Movement.xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (Position.position.X + (Texture.Width / 2))) / 150 * timeCharged / 10;
         }
 
-        public Animation GetAnimationState()
+        public AnimationObject GetAnimationState()
         {
             return AnimationState switch
             {
@@ -158,31 +87,31 @@ namespace PlatformerSpeedRunner.Objects
 
         private void CheckAnimationState()
         {
-            if (xVelocity == 0 && yVelocity == 0 && AnimationState != Animations.Idle)
+            if (Movement.xVelocity == 0 && Movement.yVelocity == 0 && AnimationState != Animations.Idle)
             {
                 AnimationState = Animations.Idle;
             }
-            else if (yVelocity < 0 && xVelocity >= 0 &&AnimationState != Animations.JumpingRight)
+            else if (Movement.yVelocity < 0 && Movement.xVelocity >= 0 &&AnimationState != Animations.JumpingRight)
             {
                 AnimationState = Animations.JumpingRight;
             }
-            else if (yVelocity < 0 && xVelocity <= 0 && AnimationState != Animations.JumpingRight)
+            else if (Movement.yVelocity < 0 && Movement.xVelocity <= 0 && AnimationState != Animations.JumpingRight)
             {
                 AnimationState = Animations.JumpingLeft;
             }
-            else if (yVelocity > 0 && xVelocity >= 0 && AnimationState != Animations.FallingRight)
+            else if (Movement.yVelocity > 0 && Movement.xVelocity >= 0 && AnimationState != Animations.FallingRight)
             {
                 AnimationState = Animations.FallingRight;
             }
-            else if (yVelocity > 0 && xVelocity <= 0 && AnimationState != Animations.FallingRight)
+            else if (Movement.yVelocity > 0 && Movement.xVelocity <= 0 && AnimationState != Animations.FallingRight)
             {
                 AnimationState = Animations.FallingLeft;
             }
-            else if (xVelocity > 0 && yVelocity == 0 && AnimationState != Animations.RunningRight)
+            else if (Movement.xVelocity > 0 && Movement.yVelocity == 0 && AnimationState != Animations.RunningRight)
             {
                 AnimationState = Animations.RunningRight;
             }
-            else if (xVelocity < 0 && yVelocity == 0 && AnimationState != Animations.RunningLeft)
+            else if (Movement.xVelocity < 0 && Movement.yVelocity == 0 && AnimationState != Animations.RunningLeft)
             {
                 AnimationState = Animations.RunningLeft;
             }

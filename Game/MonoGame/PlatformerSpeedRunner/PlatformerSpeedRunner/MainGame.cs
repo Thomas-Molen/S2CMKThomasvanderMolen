@@ -56,7 +56,7 @@ namespace PlatformerSpeedRunner
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //TODO CHANGE THIS TO THE BOOT SCREEN
-            SwitchGameState(new SplashState());
+            SwitchGameState(new MenuState());
         }
 
         //switch state logic
@@ -65,12 +65,14 @@ namespace PlatformerSpeedRunner
             SwitchGameState(gameState);
         }
 
-
-
         private void SwitchGameState(BaseGameState gameState)
         {
             if (currentGameState != null)
             {
+                if (currentGameState.currentState == GameState.MainMenu)
+                {
+
+                }
                 currentGameState.OnStateSwitched -= CurrentGameState_OnStateSwitched;
                 currentGameState.UnloadContent();
             }

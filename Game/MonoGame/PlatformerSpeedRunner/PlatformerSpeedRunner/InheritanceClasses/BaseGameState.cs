@@ -16,6 +16,7 @@ namespace PlatformerSpeedRunner.States.Base
 {
     public abstract class BaseGameState
     {
+        public GameState currentState;
         private protected bool debug = false;
 
         public BasicObject backgroundImage;

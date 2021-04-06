@@ -7,6 +7,7 @@ namespace PlatformerSpeedRunner.Input
 {
     public class GameplayInputCommand : BaseInputCommand
     {
+        public class Exit : GameplayInputCommand { }
         public class PlayerMoveLeft : GameplayInputCommand { }
         public class PlayerMoveRight : GameplayInputCommand { }
         public class PlayerMoveUp : GameplayInputCommand { }

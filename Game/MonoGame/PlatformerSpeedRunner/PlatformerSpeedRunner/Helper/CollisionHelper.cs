@@ -18,16 +18,16 @@ namespace PlatformerSpeedRunner.Helper
                     Convert.ToInt32(player.Position.position.X) < Object.Position.position.X + Object.Texture.Width)
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y - player.Texture.Height));
-                    player.yVelocity = 0;
+                    player.Movement.yVelocity = 0;
                 }
                 else if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
                         Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
                         Convert.ToInt32(player.Position.position.X + player.Texture.Width) >= Object.Position.position.X)
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y + Object.Texture.Height));
-                    if (player.yVelocity < 0)
+                    if (player.Movement.yVelocity < 0)
                     {
-                        player.yVelocity = 0.1f;
+                        player.Movement.yVelocity = 0.1f;
                     }
                 }
                 else if (Convert.ToInt32(player.Position.position.X) >= Object.Position.position.X + 20 &&
@@ -35,9 +35,9 @@ namespace PlatformerSpeedRunner.Helper
                         Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X + Object.Texture.Width, player.Position.position.Y));
-                    if (player.xVelocity < 0)
+                    if (player.Movement.xVelocity < 0)
                     {
-                        player.xVelocity = 0;
+                        player.Movement.xVelocity = 0;
                     }
                 }
                 else if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
@@ -45,9 +45,9 @@ namespace PlatformerSpeedRunner.Helper
                         Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X - player.Texture.Width, player.Position.position.Y));
-                    if (player.xVelocity > 0)
+                    if (player.Movement.xVelocity > 0)
                     {
-                        player.xVelocity = 0;
+                        player.Movement.xVelocity = 0;
                     }
                 }
             });
@@ -62,16 +62,16 @@ namespace PlatformerSpeedRunner.Helper
                     Convert.ToInt32(player.Position.position.X) < Object.Position.position.X + Object.Texture.Width)
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y - player.Texture.Height));
-                    player.yVelocity = 0;
+                    player.Movement.yVelocity = 0;
                 }
                 else if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
                         Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
                         Convert.ToInt32(player.Position.position.X + player.Texture.Width) >= Object.Position.position.X)
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y + Object.Texture.Height));
-                    if (player.yVelocity < 0)
+                    if (player.Movement.yVelocity < 0)
                     {
-                        player.yVelocity = 0.1f;
+                        player.Movement.yVelocity = 0.1f;
                     }
                 }
             });
@@ -86,9 +86,9 @@ namespace PlatformerSpeedRunner.Helper
                         Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X + Object.Texture.Width, player.Position.position.Y));
-                    if (player.xVelocity < 0)
+                    if (player.Movement.xVelocity < 0)
                     {
-                        player.xVelocity = 0;
+                        player.Movement.xVelocity = 0;
                     }
                 }
                 else if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
@@ -96,9 +96,9 @@ namespace PlatformerSpeedRunner.Helper
                         Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X - player.Texture.Width, player.Position.position.Y));
-                    if (player.xVelocity > 0)
+                    if (player.Movement.xVelocity > 0)
                     {
-                        player.xVelocity = 0;
+                        player.Movement.xVelocity = 0;
                     }
                 }
             });
@@ -136,16 +136,16 @@ namespace PlatformerSpeedRunner.Helper
                     result = Object;
 
                     player.Position.SetPosition(new Vector2(player.Position.position.X + Object.velocity, Object.Position.position.Y - player.Texture.Height));
-                    player.yVelocity = 0;
+                    player.Movement.yVelocity = 0;
                 }
                 else if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
                         Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
                         Convert.ToInt32(player.Position.position.X + player.Texture.Width) >= Object.Position.position.X)
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y + Object.Texture.Height));
-                    if (player.yVelocity < 0)
+                    if (player.Movement.yVelocity < 0)
                     {
-                        player.yVelocity = 0.1f;
+                        player.Movement.yVelocity = 0.1f;
                     }
                 }
                 else if (Convert.ToInt32(player.Position.position.X) >= Object.Position.position.X + 20 &&
@@ -153,9 +153,9 @@ namespace PlatformerSpeedRunner.Helper
                         Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X + Object.Texture.Width, player.Position.position.Y));
-                    if (player.xVelocity < 0)
+                    if (player.Movement.xVelocity < 0)
                     {
-                        player.xVelocity = 0;
+                        player.Movement.xVelocity = 0;
                     }
                 }
                 else if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
@@ -163,9 +163,9 @@ namespace PlatformerSpeedRunner.Helper
                         Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X - player.Texture.Width, player.Position.position.Y));
-                    if (player.xVelocity > 0)
+                    if (player.Movement.xVelocity > 0)
                     {
-                        player.xVelocity = 0;
+                        player.Movement.xVelocity = 0;
                     }
                 }
             });
