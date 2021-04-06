@@ -10,10 +10,12 @@ using PlatformerSpeedRunner.Camera;
 
 namespace PlatformerSpeedRunner.Objects
 {
-    public class PlayerSprite : BaseGameObject
+    public class PlayerSprite : RenderAbleObject
     {
+        public RenderHelper renderHelper = new RenderHelper();
         public CameraMode cameraState = CameraMode.Horizontal;
         private AnimationHelper animationHelper = new AnimationHelper();
+        private Animations AnimationState;
 
         public float xVelocity = 0.0f;
         public float yVelocity = 0.0f;
@@ -37,10 +39,10 @@ namespace PlatformerSpeedRunner.Objects
         private readonly Animation JumpingLeftAnimation;
         private readonly Animation DeathAnimation;
 
-        public PlayerSprite(Texture2D texture)
+        public PlayerSprite(Texture2D Texture)
         {
-            baseTexture = texture;
-            AddBoundingBox(new BoundingBox(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
+            textureHelper.SetTexture(Texture);
+            //AddBoundingBox(new BoundingBoxObject(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
             AnimationState = Animations.Idle;
 
             RunningRightAnimation = animationHelper.CreateAnimation("Player\\Running\\PlayerRunningRight", 12, 24);
@@ -51,6 +53,20 @@ namespace PlatformerSpeedRunner.Objects
             JumpingRightAnimation = animationHelper.CreateAnimation("Player\\JumpingRight");
             JumpingLeftAnimation = animationHelper.CreateAnimation("Player\\JumpingLeft");
             DeathAnimation = animationHelper.CreateAnimation("Player\\Death\\Death", 6, 12);
+        }
+
+        public Vector2 GetPosition()
+        {
+            return positionHelper.position;
+        }
+        public void SetPosition(Vector2 Position)
+        {
+            positionHelper.SetPosition(Position);
+        }
+
+        public void ChangeTexture(Texture2D Texture)
+        {
+            textureHelper.SetTexture(Texture);
         }
 
         public void PlayerPhysics()
@@ -74,8 +90,7 @@ namespace PlatformerSpeedRunner.Objects
             {
                 yVelocity = -maxYVelocity;
             }
-
-            Position = new Vector2(Position.X + xVelocity, Position.Y + yVelocity);           
+            positionHelper.SetPosition(new Vector2(positionHelper.position.X + xVelocity, positionHelper.position.Y + yVelocity));           
         }
         
         public void MoveLeft()
@@ -120,14 +135,14 @@ namespace PlatformerSpeedRunner.Objects
 
         public void OnGround(float yPosition)
         {
-            Position = new Vector2(Position.X, yPosition);
+            positionHelper.SetPosition(new Vector2(positionHelper.position.X, yPosition));
         }
 
         public void Grapple(int timeCharged, CameraHelper camera)
         {
             MouseState mouseState = Mouse.GetState();
 
-            float yGrappleDistance = mouseState.Y - Position.Y;
+            float yGrappleDistance = mouseState.Y - positionHelper.position.Y;
             
             if (yGrappleDistance < -700)
             {
@@ -137,7 +152,7 @@ namespace PlatformerSpeedRunner.Objects
             {
                 yVelocity += yGrappleDistance / 135 * timeCharged / 10;
             }
-            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (Position.X + (Width / 2))) / 150 * timeCharged / 10;
+            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (positionHelper.position.X + (textureHelper.Width / 2))) / 150 * timeCharged / 10;
         }
 
         public Animation GetAnimationState()

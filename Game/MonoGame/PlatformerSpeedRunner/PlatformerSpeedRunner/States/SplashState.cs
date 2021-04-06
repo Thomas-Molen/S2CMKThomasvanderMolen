@@ -7,6 +7,7 @@ using PlatformerSpeedRunner.Objects;
 using PlatformerSpeedRunner.States.Base;
 using PlatformerSpeedRunner.Input;
 using PlatformerSpeedRunner.Input.Base;
+using System;
 
 namespace PlatformerSpeedRunner.States
 {
@@ -14,8 +15,7 @@ namespace PlatformerSpeedRunner.States
     {
         public override void LoadContent()
         {
-            backgroundImage = new ObjectSprite(LoadTexture("Backgrounds\\splash"));
-
+            backgroundImage = new ObjectSprite(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
             AddGameObject(backgroundImage);
         }
 
@@ -30,11 +30,21 @@ namespace PlatformerSpeedRunner.States
             });
         }
 
-        public override void UpdateGameState(GameTime gameTime) { }
+        public override void UpdateGameState(GameTime gameTime) 
+        {
+            camera.Follow();
+        }
 
         protected override void SetInputManager()
         {
             InputManager = new InputManager(new SplashInputMapper());
+        }
+
+        private TextObject AddText(string content, int PosX, int PosY)
+        {
+            TextObject textObject = new TextObject(content, new Vector2(PosX, PosY));
+            AddTextObject(textObject);
+            return textObject;
         }
     }
 }

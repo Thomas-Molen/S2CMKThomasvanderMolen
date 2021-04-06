@@ -2,7 +2,7 @@
 
 namespace PlatformerSpeedRunner.Objects
 {
-    public class BoundingBox
+    public class BoundingBoxObject
     {
         public Vector2 position { get; set; }
         private float width { get; set; }
@@ -16,14 +16,14 @@ namespace PlatformerSpeedRunner.Objects
             }
         }
 
-        public BoundingBox(Vector2 position, float width, float height)
+        public BoundingBoxObject(Vector2 position, float width, float height)
         {
             this.position = position;
             this.width = width;
             this.height = height;
         }
 
-        public bool CollidesWith(BoundingBox otherBB)
+        public bool CollidesWith(BoundingBoxObject otherBB)
         {
             if (position.X < otherBB.position.X + otherBB.width &&
                 position.X + width > otherBB.position.X &&

@@ -29,7 +29,7 @@ namespace PlatformerSpeedRunner.States.Base
         protected int baseViewportHeight;
         protected int baseViewportWidth;
 
-        private readonly List<BaseGameObject> gameObjects = new List<BaseGameObject>();
+        private readonly List<RenderAbleObject> gameObjects = new List<RenderAbleObject>();
         private readonly List<TextObject> textObjects = new List<TextObject>();
 
         protected InputManager InputManager { get; set; }
@@ -100,12 +100,12 @@ namespace PlatformerSpeedRunner.States.Base
             OnStateSwitched?.Invoke(this, gameState);
         }
 
-        protected void AddGameObject(BaseGameObject gameObject)
+        protected void AddGameObject(RenderAbleObject gameObject)
         {
             gameObjects.Add(gameObject);
         }
 
-        protected void RemoveGameObject(BaseGameObject gameObject)
+        protected void RemoveGameObject(RenderAbleObject gameObject)
         {
             gameObjects.Remove(gameObject);
         }
@@ -126,7 +126,7 @@ namespace PlatformerSpeedRunner.States.Base
             {
                 if (debug)
                 {
-                    gameObject.RenderBoundingBoxes(spriteBatch);
+                    //gameObject.RenderBoundingBoxes(spriteBatch);
                 }
                 gameObject.Render(spriteBatch);
             }
@@ -136,7 +136,7 @@ namespace PlatformerSpeedRunner.States.Base
         {
             foreach (var textObject in textObjects)
             {
-                textObject.Render(spriteBatch, font);
+                textObject.renderHelper.RenderText(spriteBatch, font, textObject);
             }
         }
     }

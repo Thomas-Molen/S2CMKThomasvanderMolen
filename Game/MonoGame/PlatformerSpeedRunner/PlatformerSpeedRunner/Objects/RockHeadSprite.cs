@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Objects.Base;
 
 namespace PlatformerSpeedRunner.Objects
 {
-    public class RockHeadSprite : BaseGameObject
+    public class RockHeadSprite : RenderAbleObject
     {
+        public RenderHelper renderHelper = new RenderHelper();
         private const int BBWidth = 129;
         private const int BBHeight = 129;
         private readonly int minPos;
@@ -18,34 +20,35 @@ namespace PlatformerSpeedRunner.Objects
         public int velocity;
         private readonly Texture2D idleTexture;
 
-        public RockHeadSprite(Texture2D texture, int inputMinPos, int inputMaxPos)
+        public RockHeadSprite(Texture2D Texture, Vector2 Position, int inputMinPos, int inputMaxPos)
         {
-            baseTexture = texture;
-            idleTexture = texture;
+            positionHelper.SetPosition(Position);
+            textureHelper.SetTexture(Texture);
+            idleTexture = Texture;
             minPos = inputMinPos;
             maxPos = inputMaxPos;
 
             velocity = movementSpeed;
 
-            AddBoundingBox(new BoundingBox(new Vector2(0, 0), BBWidth, BBHeight));
+            //AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
         }
 
         public void Movement()
         {
-            if (baseTexture != idleTexture)
+            if (textureHelper.texture != idleTexture)
             {
-                baseTexture = idleTexture;
+                textureHelper.SetTexture(idleTexture);
             }
 
-            if (Position.X >= maxPos)
+            if (positionHelper.position.X >= maxPos)
             {
                 velocity = -movementSpeed;
             }
-            else if (Position.X <= minPos)
+            else if (positionHelper.position.X <= minPos)
             {
                 velocity = movementSpeed;
             }
-            Position = new Vector2(Position.X + velocity, Position.Y);
+            positionHelper.SetPosition(new Vector2(positionHelper.position.X + velocity, positionHelper.position.Y));
         }
     }
 }
