@@ -6,12 +6,12 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class CollisionDetector
     {
-        private bool DetectCollision(PlayerSprite playerSprite, ObjectSprite objectSprite)
+        private bool DetectCollision(Player playerSprite, BasicObject objectSprite)
         {
-            playerSprite.boundingBoxHelper.UpdateBoundingBoxes(playerSprite.positionHelper.position);
-            foreach (var passiveBB in objectSprite.boundingBoxHelper.boundingBoxes)
+            playerSprite.BoundingBox.UpdateBoundingBoxes(playerSprite.Position.position);
+            foreach (var passiveBB in objectSprite.BoundingBox.boundingBoxes)
             {
-                foreach (var activeBB in playerSprite.boundingBoxHelper.boundingBoxes)
+                foreach (var activeBB in playerSprite.BoundingBox.boundingBoxes)
                 {
                     if (passiveBB.CollidesWith(activeBB))
                     {
@@ -19,56 +19,57 @@ namespace PlatformerSpeedRunner.Objects
                     }
                 }
             }
-
             return false;
         }
-        //private bool DetectCollision(PlayerSprite playerSprite, SpikeHeadSprite spikeHeadSprite)
-        //{
-        //    foreach (var passiveBB in spikeHeadSprite.boundingBoxHelper.boundingBoxes)
-        //    {
-        //        foreach (var activeBB in playerSprite.boundingBoxHelper.boundingBoxes)
-        //        {
-        //            if (passiveBB.CollidesWith(activeBB))
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //    }
+        private bool DetectCollision(Player playerSprite, MovingSpikehead spikeHeadSprite)
+        {
+            playerSprite.BoundingBox.UpdateBoundingBoxes(playerSprite.Position.position);
+            spikeHeadSprite.BoundingBox.UpdateBoundingBoxes(spikeHeadSprite.Position.position);
+            foreach (var passiveBB in spikeHeadSprite.BoundingBox.boundingBoxes)
+            {
+                foreach (var activeBB in playerSprite.BoundingBox.boundingBoxes)
+                {
+                    if (passiveBB.CollidesWith(activeBB))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private bool DetectCollision(Player playerSprite, MovingRockHead rockHeadSprite)
+        {
+            playerSprite.BoundingBox.UpdateBoundingBoxes(playerSprite.Position.position);
+            rockHeadSprite.BoundingBox.UpdateBoundingBoxes(rockHeadSprite.Position.position);
+            foreach (var passiveBB in rockHeadSprite.BoundingBox.boundingBoxes)
+            {
+                foreach (var activeBB in playerSprite.BoundingBox.boundingBoxes)
+                {
+                    if (passiveBB.CollidesWith(activeBB))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private bool DetectCollision(Player playerSprite, CheckPoint checkPointSprite)
+        {
+            playerSprite.BoundingBox.UpdateBoundingBoxes(playerSprite.Position.position);
+            foreach (var passiveBB in checkPointSprite.BoundingBox.boundingBoxes)
+            {
+                foreach (var activeBB in playerSprite.BoundingBox.boundingBoxes)
+                {
+                    if (passiveBB.CollidesWith(activeBB))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
-        //    return false;
-        //}
-        //private bool DetectCollision(PlayerSprite playerSprite, RockHeadSprite rockHeadSprite)
-        //{
-        //    foreach (var passiveBB in rockHeadSprite.boundingBoxHelper.boundingBoxes)
-        //    {
-        //        foreach (var activeBB in playerSprite.boundingBoxHelper.boundingBoxes)
-        //        {
-        //            if (passiveBB.CollidesWith(activeBB))
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //    }
-
-        //    return false;
-        //}
-        //private bool DetectCollision(PlayerSprite playerSprite, CheckPointSprite checkPointSprite)
-        //{
-        //    foreach (var passiveBB in checkPointSprite.boundingBoxHelper.boundingBoxes)
-        //    {
-        //        foreach (var activeBB in playerSprite.boundingBoxHelper.boundingBoxes)
-        //        {
-        //            if (passiveBB.CollidesWith(activeBB))
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //    }
-
-        //    return false;
-        //}
-
-        public void DetectCollisions(PlayerSprite playerSprite, List<ObjectSprite> objectSprites, Action<PlayerSprite, ObjectSprite> collisionHandler)
+        public void DetectCollisions(Player playerSprite, List<BasicObject> objectSprites, Action<Player, BasicObject> collisionHandler)
         {
             foreach (var objectSprite in objectSprites)
             {
@@ -78,42 +79,37 @@ namespace PlatformerSpeedRunner.Objects
                 }
             }
         }
-        //public SpikeHeadSprite DetectCollisions(PlayerSprite playerSprite, List<SpikeHeadSprite> spikeHeadSprites)
-        //{
-        //    SpikeHeadSprite result = null;
-        //    foreach (var spikeHeadSprite in spikeHeadSprites)
-        //    {
-        //        var testing = DetectCollision(playerSprite, spikeHeadSprite);
-        //        if (testing)
-        //        {
-        //            result = spikeHeadSprite;
-        //        }
-        //    }
-        //    return result;
-        //}
-        //public RockHeadSprite DetectCollisions(PlayerSprite playerSprite, List<RockHeadSprite> rockHeadSprites)
-        //{
-        //    RockHeadSprite result = null;
-        //    foreach (var rockHeadSprite in rockHeadSprites)
-        //    {
-        //        if (DetectCollision(playerSprite, rockHeadSprite))
-        //        {
-        //            result = rockHeadSprite;
-        //        }
-        //    }
-        //    return result;
-        //}
-        //public CheckPointSprite DetectCollisions(PlayerSprite playerSprite, List<CheckPointSprite> checkPointSprites)
-        //{
-        //    CheckPointSprite result = null;
-        //    foreach (var checkPointSprite in checkPointSprites)
-        //    {
-        //        if (DetectCollision(playerSprite, checkPointSprite))
-        //        {
-        //            result = checkPointSprite;
-        //        }
-        //    }
-        //    return result;
-        //}
+        public bool DetectCollisions(Player playerSprite, List<MovingSpikehead> spikeHeadSprites)
+        {
+            bool result = false;
+            foreach (var spikeHeadSprite in spikeHeadSprites)
+            {
+                if (DetectCollision(playerSprite, spikeHeadSprite))
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+        public void DetectCollisions(Player playerSprite, List<MovingRockHead> rockHeadSprites, Action<Player, MovingRockHead> collisionHandler)
+        {
+            foreach (var rockHeadSprite in rockHeadSprites)
+            {
+                if (DetectCollision(playerSprite, rockHeadSprite))
+                {
+                    collisionHandler(playerSprite, rockHeadSprite);
+                }
+            }
+        }
+        public void DetectCollisions(Player playerSprite, List<CheckPoint> checkPointSprites, Action<Player, CheckPoint> collisionHandler)
+        {
+            foreach (var checkPointSprite in checkPointSprites)
+            {
+                if (DetectCollision(playerSprite, checkPointSprite))
+                {
+                    collisionHandler(playerSprite, checkPointSprite);
+                }
+            }
+        }
     }
 }

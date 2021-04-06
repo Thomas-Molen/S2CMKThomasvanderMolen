@@ -11,9 +11,9 @@ namespace PlatformerSpeedRunner.Helper
 {
     public class RenderHelper
     {
-        public void RenderText(SpriteBatch spriteBatch, SpriteFont font, TextObject ObjectToRender)
+        public void RenderText(SpriteBatch spriteBatch, SpriteFont font, Text ObjectToRender)
         {
-            spriteBatch.DrawString(font, ObjectToRender.content, ObjectToRender.positionHelper.position, Color.Black);
+            spriteBatch.DrawString(font, ObjectToRender.content, ObjectToRender.Position.position, Color.Black);
         }
     }
 }

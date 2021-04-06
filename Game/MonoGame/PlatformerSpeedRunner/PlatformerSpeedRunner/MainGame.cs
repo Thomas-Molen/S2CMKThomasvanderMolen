@@ -65,22 +65,13 @@ namespace PlatformerSpeedRunner
             SwitchGameState(gameState);
         }
 
-        private void CurrentGameState_OnEventNotification(object sender, Enum.Events e)
-        {
-            switch (e)
-            {
-                case Events.GAME_QUIT:
-                    Exit();
-                    break;
-            }
-        }
+
 
         private void SwitchGameState(BaseGameState gameState)
         {
             if (currentGameState != null)
             {
                 currentGameState.OnStateSwitched -= CurrentGameState_OnStateSwitched;
-                currentGameState.OnEventNotification -= CurrentGameState_OnEventNotification;
                 currentGameState.UnloadContent();
             }
 
@@ -91,7 +82,6 @@ namespace PlatformerSpeedRunner
             currentGameState.LoadContent();
 
             currentGameState.OnStateSwitched += CurrentGameState_OnStateSwitched;
-            currentGameState.OnEventNotification += CurrentGameState_OnEventNotification;
         }
 
         protected override void UnloadContent()

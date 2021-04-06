@@ -15,7 +15,7 @@ namespace PlatformerSpeedRunner.States
     {
         public override void LoadContent()
         {
-            backgroundImage = new ObjectSprite(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
+            backgroundImage = new BasicObject(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
             AddGameObject(backgroundImage);
         }
 
@@ -40,9 +40,9 @@ namespace PlatformerSpeedRunner.States
             InputManager = new InputManager(new SplashInputMapper());
         }
 
-        private TextObject AddText(string content, int PosX, int PosY)
+        private Text AddText(string content, int PosX, int PosY)
         {
-            TextObject textObject = new TextObject(content, new Vector2(PosX, PosY));
+            Text textObject = new Text(content, new Vector2(PosX, PosY));
             AddTextObject(textObject);
             return textObject;
         }

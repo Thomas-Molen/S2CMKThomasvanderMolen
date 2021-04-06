@@ -18,7 +18,7 @@ namespace PlatformerSpeedRunner.States.Base
     {
         private protected bool debug = false;
 
-        public ObjectSprite backgroundImage;
+        public BasicObject backgroundImage;
 
         public CameraHelper camera;
 
@@ -30,7 +30,7 @@ namespace PlatformerSpeedRunner.States.Base
         protected int baseViewportWidth;
 
         private readonly List<RenderAbleObject> gameObjects = new List<RenderAbleObject>();
-        private readonly List<TextObject> textObjects = new List<TextObject>();
+        private readonly List<Text> textObjects = new List<Text>();
 
         protected InputManager InputManager { get; set; }
 
@@ -68,8 +68,6 @@ namespace PlatformerSpeedRunner.States.Base
 
         public event EventHandler<BaseGameState> OnStateSwitched;
 
-        public event EventHandler<Events> OnEventNotification;
-
 
         protected Texture2D LoadTexture(string textureName)
         {
@@ -85,15 +83,6 @@ namespace PlatformerSpeedRunner.States.Base
             }
         }
 
-        protected void NotifyEvent(Events eventType)
-        {
-            OnEventNotification?.Invoke(this, eventType);
-
-            foreach (var gameObject in gameObjects)
-            {
-                gameObject.OnNotify(eventType);
-            }
-        }
 
         protected void SwitchState(BaseGameState gameState)
         {
@@ -110,12 +99,12 @@ namespace PlatformerSpeedRunner.States.Base
             gameObjects.Remove(gameObject);
         }
 
-        protected void AddTextObject(TextObject textObject)
+        protected void AddTextObject(Text textObject)
         {
             textObjects.Add(textObject);
         }
 
-        protected void RemoveTextObject(TextObject textObject)
+        protected void RemoveTextObject(Text textObject)
         {
             textObjects.Remove(textObject);
         }
@@ -128,7 +117,7 @@ namespace PlatformerSpeedRunner.States.Base
                 {
                     //gameObject.RenderBoundingBoxes(spriteBatch);
                 }
-                gameObject.Render(spriteBatch);
+                gameObject.RenderSprite(spriteBatch);
             }
         }
 
@@ -136,7 +125,7 @@ namespace PlatformerSpeedRunner.States.Base
         {
             foreach (var textObject in textObjects)
             {
-                textObject.renderHelper.RenderText(spriteBatch, font, textObject);
+                textObject.Render.RenderText(spriteBatch, font, textObject);
             }
         }
 

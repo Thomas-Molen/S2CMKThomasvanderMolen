@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PlatformerSpeedRunner.Enum
+namespace PlatformerSpeedRunner.Helper
 {
-    public enum Events
+    public class PlayerMovementHelper
     {
     }
 }

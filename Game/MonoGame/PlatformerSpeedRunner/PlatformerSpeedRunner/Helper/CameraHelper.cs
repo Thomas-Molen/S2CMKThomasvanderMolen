@@ -13,51 +13,51 @@ namespace PlatformerSpeedRunner.Camera
 
         private Matrix position;
         private Matrix offset;
-        public void Follow (PlayerSprite playerSprite)
+        public void Follow (Player playerSprite)
         {
             if (playerSprite != null)
             {
-                if (playerSprite.GetPosition().X < Program.width / 2)
+                if (playerSprite.Position.position.X < Program.width / 2)
                 {
                     position = Matrix.CreateTranslation(
-                        -playerSprite.GetPosition().X - (playerSprite.textureHelper.Width / 2),
-                        -playerSprite.GetPosition().Y - (playerSprite.textureHelper.Height / 2),
+                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
+                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
                         0);
 
                     offset = Matrix.CreateTranslation(
-                        playerSprite.GetPosition().X,
-                        playerSprite.GetPosition().Y,
+                        playerSprite.Position.position.X,
+                        playerSprite.Position.position.Y,
                         0);
                 }
                 else if (playerSprite.cameraState == CameraMode.Horizontal)
                 {
                     position = Matrix.CreateTranslation(
-                        -playerSprite.GetPosition().X - (playerSprite.textureHelper.Width / 2),
-                        -playerSprite.GetPosition().Y - (playerSprite.textureHelper.Height / 2),
+                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
+                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
                         0);
 
                     offset = Matrix.CreateTranslation(
                         Program.width / 2,
-                        playerSprite.GetPosition().Y,
+                        playerSprite.Position.position.Y,
                         0);
                 }
                 else if (playerSprite.cameraState == CameraMode.Vertical)
                 {
                     position = Matrix.CreateTranslation(
-                        -playerSprite.GetPosition().X - (playerSprite.textureHelper.Width / 2),
-                        -playerSprite.GetPosition().Y - (playerSprite.textureHelper.Height / 2),
+                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
+                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
                         0);
 
                     offset = Matrix.CreateTranslation(
                         Program.width / 2,
-                        playerSprite.GetPosition().Y,
+                        playerSprite.Position.position.Y,
                         0);
                 }
                 else if (playerSprite.cameraState == CameraMode.Free)
                 {
                     position = Matrix.CreateTranslation(
-                        -playerSprite.GetPosition().X - (playerSprite.textureHelper.Width / 2),
-                        -playerSprite.GetPosition().Y - (playerSprite.textureHelper.Height / 2),
+                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
+                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
                         0);
 
                     offset = Matrix.CreateTranslation(

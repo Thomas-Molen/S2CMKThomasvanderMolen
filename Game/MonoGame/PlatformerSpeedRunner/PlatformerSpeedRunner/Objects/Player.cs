@@ -10,12 +10,12 @@ using PlatformerSpeedRunner.Camera;
 
 namespace PlatformerSpeedRunner.Objects
 {
-    public class PlayerSprite : RenderAbleObject
+    public class Player : RenderAbleObject
     {
-        public BoundingBoxHelper boundingBoxHelper = new BoundingBoxHelper();
-        public RenderHelper renderHelper = new RenderHelper();
+        private PlayerMovementHelper PlayerMovement = new PlayerMovementHelper();
+        public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
+        private AnimationHelper Animation = new AnimationHelper();
         public CameraMode cameraState = CameraMode.Horizontal;
-        private AnimationHelper animationHelper = new AnimationHelper();
         private Animations AnimationState;
 
         public float xVelocity = 0.0f;
@@ -38,34 +38,20 @@ namespace PlatformerSpeedRunner.Objects
         private readonly Animation JumpingLeftAnimation;
         private readonly Animation DeathAnimation;
 
-        public PlayerSprite(Texture2D Texture)
+        public Player(Texture2D Texture)
         {
-            textureHelper.SetTexture(Texture);
-            boundingBoxHelper.AddBoundingBox(new BoundingBoxObject(new Vector2(1, 0), BBWidth, BBHeight));
+            base.Texture.SetTexture(Texture);
+            BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(1, 0), BBWidth, BBHeight));
             AnimationState = Animations.Idle;
 
-            RunningRightAnimation = animationHelper.CreateAnimation("Player\\Running\\PlayerRunningRight", 12, 24);
-            RunningLeftAnimation = animationHelper.CreateAnimation("Player\\Running\\PlayerRunningLeft", 12, 24);
-            IdleAnimation = animationHelper.CreateAnimation("Player\\Idle\\PlayerIdle", 11, 55);
-            FallingRightAnimation = animationHelper.CreateAnimation("Player\\FallingRight");
-            FallingLeftAnimation = animationHelper.CreateAnimation("Player\\FallingLeft");
-            JumpingRightAnimation = animationHelper.CreateAnimation("Player\\JumpingRight");
-            JumpingLeftAnimation = animationHelper.CreateAnimation("Player\\JumpingLeft");
-            DeathAnimation = animationHelper.CreateAnimation("Player\\Death\\Death", 6, 12);
-        }
-
-        public Vector2 GetPosition()
-        {
-            return positionHelper.position;
-        }
-        public void SetPosition(Vector2 Position)
-        {
-            positionHelper.SetPosition(Position);
-        }
-
-        public void ChangeTexture(Texture2D Texture)
-        {
-            textureHelper.SetTexture(Texture);
+            RunningRightAnimation = Animation.CreateAnimation("Player\\Running\\PlayerRunningRight", 12, 24);
+            RunningLeftAnimation = Animation.CreateAnimation("Player\\Running\\PlayerRunningLeft", 12, 24);
+            IdleAnimation = Animation.CreateAnimation("Player\\Idle\\PlayerIdle", 11, 55);
+            FallingRightAnimation = Animation.CreateAnimation("Player\\FallingRight");
+            FallingLeftAnimation = Animation.CreateAnimation("Player\\FallingLeft");
+            JumpingRightAnimation = Animation.CreateAnimation("Player\\JumpingRight");
+            JumpingLeftAnimation = Animation.CreateAnimation("Player\\JumpingLeft");
+            DeathAnimation = Animation.CreateAnimation("Player\\Death\\Death", 6, 12);
         }
 
         public void PlayerPhysics()
@@ -89,7 +75,7 @@ namespace PlatformerSpeedRunner.Objects
             {
                 yVelocity = -maxYVelocity;
             }
-            positionHelper.SetPosition(new Vector2(positionHelper.position.X + xVelocity, positionHelper.position.Y + yVelocity));           
+            Position.SetPosition(new Vector2(Position.position.X + xVelocity, Position.position.Y + yVelocity));           
         }
         
         public void MoveLeft()
@@ -134,14 +120,14 @@ namespace PlatformerSpeedRunner.Objects
 
         public void OnGround(float yPosition)
         {
-            positionHelper.SetPosition(new Vector2(positionHelper.position.X, yPosition));
+            Position.SetPosition(new Vector2(Position.position.X, yPosition));
         }
 
         public void Grapple(int timeCharged, CameraHelper camera)
         {
             MouseState mouseState = Mouse.GetState();
 
-            float yGrappleDistance = mouseState.Y - positionHelper.position.Y;
+            float yGrappleDistance = mouseState.Y - Position.position.Y;
             
             if (yGrappleDistance < -700)
             {
@@ -151,7 +137,7 @@ namespace PlatformerSpeedRunner.Objects
             {
                 yVelocity += yGrappleDistance / 135 * timeCharged / 10;
             }
-            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (positionHelper.position.X + (textureHelper.Width / 2))) / 150 * timeCharged / 10;
+            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (Position.position.X + (Texture.Width / 2))) / 150 * timeCharged / 10;
         }
 
         public Animation GetAnimationState()

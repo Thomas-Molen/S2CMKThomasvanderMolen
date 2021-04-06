@@ -8,10 +8,9 @@ using PlatformerSpeedRunner.Objects.Base;
 
 namespace PlatformerSpeedRunner.Objects
 {
-    public class RockHeadSprite : RenderAbleObject
+    public class MovingRockHead : RenderAbleObject
     {
-        public BoundingBoxHelper boundingBoxHelper = new BoundingBoxHelper();
-        public RenderHelper renderHelper = new RenderHelper();
+        public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
         private const int BBWidth = 129;
         private const int BBHeight = 129;
         private readonly int minPos;
@@ -21,36 +20,36 @@ namespace PlatformerSpeedRunner.Objects
         public int velocity;
         private readonly Texture2D idleTexture;
 
-        public RockHeadSprite(Texture2D Texture, Vector2 Position, int inputMinPos, int inputMaxPos)
+        public MovingRockHead(Texture2D Texture, Vector2 Position, int inputMinPos, int inputMaxPos)
         {
-            positionHelper.SetPosition(Position);
-            textureHelper.SetTexture(Texture);
+            base.Position.SetPosition(Position);
+            base.Texture.SetTexture(Texture);
             idleTexture = Texture;
             minPos = inputMinPos;
             maxPos = inputMaxPos;
 
             velocity = movementSpeed;
 
-            boundingBoxHelper.AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
+            BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
         }
 
         public void Movement()
         {
-            boundingBoxHelper.UpdateBoundingBoxes(positionHelper.position);
-            if (textureHelper.texture != idleTexture)
+            BoundingBox.UpdateBoundingBoxes(Position.position);
+            if (Texture.texture != idleTexture)
             {
-                textureHelper.SetTexture(idleTexture);
+                Texture.SetTexture(idleTexture);
             }
 
-            if (positionHelper.position.X >= maxPos)
+            if (Position.position.X >= maxPos)
             {
                 velocity = -movementSpeed;
             }
-            else if (positionHelper.position.X <= minPos)
+            else if (Position.position.X <= minPos)
             {
                 velocity = movementSpeed;
             }
-            positionHelper.SetPosition(new Vector2(positionHelper.position.X + velocity, positionHelper.position.Y));
+            Position.SetPosition(new Vector2(Position.position.X + velocity, Position.position.Y));
         }
     }
 }
