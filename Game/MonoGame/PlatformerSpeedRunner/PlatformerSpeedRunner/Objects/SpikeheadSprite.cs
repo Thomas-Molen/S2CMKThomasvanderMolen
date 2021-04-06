@@ -10,6 +10,7 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class SpikeHeadSprite : RenderAbleObject
     {
+        public BoundingBoxHelper boundingBoxHelper = new BoundingBoxHelper();
         public RenderHelper renderHelper = new RenderHelper();
         private const int BBWidth1 = 75;
         private const int BBHeight1 = 129;
@@ -30,12 +31,13 @@ namespace PlatformerSpeedRunner.Objects
 
             yVelocity = movementSpeed;
 
-            //AddBoundingBox(new BoundingBoxObject(new Vector2(30, 0), BBWidth1, BBHeight1));
-            //AddBoundingBox(new BoundingBoxObject(new Vector2(0, 30), BBWidth2, BBHeight2));
+            boundingBoxHelper.AddBoundingBox(new BoundingBoxObject(new Vector2(30, 0), BBWidth1, BBHeight1));
+            boundingBoxHelper.AddBoundingBox(new BoundingBoxObject(new Vector2(0, 30), BBWidth2, BBHeight2));
         }
 
         public void Movement()
         {
+            boundingBoxHelper.UpdateBoundingBoxes(positionHelper.position);
             if (positionHelper.position.Y >= maxPosY)
             {
                 yVelocity = -movementSpeed;

@@ -12,6 +12,7 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class PlayerSprite : RenderAbleObject
     {
+        public BoundingBoxHelper boundingBoxHelper = new BoundingBoxHelper();
         public RenderHelper renderHelper = new RenderHelper();
         public CameraMode cameraState = CameraMode.Horizontal;
         private AnimationHelper animationHelper = new AnimationHelper();
@@ -25,8 +26,6 @@ namespace PlatformerSpeedRunner.Objects
         private const int maxXVelocity = 10;
         private const int maxYVelocity = 15;
 
-        private const int BBPosX = 1;
-        private const int BBPosY = 0;
         private const int BBWidth = 45;
         private const int BBHeight = 55;
 
@@ -42,7 +41,7 @@ namespace PlatformerSpeedRunner.Objects
         public PlayerSprite(Texture2D Texture)
         {
             textureHelper.SetTexture(Texture);
-            //AddBoundingBox(new BoundingBoxObject(new Vector2(BBPosX, BBPosY), BBWidth, BBHeight));
+            boundingBoxHelper.AddBoundingBox(new BoundingBoxObject(new Vector2(1, 0), BBWidth, BBHeight));
             AnimationState = Animations.Idle;
 
             RunningRightAnimation = animationHelper.CreateAnimation("Player\\Running\\PlayerRunningRight", 12, 24);
@@ -71,6 +70,7 @@ namespace PlatformerSpeedRunner.Objects
 
         public void PlayerPhysics()
         {
+            boundingBoxHelper.UpdateBoundingBoxes(positionHelper.position);
             CheckAnimationState();
             GravityEffect();
 

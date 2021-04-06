@@ -10,6 +10,7 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class RockHeadSprite : RenderAbleObject
     {
+        public BoundingBoxHelper boundingBoxHelper = new BoundingBoxHelper();
         public RenderHelper renderHelper = new RenderHelper();
         private const int BBWidth = 129;
         private const int BBHeight = 129;
@@ -30,11 +31,12 @@ namespace PlatformerSpeedRunner.Objects
 
             velocity = movementSpeed;
 
-            //AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
+            boundingBoxHelper.AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
         }
 
         public void Movement()
         {
+            boundingBoxHelper.UpdateBoundingBoxes(positionHelper.position);
             if (textureHelper.texture != idleTexture)
             {
                 textureHelper.SetTexture(idleTexture);

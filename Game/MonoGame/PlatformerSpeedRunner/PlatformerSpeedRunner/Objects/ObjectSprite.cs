@@ -10,31 +10,10 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class ObjectSprite : RenderAbleObject
     {
+        public BoundingBoxHelper boundingBoxHelper = new BoundingBoxHelper();
         public RenderHelper renderHelper = new RenderHelper();
         private int BBWidth;
         private int BBHeight;
-
-        public ObjectSprite(Texture2D Texture, int BoundingBoxWidth, int BoundingBoxHeight, Vector2 Position)
-        {
-            positionHelper.SetPosition(Position);
-            textureHelper.SetTexture(Texture);
-
-            BBWidth = BoundingBoxWidth + 1;
-            BBHeight = BoundingBoxHeight + 1;
-
-            //AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
-        }
-
-        public ObjectSprite(Texture2D Texture, int BoundingBoxWidth, int BoundingBoxHeight, int BoundingBoxOffSetX, int BoundingBoxOffSetY, Vector2 Position)
-        {
-            positionHelper.SetPosition(Position);
-            textureHelper.SetTexture(Texture);
-
-            BBWidth = BoundingBoxWidth + 1;
-            BBHeight = BoundingBoxHeight + 1;
-
-            //AddBoundingBox(new BoundingBoxObject(new Vector2(BoundingBoxOffSetX, BoundingBoxOffSetY), BBWidth, BBHeight));
-        }
 
         public ObjectSprite(Texture2D Texture, Vector2 Position, bool BoundingBox = false)
         {
@@ -46,8 +25,18 @@ namespace PlatformerSpeedRunner.Objects
                 BBWidth = textureHelper.Width + 1;
                 BBHeight = textureHelper.Height + 1;
 
-                //AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
+                boundingBoxHelper.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.X, Position.Y), BBWidth, BBHeight));
             }
+        }
+        public ObjectSprite(Texture2D Texture, int BoundingBoxWidth, int BoundingBoxHeight, Vector2 Position)
+        {
+            positionHelper.SetPosition(Position);
+            textureHelper.SetTexture(Texture);
+
+            BBWidth = BoundingBoxWidth + 1;
+            BBHeight = BoundingBoxHeight + 1;
+
+            boundingBoxHelper.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.X, Position.Y), BBWidth, BBHeight));
         }
     }
 }
