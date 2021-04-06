@@ -139,5 +139,8 @@ namespace PlatformerSpeedRunner.States.Base
                 textObject.renderHelper.RenderText(spriteBatch, font, textObject);
             }
         }
+
+        public virtual void RenderBoundingBoxes(SpriteBatch spriteBatch)
+        { }
     }
 }

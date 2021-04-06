@@ -70,7 +70,6 @@ namespace PlatformerSpeedRunner.Objects
 
         public void PlayerPhysics()
         {
-            boundingBoxHelper.UpdateBoundingBoxes(positionHelper.position);
             CheckAnimationState();
             GravityEffect();
 

@@ -8,8 +8,9 @@ using PlatformerSpeedRunner.Objects.Base;
 
 namespace PlatformerSpeedRunner.Objects
 {
-    public class CheckPoint : RenderAbleObject
+    public class CheckPointSprite : RenderAbleObject
     {
+        public BoundingBoxHelper boundingBoxHelper = new BoundingBoxHelper();
         public RenderHelper renderHelper = new RenderHelper();
         
         private const int BBWidth = 38;
@@ -17,10 +18,10 @@ namespace PlatformerSpeedRunner.Objects
 
         public bool activated = false;
 
-        public CheckPoint(Texture2D Texture, Vector2 Position)
+        public CheckPointSprite(Texture2D Texture, Vector2 Position)
         {
             textureHelper.SetTexture(Texture);
-            //AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
+            boundingBoxHelper.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.X, Position.Y), BBWidth, BBHeight));
 
             positionHelper.SetPosition(Position);
         }

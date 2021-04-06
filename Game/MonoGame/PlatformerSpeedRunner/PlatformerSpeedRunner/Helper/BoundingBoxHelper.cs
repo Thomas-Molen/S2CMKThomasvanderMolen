@@ -7,8 +7,9 @@ namespace PlatformerSpeedRunner.Helper
 {
     public class BoundingBoxHelper
     {
-        protected List<BoundingBoxObject> boundingBoxes;
-        protected Texture2D boundingBoxTexture;
+        public List<BoundingBoxObject> boundingBoxes { get; private set; }
+        private Texture2D boundingBoxTexture;
+        private Vector2 basePosition = Vector2.One;
 
         public BoundingBoxHelper()
         {
@@ -36,6 +37,18 @@ namespace PlatformerSpeedRunner.Helper
             foreach (var bb in boundingBoxes)
             {
                 spriteBatch.Draw(boundingBoxTexture, bb.rectangle, Color.Red);
+            }
+        }
+
+        public void UpdateBoundingBoxes(Vector2 Position)
+        {
+            var deltaX = Position.X - basePosition.X;
+            var deltaY = Position.Y - basePosition.Y;
+            basePosition = Position;
+
+            foreach (var bb in boundingBoxes)
+            {
+                bb.position = new Vector2(bb.position.X + deltaX, bb.position.Y + deltaY);
             }
         }
     }

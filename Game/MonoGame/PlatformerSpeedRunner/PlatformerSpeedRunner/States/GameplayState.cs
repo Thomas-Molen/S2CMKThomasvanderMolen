@@ -226,29 +226,29 @@ namespace PlatformerSpeedRunner.States
             collisionHelper.PlayerFullDetector(playerSprite, FullCollisionList);
             collisionHelper.PlayerTopDetector(playerSprite, TopsCollisionList);
             collisionHelper.PlayerSideDetector(playerSprite, SidesCollisionList);
-            var returnRockHead = collisionHelper.playerRockHeadDetector(playerSprite, RockHeadCollisionList);
-            if (returnRockHead != null)
-            {
-                returnRockHead.textureHelper.SetTexture(LoadTexture("Enemies\\RockHeadMad"));
-            }
-            var testing = collisionHelper.PlayerSpikeHeadDetector(playerSprite, SpikeHeadCollisionList);
-            if (testing)
-            {
-                RespawnPlayer();
-            }
-            if (collisionHelper.PlayerDeathDetector(playerSprite, DeathCollisionList))
-            {
-                RespawnPlayer();
-            }
-            var returnCheckPoint = collisionHelper.PlayerCheckPointDetector(playerSprite, CheckPointCollisionList);
-            if (returnCheckPoint != null)
-            {
-                CheckPointActivation(returnCheckPoint);
-            }
-            if (collisionHelper.PlayerEndFlagDetector(playerSprite, EndFlagCollisionList))
-            {
-                //SwitchState(new SplashState());
-            }
+            //var returnRockHead = collisionHelper.PlayerRockHeadDetector(playerSprite, RockHeadCollisionList);
+            //if (returnRockHead != null)
+            //{
+            //    returnRockHead.textureHelper.SetTexture(LoadTexture("Enemies\\RockHeadMad"));
+            //}
+            //var testing = collisionHelper.PlayerSpikeHeadDetector(playerSprite, SpikeHeadCollisionList);
+            //if (testing)
+            //{
+            //    RespawnPlayer();
+            //}
+            //if (collisionHelper.PlayerDeathDetector(playerSprite, DeathCollisionList))
+            //{
+            //    RespawnPlayer();
+            //}
+            //var returnCheckPoint = collisionHelper.PlayerCheckPointDetector(playerSprite, CheckPointCollisionList);
+            //if (returnCheckPoint != null)
+            //{
+            //    CheckPointActivation(returnCheckPoint);
+            //}
+            //if (collisionHelper.PlayerEndFlagDetector(playerSprite, EndFlagCollisionList))
+            //{
+            //    //SwitchState(new SplashState());
+            //}
         }
 
         //creating objects in world
