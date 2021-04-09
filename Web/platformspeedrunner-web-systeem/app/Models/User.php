@@ -2,42 +2,46 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+/**
+ * Class User
+ *
+ * @property $id
+ * @property $username
+ * @property $password
+ * @property $unique_key
+ * @property $upvotes
+ *
+ * @package App
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
+class User extends Model
 {
-    use HasFactory, Notifiable;
+    protected $table = 'user';
+    public $timestamps = false;
+
+    static $rules = [
+		'username' => 'required|max:30',
+        'password' => 'required|max:150',
+    ];
+
+    protected $perPage = 20;
 
     /**
-     * The attributes that are mass assignable.
+     * Attributes that should be mass-assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
+        'username',
         'password',
+        'unique_key',
+        'upvotes'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password'
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 }
