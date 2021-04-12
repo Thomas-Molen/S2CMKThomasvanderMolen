@@ -19,6 +19,8 @@ class CreateUserTable extends Migration
             $table->string('password', 150);
             $table->string('unique_key', 20);
             $table->integer('upvotes')->default(0);
+            $table->boolean('active')->default(1);
+            $table->rememberToken();
         });
     }
 

@@ -18,7 +18,8 @@ class CreateCommentTable extends Migration
             $table->foreignId('user_id')->constrained('user');
             $table->foreignId('run_id')->constrained('run');
             $table->string('content', '500');
-            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('created_at')->nullable();
+            $table->boolean('active')->default(1);
         });
     }
 

@@ -46,6 +46,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach ($users as $user)
+                                    @if ($user->active === 1)
                                     <tr>
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->username }}</td>
@@ -62,6 +63,7 @@
                                             </form>
                                         </td>
                                     </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                                 <tfoot>

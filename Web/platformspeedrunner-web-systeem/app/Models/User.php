@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class User
@@ -16,14 +17,15 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class User extends Model
+class User extends Authenticatable
 {
     protected $table = 'user';
     public $timestamps = false;
 
     static $rules = [
 		'username' => 'required|max:30',
-        'password' => 'required|max:150',
+        'password' => 'max:150',
+        'unique_key' => 'required|max:20',
     ];
 
     protected $perPage = 20;
@@ -37,7 +39,8 @@ class User extends Model
         'username',
         'password',
         'unique_key',
-        'upvotes'
+        'upvotes',
+        'active'
     ];
 
     protected $hidden = [

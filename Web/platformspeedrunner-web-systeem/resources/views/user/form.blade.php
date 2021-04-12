@@ -8,20 +8,13 @@
         </div>
         <div class="form-group">
             {{ Form::label('password') }}
-            {{ Form::text('password', $user->password, ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''), 'placeholder' => 'Password']) }}
+            {{ Form::text('password', "", ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''), 'placeholder' => 'Password']) }}
             {!! $errors->first('password', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('unique_key') }}
             {{ Form::text('unique_key', $user->unique_key, ['class' => 'form-control' . ($errors->has('unique_key') ? ' is-invalid' : ''), 'placeholder' => 'Unique Key']) }}
             {!! $errors->first('unique_key', '<div class="invalid-feedback">:message</p>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('upvotes') }}
-            {{ Form::text('upvotes', $user->upvotes, ['class' => 'form-control' . ($errors->has('upvotes') ? ' is-invalid' : ''), 'placeholder' => 'Upvotes']) }}
-            {!! $errors->first('upvotes', '<div class="invalid-feedback">:message</p>') !!}
-        </div>
-
 
     </div>
     <div class="box-footer mt20">
