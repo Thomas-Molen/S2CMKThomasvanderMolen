@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="wrapper">
-{{--        @include('inc.slidebar')--}}
+        @include('inc.sidebar')
 
         <div class="content-wrapper">
             @yield('content')

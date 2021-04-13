@@ -23,12 +23,10 @@ class Comment extends Model
     public $timestamps = false;
 
     static $rules = [
-		'user_id' => 'required',
-		'run_id' => 'required',
 		'content' => 'required|max:500'
     ];
 
-    protected $perPage = 20;
+    protected $perPage = 1e20;
 
     /**
      * Attributes that should be mass-assignable.

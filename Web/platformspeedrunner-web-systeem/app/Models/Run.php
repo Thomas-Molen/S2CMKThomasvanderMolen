@@ -23,10 +23,11 @@ class Run extends Model
 
     static $rules = [
         'user_id' => 'required',
-        'custom_name' => 'max:50'
+        'custom_name' => 'max:50',
+        'duration' => 'required'
     ];
 
-    protected $perPage = 20;
+    protected $perPage = 100;
 
     /**
      * Attributes that should be mass-assignable.
@@ -37,6 +38,7 @@ class Run extends Model
         'user_id',
         'active',
         'custom_name',
-        'created_at'
+        'created_at',
+        'duration'
     ];
 }

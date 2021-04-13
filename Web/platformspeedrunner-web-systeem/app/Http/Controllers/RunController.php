@@ -49,7 +49,7 @@ class RunController extends Controller
 
         $run = Run::create($request->all());
         $run->update(['created_at' => date('Y-m-d H:i:s')]);
-        if ($request->custom_name === null)
+        if ($request->custom_name === null OR $request->custom_name === "")
         {
             $run->update(['custom_name' => "#" . $run->id]);
         }
@@ -96,6 +96,10 @@ class RunController extends Controller
         request()->validate(Run::$rules);
 
         $run->update($request->all());
+        if ($request->custom_name === null OR $request->custom_name === "")
+        {
+            $run->update(['custom_name' => "#" . $run->id]);
+        }
 
         return redirect()->route('run.index')
             ->with('success', 'Run updated successfully');
@@ -118,7 +122,7 @@ class RunController extends Controller
     {
         $user = User::find($user_id);
 
-        if ($user->isEmpty())
+        if ($user === null)
         {
             return "User not found";
         }

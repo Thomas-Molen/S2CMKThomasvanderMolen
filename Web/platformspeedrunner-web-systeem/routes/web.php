@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LeaderboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,8 +30,15 @@ Route::post('/login', [LoginController::class, 'store']);
 // Logout
 Route::get('/logout', [LogoutController::class, 'store'])->name('logout');
 
+// accessible pages
+Route::get('leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+Route::get('/', [LeaderboardController::class, 'index'])->name('home');
+
+//middleware
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('user', UserController::class);
     Route::resource('run', RunController::class);
     Route::resource('comment', CommentController::class);
+
+    Route::get('create_comment/{run_id}', [CommentController::class, 'user_create'])->name('user_create_comment');
 });

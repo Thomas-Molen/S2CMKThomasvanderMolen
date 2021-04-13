@@ -38,6 +38,17 @@ class CommentController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource as a normal user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function user_create(Request $run_id)
+    {
+        $comment = new Comment();
+        return view('comment.user_create', compact('comment'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -48,7 +59,16 @@ class CommentController extends Controller
         request()->validate(Comment::$rules);
 
         $comment = Comment::create($request->all());
+        if (empty($request->user_id))
+        {
+            $comment->update(['user_id' => auth()->id()]);
+        }
+        if (empty($request->run_id))
+        {
+            $comment->update(['run_id' => 1]);
+        }
         $comment->update(['created_at' => date('Y-m-d H:i:s')]);
+        
 
         return redirect()->route('comment.index')
             ->with('success', 'Comment created successfully.');

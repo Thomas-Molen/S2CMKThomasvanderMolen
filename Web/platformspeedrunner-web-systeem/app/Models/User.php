@@ -28,7 +28,7 @@ class User extends Authenticatable
         'unique_key' => 'required|max:20',
     ];
 
-    protected $perPage = 20;
+    protected $perPage = 1e20;
 
     /**
      * Attributes that should be mass-assignable.

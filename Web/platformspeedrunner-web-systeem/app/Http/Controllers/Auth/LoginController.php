@@ -36,6 +36,6 @@ class LoginController extends Controller
         {
             return back()->with('status', 'Invalid login details');
         }
-        return redirect()->route('YOU LOGGED IN');
+        return redirect()->route('leaderboard');
     }
 }

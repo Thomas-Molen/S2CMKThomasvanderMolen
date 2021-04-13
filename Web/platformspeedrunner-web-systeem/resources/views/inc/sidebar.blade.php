@@ -13,33 +13,44 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link" style="padding-bottom: 30px">
-        <img src="{{ asset('/img/logo.png') }}" alt="BAS Trucks logo" class="brand-image" style="max-width: 200px;"/>
+        <img src="{{ asset('/img/logo.png') }}" alt="Platformer Speedrunner" class="brand-image" style="max-width: 200px;"/>
         <span class="brand-text font-weight-light"></span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
+        @if (auth()->user())
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="{{ asset('backend/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="{{ route('dashboard') }}" class="d-block">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</a>
+                <a href="{{ route('user.index') }}" class="d-block">{{ auth()->user()->username }}</a>
             </div>
         </div>
-
+        @endif
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="/" class="nav-link {{ Request::routeIs('dashboard') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="{{ route('leaderboard') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th-list"></i>
                         <p>
-                            Personal Dashboard
+                            Leaderboard
                         </p>
                     </a>
                 </li>
+                @if(auth()->user())
+                    <li class="nav-item">
+                        <a href="{{ route('run.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-running"></i>
+                            <p>
+                                Personal Runs
+                            </p>
+                        </a>
+                    </li>
+                @endif
 
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -51,7 +62,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('users.index') }}" class="nav-link {{ Request::routeIs('users.*') ? 'active' : '' }}">
+                            <a href="{{ route('user.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Users
@@ -59,78 +70,43 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('department.index') }}" class="nav-link {{ Request::routeIs('department.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-building"></i>
+                            <a href="{{ route('run.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-running"></i>
                                 <p>
-                                    Departments
+                                    Runs
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('priority.index') }}" class="nav-link {{ Request::routeIs('priority.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-exclamation"></i>
+                            <a href="{{ route('comment.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-comments"></i>
                                 <p>
-                                    Priorities
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('attachment-type.index') }}" class="nav-link {{ Request::routeIs('attachment-type.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-file-pdf"></i>
-                                <p>
-                                    Attachment Types
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('question.index') }}" class="nav-link {{ Request::routeIs('question.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-question"></i>
-                                <p>
-                                    Questions
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('category-ticket.index') }}" class="nav-link {{ Request::routeIs('category-ticket.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-boxes"></i>
-                                <p>
-                                    Ticket categories
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('status.index') }}" class="nav-link {{ Request::routeIs('status.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-info"></i>
-                                <p>
-                                    Status
+                                    Comments
                                 </p>
                             </a>
                         </li>
                     </ul>
                 </li>
-
+                @if (auth()->user())
                 <li class="nav-item">
-                    <a href="{{ route('tickets') }}" class="nav-link">
-                        <i class="nav-icon fas fa-clipboard-list"></i>
-                        <p>
-                            Tickets
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                    <a class="nav-link" href="{{ route('logout') }}">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
                             Logout
                         </p>
                     </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;">
                         @csrf
                     </form>
+                    @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            <i class="nav-icon fas fa-sign-in-alt"></i>
+                            <p>
+                                Login
+                            </p>
+                        </a>
+                    @endif
                 </li>
             </ul>
         </nav>
