@@ -1920,9 +1920,14 @@ let DataTable = {
     }
   },
   init: function () {
-    $("table.table.SpeedRunnerTable").DataTable({
-      "language": DataTable.Language
-    })
+      $("table.table.SpeedRunnerTable").DataTable({
+          language: DataTable.Language,
+          pageLength: 25,
+          columnDefs: [
+              { orderable: false, targets: ["rank", "actions"] }
+          ],
+          order: [[1, 'asc']]
+      })
   }
 };
 DataTable.init();

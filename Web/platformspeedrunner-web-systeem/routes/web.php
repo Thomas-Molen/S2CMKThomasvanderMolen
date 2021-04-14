@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LeaderboardController;
@@ -39,6 +40,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('user', UserController::class);
     Route::resource('run', RunController::class);
     Route::resource('comment', CommentController::class);
+    Route::resource('role', RoleController::class);
 
     Route::get('create_comment/{run_id}', [CommentController::class, 'user_create'])->name('user_create_comment');
 });

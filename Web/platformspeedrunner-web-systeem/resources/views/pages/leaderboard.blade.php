@@ -21,15 +21,15 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped SpeedRunnerTable">
+                                <table class="table table-bordered table-striped LeaderboardTable">
                                     <thead>
                                     <tr>
-                                        <th>Rank</th>
+                                        <th class="rank">Rank</th>
                                         <th>Title</th>
                                         <th>Player</th>
                                         <th>Time (h:m:s:ms)</th>
                                         <th>Date (y-d-m UTC)</th>
-                                        <th>Actions</th>
+                                        <th class="actions">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -39,9 +39,9 @@
                                                 @if ($i === 0)
                                                     <td><i class="fas fa-trophy"></i>{{ ++$i }}</td>
                                                 @elseif ($i === 1)
-                                                    <td><i class="fas fa-award"></i>{{ ++$i }}</td>
-                                                @elseif ($i === 2)
                                                     <td><i class="fas fa-medal"></i>{{ ++$i }}</td>
+                                                @elseif ($i === 2)
+                                                    <td><i class="fas fa-award"></i>{{ ++$i }}</td>
                                                 @else
                                                     <td>{{ ++$i }}</td>
                                                 @endif
@@ -85,4 +85,19 @@
             </div>
         </div>
     </section>
+@endsection
+@section('pagejs')
+    <script>
+        window.onload = function () {
+            $("table.LeaderboardTable").DataTable({
+                language: DataTable.Language,
+                pageLength: 25,
+                columnDefs: [
+                    { orderable: false, targets: ["rank", "actions"] }
+                ],
+                order: [[3, 'asc']]
+            })
+        }
+        DataTable.init();
+    </script>
 @endsection

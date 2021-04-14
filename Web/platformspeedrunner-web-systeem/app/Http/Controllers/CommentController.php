@@ -42,10 +42,11 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function user_create(Request $run_id)
+    public function user_create(Request $request, int $id)
     {
         $comment = new Comment();
-        return view('comment.user_create', compact('comment'));
+
+        return view('comment.user_create')->with(['comment' => $comment, 'run_id' => $id]);
     }
 
     /**
@@ -57,7 +58,6 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         request()->validate(Comment::$rules);
-
         $comment = Comment::create($request->all());
         if (empty($request->user_id))
         {
@@ -65,10 +65,10 @@ class CommentController extends Controller
         }
         if (empty($request->run_id))
         {
-            $comment->update(['run_id' => 1]);
+            $comment->update(['run_id' => $request->run_id]);
         }
         $comment->update(['created_at' => date('Y-m-d H:i:s')]);
-        
+
 
         return redirect()->route('comment.index')
             ->with('success', 'Comment created successfully.');
