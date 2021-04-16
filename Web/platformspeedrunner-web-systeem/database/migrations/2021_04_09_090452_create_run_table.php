@@ -16,6 +16,7 @@ class CreateRunTable extends Migration
         Schema::create('run', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('user');
+            $table->integer('upvotes')->default(0);
             $table->bigInteger('duration')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->string('custom_name', 50)->nullable();

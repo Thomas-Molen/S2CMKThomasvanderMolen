@@ -52,7 +52,7 @@ namespace PlatformerSpeedRunner.States
 
         private readonly List<BasicObject> ObjectSpriteList = new List<BasicObject>();
         private readonly List<MovingRockHead> RockHeadSpriteList = new List<MovingRockHead>();
-        private readonly List<MovingSpikehead> SpikeHeadSpriteList = new List<MovingSpikehead>();
+        private readonly List<MovingSpikeHead> SpikeHeadSpriteList = new List<MovingSpikeHead>();
         private readonly List<CheckPoint> CheckPointList = new List<CheckPoint>();
 
         private readonly List<BasicObject> TopsCollisionList = new List<BasicObject>();
@@ -60,7 +60,7 @@ namespace PlatformerSpeedRunner.States
         private readonly List<BasicObject> FullCollisionList = new List<BasicObject>();
         private readonly List<BasicObject> DeathCollisionList = new List<BasicObject>();
         private readonly List<MovingRockHead> RockHeadCollisionList = new List<MovingRockHead>();
-        private readonly List<MovingSpikehead> SpikeHeadCollisionList = new List<MovingSpikehead>();
+        private readonly List<MovingSpikeHead> SpikeHeadCollisionList = new List<MovingSpikeHead>();
         private readonly List<CheckPoint> CheckPointCollisionList = new List<CheckPoint>();
         private readonly List<BasicObject> EndFlagCollisionList = new List<BasicObject>();
 
@@ -193,7 +193,7 @@ namespace PlatformerSpeedRunner.States
             {
                 rockHead.Movement();
             }
-            foreach (MovingSpikehead spikeHead in SpikeHeadCollisionList)
+            foreach (MovingSpikeHead spikeHead in SpikeHeadCollisionList)
             {
                 spikeHead.Movement();
             }
@@ -271,7 +271,7 @@ namespace PlatformerSpeedRunner.States
 
         private void AddSpikeHead(int PosX, int PosY, int MinPosY, int MaxPosY)
         {
-            MovingSpikehead spikeHead = new MovingSpikehead(LoadTexture("Enemies\\SpikeHead"), new Vector2(PosX, PosY), MinPosY, MaxPosY);
+            MovingSpikeHead spikeHead = new MovingSpikeHead(LoadTexture("Enemies\\SpikeHead"), new Vector2(PosX, PosY), MinPosY, MaxPosY);
             SpikeHeadCollisionList.Add(spikeHead);
             SpikeHeadSpriteList.Add(spikeHead);
             AddGameObject(spikeHead);

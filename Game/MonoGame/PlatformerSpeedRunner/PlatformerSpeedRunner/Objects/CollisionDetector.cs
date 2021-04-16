@@ -21,7 +21,7 @@ namespace PlatformerSpeedRunner.Objects
             }
             return false;
         }
-        private bool DetectCollision(Player playerSprite, MovingSpikehead spikeHeadSprite)
+        private bool DetectCollision(Player playerSprite, MovingSpikeHead spikeHeadSprite)
         {
             playerSprite.BoundingBox.UpdateBoundingBoxes(playerSprite.Position.position);
             spikeHeadSprite.BoundingBox.UpdateBoundingBoxes(spikeHeadSprite.Position.position);
@@ -79,7 +79,7 @@ namespace PlatformerSpeedRunner.Objects
                 }
             }
         }
-        public bool DetectCollisions(Player playerSprite, List<MovingSpikehead> spikeHeadSprites)
+        public bool DetectCollisions(Player playerSprite, List<MovingSpikeHead> spikeHeadSprites)
         {
             bool result = false;
             foreach (var spikeHeadSprite in spikeHeadSprites)

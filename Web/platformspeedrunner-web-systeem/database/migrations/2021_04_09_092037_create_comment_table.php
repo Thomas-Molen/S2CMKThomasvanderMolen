@@ -18,6 +18,7 @@ class CreateCommentTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained('user');
             $table->foreignId('run_id')->nullable()->constrained('run');
             $table->string('content', '500');
+            $table->integer('upvotes')->default(0);
             $table->dateTimeTz('created_at')->nullable();
             $table->boolean('active')->default(1);
         });

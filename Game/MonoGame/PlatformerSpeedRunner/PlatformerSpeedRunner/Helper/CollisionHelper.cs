@@ -114,7 +114,7 @@ namespace PlatformerSpeedRunner.Helper
             return result;
         }
 
-        public bool PlayerSpikeHeadDetector(Player playerSprite, List<MovingSpikehead> SpikeHeadCollisionList)
+        public bool PlayerSpikeHeadDetector(Player playerSprite, List<MovingSpikeHead> SpikeHeadCollisionList)
         {
             bool result = false;
             if (collisionDetector.DetectCollisions(playerSprite, SpikeHeadCollisionList))

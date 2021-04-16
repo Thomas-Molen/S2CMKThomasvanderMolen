@@ -39,6 +39,7 @@ class Run extends Model
         'active',
         'custom_name',
         'created_at',
-        'duration'
+        'duration',
+        'upvotes'
     ];
 }

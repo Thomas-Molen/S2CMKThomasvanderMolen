@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint2\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\CircusTrein(v1).csproj",
+      "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint 3\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\CircusTrein(v1).csproj",
       "projectName": "CircusTrein(v1)",
-      "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint2\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\CircusTrein(v1).csproj",
+      "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint 3\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\CircusTrein(v1).csproj",
       "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-      "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint2\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\obj\\",
+      "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint 3\\ExtraOpdrachten\\CircusTrein\\CircusTrein(v1)\\CircusTrein(v1)\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",

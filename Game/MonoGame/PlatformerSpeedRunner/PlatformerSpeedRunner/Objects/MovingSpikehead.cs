@@ -8,7 +8,7 @@ using PlatformerSpeedRunner.Objects.Base;
 
 namespace PlatformerSpeedRunner.Objects
 {
-    public class MovingSpikehead : RenderAbleObject
+    public class MovingSpikeHead : RenderAbleObject
     {
         public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
         private const int BBWidth1 = 75;
@@ -21,7 +21,7 @@ namespace PlatformerSpeedRunner.Objects
         private int movementSpeed = 3;
         public int yVelocity;
 
-        public MovingSpikehead(Texture2D Texture, Vector2 Position, int inputMinPosX, int inputMaxPosX)
+        public MovingSpikeHead(Texture2D Texture, Vector2 Position, int inputMinPosX, int inputMaxPosX)
         {
             base.Position.SetPosition(Position);
             base.Texture.SetTexture(Texture);

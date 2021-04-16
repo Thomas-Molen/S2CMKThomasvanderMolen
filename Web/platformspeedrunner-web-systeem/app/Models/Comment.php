@@ -38,7 +38,8 @@ class Comment extends Model
         'run_id',
         'content',
         'active',
-        'created_at'
+        'created_at',
+        'upvotes'
     ];
 
 }
