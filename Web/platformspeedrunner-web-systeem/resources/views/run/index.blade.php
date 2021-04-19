@@ -49,13 +49,13 @@
                                         @if ($run->active === 1)
                                             <tr>
                                                 <td>{{ $run->custom_name }}</td>
-                                                <td>{{ (new App\Http\Controllers\RunController)->GetUsername($run->user_id) }}</td>
+                                                <td>{{ (new App\Http\Controllers\UserController)->GetUsername($run->user_id) }}</td>
                                                 <td>{{ $run->duration }}</td>
                                                 <td>{{ $run->created_at . " (UTC)"}}</td>
                                                 <td>
                                                     <form action="{{ route('run.destroy',$run->id) }}" method="POST">
                                                         <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                        <a class="btn btn-sm btn-success" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                        <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
 
                                                         @csrf
                                                         @method('DELETE')

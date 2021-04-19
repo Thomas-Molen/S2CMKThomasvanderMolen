@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -19,10 +20,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate();
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $users = User::paginate();
 
-        return view('user.index', compact('users'))
-            ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+            return view('user.index', compact('users'))
+                ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+        }
     }
 
     /**
@@ -32,8 +35,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = new User();
-        return view('user.create', compact('user'));
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $user = new User();
+            return view('user.create', compact('user'));
+        }
     }
 
     /**
@@ -45,12 +50,12 @@ class UserController extends Controller
     public function store(Request $request)
     {
         request()->validate(User::$rules);
-
         $user = User::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'unique_key' => $request->unique_key,
-            'upvotes' => $request->upvotes
+            'upvotes' => $request->upvotes,
+            'role' => $request->role_id
         ]);
 
         return redirect()->route('user.index')
@@ -65,9 +70,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        if ((new AuthenticatorController)->IsCurrentUser($id)) {
+            $user = User::find($id);
 
-        return view('user.show', compact('user'));
+            return view('user.show', compact('user'));
+        }
     }
 
     /**
@@ -78,9 +85,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        if ((new AuthenticatorController)->IsCurrentUser($id)) {
+            $user = User::find($id);
 
-        return view('user.edit', compact('user'));
+            return view('user.edit', compact('user'));
+        }
     }
 
     /**
@@ -111,5 +120,19 @@ class UserController extends Controller
 
         return redirect()->route('user.index')
             ->with('success', 'User deleted successfully');
+    }
+
+    public function GetUsername($id)
+    {
+        $user = User::find($id);
+
+        if ($user === null)
+        {
+            return "User not found";
+        }
+        else
+        {
+            return $user->username;
+        }
     }
 }

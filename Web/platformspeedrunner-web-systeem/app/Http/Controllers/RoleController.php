@@ -18,10 +18,12 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate();
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $roles = Role::paginate();
 
-        return view('role.index', compact('roles'))
-            ->with('i', (request()->input('page', 1) - 1) * $roles->perPage());
+            return view('role.index', compact('roles'))
+                ->with('i', (request()->input('page', 1) - 1) * $roles->perPage());
+        }
     }
 
     /**
@@ -31,8 +33,10 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $role = new Role();
-        return view('role.create', compact('role'));
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $role = new Role();
+            return view('role.create', compact('role'));
+        }
     }
 
     /**
@@ -59,9 +63,11 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $role = Role::find($id);
 
-        return view('role.show', compact('role'));
+            return view('role.show', compact('role'));
+        }
     }
 
     /**
@@ -72,9 +78,11 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $role = Role::find($id);
 
-        return view('role.edit', compact('role'));
+            return view('role.edit', compact('role'));
+        }
     }
 
     /**
@@ -105,5 +113,11 @@ class RoleController extends Controller
 
         return redirect()->route('role.index')
             ->with('success', 'Role deleted successfully');
+    }
+
+    public function GetName($id)
+    {
+        $role = Role::find($id);
+        return $role->name;
     }
 }

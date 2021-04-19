@@ -5,6 +5,7 @@
             {{ Form::text('custom_name', $run->custom_name, ['class' => 'form-control' . ($errors->has('custom_name') ? ' is-invalid' : ''), 'placeholder' => 'Custom name']) }}
             {!! $errors->first('custom_name', '<div class="invalid-feedback">:message</p>') !!}
         </div>
+        @if ((new App\Http\Controllers\AuthenticatorController)->IsAdmin())
         <div class="form-group">
             {{ Form::label('user_id') }}
             {{ Form::text('user_id', $run->user_id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User id']) }}
@@ -15,6 +16,7 @@
             {{ Form::number('duration', $run->duration, ['class' => 'form-control' . ($errors->has('duration') ? ' is-invalid' : ''), 'placeholder' => 'Millisecond']) }}
             {!! $errors->first('duration', '<div class="invalid-feedback">:message</p>') !!}
         </div>
+        @endif
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">Submit</button>

@@ -19,10 +19,12 @@ class RunController extends Controller
      */
     public function index()
     {
-        $runs = Run::paginate();
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $runs = Run::paginate();
 
-        return view('run.index', compact('runs'))
-            ->with('i', (request()->input('page', 1) - 1) * $runs->perPage());
+            return view('run.index', compact('runs'))
+                ->with('i', (request()->input('page', 1) - 1) * $runs->perPage());
+        }
     }
 
     /**
@@ -32,9 +34,11 @@ class RunController extends Controller
      */
     public function create()
     {
-        $run = new Run();
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $run = new Run();
 
-        return view('run.create', compact('run'));
+            return view('run.create', compact('run'));
+        }
     }
 
     /**
@@ -79,9 +83,10 @@ class RunController extends Controller
      */
     public function edit($id)
     {
-        $run = Run::find($id);
-
-        return view('run.edit', compact('run'));
+            $run = Run::find($id);
+        if ((new AuthenticatorController)->IsCurrentUser($run->user_id)) {
+            return view('run.edit', compact('run'));
+        }
     }
 
     /**
@@ -101,7 +106,11 @@ class RunController extends Controller
             $run->update(['custom_name' => "#" . $run->id]);
         }
 
-        return redirect()->route('run.index')
+        if ((new AuthenticatorController)->IsAdmin()) {
+            return redirect()->route('run.index')
+                ->with('success', 'Run updated successfully');
+        }
+        return redirect()->route('personal_runs')
             ->with('success', 'Run updated successfully');
     }
 
@@ -114,21 +123,17 @@ class RunController extends Controller
     {
         $run = Run::find($id)->update(['active' => 0]);
 
-        return redirect()->route('run.index')
+        if ((new AuthenticatorController)->IsAdmin()) {
+            return redirect()->route('run.index')
+                ->with('success', 'Run deleted successfully');
+        }
+        return redirect()->route('personal_runs')
             ->with('success', 'Run deleted successfully');
     }
 
-    public function GetUsername($user_id)
+    public function GetName($id)
     {
-        $user = User::find($user_id);
-
-        if ($user === null)
-        {
-            return "User not found";
-        }
-        else
-        {
-            return $user->username;
-        }
+        $run = Run::find($id);
+        return $run->custom_name;
     }
 }

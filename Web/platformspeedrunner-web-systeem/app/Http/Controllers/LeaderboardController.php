@@ -16,60 +16,112 @@ class LeaderboardController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * $runs->perPage());
     }
 
-    public function SortRuns()
+    public function SortRuns($runs)
     {
         $array = [];
-        foreach (Run::paginate() as $run)
+        foreach ($runs as $run)
         {
             array_push($array, $run);
         }
-        usort($array, function($a, $b)
+
+        usort($array,  function ($a, $b)
         {
-            return strcmp($a->duration, $b->duration);
+            if ($a->duration == $b->duration)
+            {
+                return 0;
+            }
+            return ($a->duration < $b->duration) ? -1 : 1;
         });
-        return $array;
+        return($array);
     }
 
     public function FormatTime($ms)
     {
         $value = array(
-            'hours' => 0,
             'minutes' => 0,
-            'seconds' => 0
+            'seconds' => 0,
+            'milliseconds' => $ms%1000
         );
 
-        $total_seconds = ($ms / 1000);
+        $totalSeconds = ($ms / 1000);
 
             $time = '';
 
-            if($total_seconds >= 3600)
+            if($totalSeconds >= 6000)
             {
-                $value['hours'] = floor($total_seconds / 3600);
-                $total_seconds = $total_seconds % 3600;
-
-                $time .= $value['hours'] . ':';
-            }
-
-            if($total_seconds >= 60)
-            {
-                $value['minutes'] = floor($total_seconds / 60);
-                $total_seconds = $total_seconds % 60;
+                $value['minutes'] = floor($totalSeconds / 60);
+                $totalSeconds = $totalSeconds % 60;
 
                 $time .= $value['minutes'] . ':';
-            } else {
-                $time .= '0:';
+            }
+        else if($totalSeconds >= 600)
+            {
+                $value['minutes'] = floor($totalSeconds / 60);
+                $totalSeconds = $totalSeconds % 60;
+
+                $time .= '0' .$value['minutes'] . ':';
+            }
+            else if ($totalSeconds >= 60)
+            {
+                $value['minutes'] = floor($totalSeconds / 60);
+                $totalSeconds = $totalSeconds % 60;
+
+                $time .= '00' . $value['minutes'] . ':';
+            }
+            else
+            {
+                $time .= '000:';
             }
 
-            $value['seconds'] = floor($total_seconds);
+            $value['seconds'] = floor($totalSeconds);
 
             if($value['seconds'] < 10)
             {
                 $value['seconds'] = '0' . $value['seconds'];
             }
-
             $time .= $value['seconds'] . ':';
-            $time .= $ms%1000;
+
+            if ($value['milliseconds'] < 10)
+            {
+                $value['milliseconds'] = '00' . $value['milliseconds'];
+            }
+            else if ($value['milliseconds'] < 100)
+            {
+                $value['milliseconds'] = '0' . $value['milliseconds'];
+            }
+                $time .= $value['milliseconds'];
 
             return $time;
+        }
+
+        public function SetSuffix($i)
+        {
+            if ($i <= 20)
+            {
+                switch ($i) {
+                    case 1:
+                        return " " . $i . "st";
+                    case 2:
+                        return " " . $i . "nd";
+                    case 3:
+                        return " " . $i . "rd";
+                    default:
+                        return $i . "th";
+                }
+            }
+            else
+            {
+                switch (substr($i, -1))
+                {
+                    case 1:
+                        return $i . "st";
+                    case 2:
+                        return $i . "nd";
+                    case 3:
+                        return $i . "rd";
+                    default:
+                        return $i . "th";
+                }
+            }
         }
     }

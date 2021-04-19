@@ -22,9 +22,7 @@ class Run extends Model
     public $timestamps = false;
 
     static $rules = [
-        'user_id' => 'required',
         'custom_name' => 'max:50',
-        'duration' => 'required'
     ];
 
     protected $perPage = 100;

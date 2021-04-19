@@ -50,14 +50,14 @@
                                         @if ($comment->active === 1)
                                             <tr>
                                                 <td>{{ $comment->id }}</td>
-                                                <td>{{ (new App\Http\Controllers\CommentController)->GetUsername($comment->user_id) }}</td>
-                                                <td>{{ (new App\Http\Controllers\CommentController)->GetRunName($comment->run_id) }}</td>
+                                                <td>{{ (new App\Http\Controllers\UserController())->GetUsername($comment->user_id) }}</td>
+                                                <td>{{ (new App\Http\Controllers\RunController())->GetName($comment->run_id) }}</td>
                                                 <td>{{ substr($comment->content, 0, 20) . "..." }}</td>
                                                 <td>{{ $comment->created_at . " (UTC)"}}</td>
                                                 <td>
                                                     <form action="{{ route('comment.destroy',$comment->id) }}" method="POST">
                                                         <a class="btn btn-sm btn-primary " href="{{ route('comment.show',$comment->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                        <a class="btn btn-sm btn-success" href="{{ route('comment.edit',$comment->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                        <a class="btn btn-sm btn-secondary" href="{{ route('comment.edit',$comment->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
 
                                                         @csrf
                                                         @method('DELETE')

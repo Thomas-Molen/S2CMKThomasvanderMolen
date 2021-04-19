@@ -40,7 +40,8 @@
                                     <th>#</th>
                                     <th>Username</th>
                                     <th>Unique Key</th>
-                                    <th>upvotes</th>
+                                    <th>Upvotes</th>
+                                    <th>Role</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -52,10 +53,11 @@
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->unique_key }}</td>
                                         <td>{{ $user->upvotes }}</td>
+                                        <td>{{ (new App\Http\Controllers\RoleController)->GetName($user->role_id) }}</td>
                                         <td>
                                             <form action="{{ route('user.destroy',$user->id) }}" method="POST">
                                             <a class="btn btn-sm btn-primary " href="{{ route('user.show',$user->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                            <a class="btn btn-sm btn-success" href="{{ route('user.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                            <a class="btn btn-sm btn-secondary" href="{{ route('user.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
 
                                                 @csrf
                                                 @method('DELETE')
@@ -72,6 +74,7 @@
                                     <th>Username</th>
                                     <th>Unique Key</th>
                                     <th>Upvotes</th>
+                                    <th>Role</th>
                                     <th>Actions</th>
                                 </tr>
                                 </tfoot>

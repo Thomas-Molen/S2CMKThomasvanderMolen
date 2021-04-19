@@ -22,11 +22,8 @@
         @if (auth()->user())
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="{{ asset('backend/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-            </div>
             <div class="info">
-                <a href="{{ route('user.index') }}" class="d-block">{{ auth()->user()->username }}</a>
+                <a class="d-block">{{ auth()->user()->username }}</a>
             </div>
         </div>
         @endif
@@ -43,15 +40,24 @@
                 </li>
                 @if(auth()->user())
                     <li class="nav-item">
-                        <a href="{{ route('run.index') }}" class="nav-link">
+                        <a href="{{ route('personal_runs') }}" class="nav-link">
                             <i class="nav-icon fas fa-running"></i>
                             <p>
                                 Personal Runs
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('comment.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-comments"></i>
+                            <p>
+                                Personal Comments
+                            </p>
+                        </a>
+                    </li>
                 @endif
 
+                @if((new App\Http\Controllers\AuthenticatorController)->IsAdmin())
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-database"></i>
@@ -85,8 +91,18 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('role.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-user-tag"></i>
+                                <p>
+                                    Roles
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
+                @endif
+
                 @if (auth()->user())
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}">

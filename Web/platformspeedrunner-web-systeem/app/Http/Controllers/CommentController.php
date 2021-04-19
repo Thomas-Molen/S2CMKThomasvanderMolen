@@ -20,10 +20,12 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::paginate();
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $comments = Comment::paginate();
 
-        return view('comment.index', compact('comments'))
-            ->with('i', (request()->input('page', 1) - 1) * $comments->perPage());
+            return view('comment.index', compact('comments'))
+                ->with('i', (request()->input('page', 1) - 1) * $comments->perPage());
+        }
     }
 
     /**
@@ -33,8 +35,10 @@ class CommentController extends Controller
      */
     public function create()
     {
-        $comment = new Comment();
-        return view('comment.create', compact('comment'));
+        if (auth()->user()) {
+            $comment = new Comment();
+            return view('comment.create', compact('comment'));
+        }
     }
 
     /**
@@ -82,9 +86,11 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        $comment = Comment::find($id);
+        if ((new AuthenticatorController)->AuthAccess()) {
+            $comment = Comment::find($id);
 
-        return view('comment.show', compact('comment'));
+            return view('comment.show', compact('comment'));
+        }
     }
 
     /**
@@ -95,9 +101,11 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        $comment = Comment::find($id);
+        if ((new AuthenticatorController)->IsCurrentUser($id)) {
+            $comment = Comment::find($id);
 
-        return view('comment.edit', compact('comment'));
+            return view('comment.edit', compact('comment'));
+        }
     }
 
     /**
@@ -128,26 +136,5 @@ class CommentController extends Controller
 
         return redirect()->route('comment.index')
             ->with('success', 'Comment deleted successfully');
-    }
-
-    public function GetUsername($user_id)
-    {
-        $user = User::find($user_id);
-
-        if ($user === null)
-        {
-            return "User not found";
-        }
-        else
-        {
-            return $user->username;
-        }
-    }
-
-    public function GetRunName($run_id)
-    {
-        $run = Run::find($run_id);
-
-        return $run->custom_name;
     }
 }

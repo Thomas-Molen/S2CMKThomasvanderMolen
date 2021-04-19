@@ -40,6 +40,10 @@
                                 <strong>Upvotes:</strong>
                                 {{ $user->upvotes }}
                             </div>
+                            <div class="form-group">
+                                <strong>Role:</strong>
+                                {{ $user->role_id }}
+                            </div>
                         </div>
                     </div>
                 </div>

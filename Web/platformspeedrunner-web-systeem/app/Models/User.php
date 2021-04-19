@@ -40,7 +40,8 @@ class User extends Authenticatable
         'password',
         'unique_key',
         'upvotes',
-        'active'
+        'active',
+        'role_id'
     ];
 
     protected $hidden = [
