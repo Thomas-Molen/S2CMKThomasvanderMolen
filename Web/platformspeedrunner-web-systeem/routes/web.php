@@ -37,6 +37,7 @@ Route::get('/logout', [LogoutController::class, 'store'])->name('logout');
 // default accessible pages
 Route::get('leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 Route::get('/', [LeaderboardController::class, 'index'])->name('home');
+Route::resource('run', RunController::class);
 
 //middleware
 Route::group(['middleware' => ['auth']], function () {
@@ -46,7 +47,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('create_comment/{run_id}', [CommentController::class, 'leaderboard_create'])->name('leaderboard_create_comment');
 
     //admin pages
-    Route::resource('run', RunController::class);
     Route::resource('user', UserController::class);
     Route::resource('comment', CommentController::class);
     Route::resource('role', RoleController::class);

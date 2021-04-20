@@ -23,6 +23,7 @@ class Run extends Model
 
     static $rules = [
         'custom_name' => 'max:50',
+        'information' => 'max:800'
     ];
 
     protected $perPage = 100;
@@ -38,6 +39,7 @@ class Run extends Model
         'custom_name',
         'created_at',
         'duration',
-        'upvotes'
+        'upvotes',
+        'information'
     ];
 }

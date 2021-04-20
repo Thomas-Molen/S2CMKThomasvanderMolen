@@ -20,6 +20,7 @@ class CreateRunTable extends Migration
             $table->bigInteger('duration')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->string('custom_name', 50)->nullable();
+            $table->string('information', 800)->nullable();
             $table->boolean('active')->default(1);
         });
     }

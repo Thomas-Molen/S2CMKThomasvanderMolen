@@ -48,14 +48,14 @@
                                                 <td>{{ $run->custom_name}}</td>
                                                 <td>{{ (new App\Http\Controllers\UserController)->GetUsername($run->user_id) }}</td>
 
-                                                <td>{{$time = (new App\Http\Controllers\LeaderboardController)->FormatTime($run->duration)}}</td>
+                                                <td>{{ (new App\Http\Controllers\LeaderboardController)->FormatTime($run->duration)}}</td>
                                                 <td>{{ $run->created_at}}</td>
                                                 <td><form action="{{ route('run.destroy',$run->id) }}" method="POST">
                                                         <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
                                                         @if (auth()->user())
                                                             <a class="btn btn-sm btn-success" href="{{ route('leaderboard_create_comment', $run->id) }}"><i class="nav-icon fas fa-comments"></i> Comment</a>
                                                         @endif
-                                                        @if($run->user_id === auth()->id())
+                                                        @if((new \App\Http\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
                                                             <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                             @csrf
                                                             @method('DELETE')

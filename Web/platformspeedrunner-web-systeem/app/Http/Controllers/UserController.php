@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\AuthenticationHelper;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,8 +71,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        if ((new AuthenticationHelper)->IsCurrentUser($id)) {
-            $user = User::find($id);
+        $user = User::find($id);
+        if ((new AuthenticationHelper)->AuthAccess()) {
 
             return view('user.show', compact('user'));
         }

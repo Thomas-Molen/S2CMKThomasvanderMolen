@@ -2,7 +2,9 @@
 
 namespace App\Http\Helpers;
 
+use App\Http\Controllers\RoleController;
 use App\Models\Role;
+use App\Models\Run;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,7 +26,7 @@ class AuthenticationHelper
     {
         if (auth()->user())
         {
-            if (Role::find(auth()->user()->role_id)->name === "admin")
+            if (auth()->user()->role_id === (new RoleController)->GetIdByName("admin"))
             {
                 return true;
             }

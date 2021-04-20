@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Run;
 use Illuminate\Http\Request;
 
 /**
@@ -119,5 +120,20 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         return $role->name;
+    }
+
+    public function GetIdByName($name)
+    {
+        foreach (Role::all() as $role)
+        {
+            if ($role->name === $name)
+            {
+                return $role->id;
+            }
+        }
+        $run = Role::create([
+            'name' => $name
+        ]);
+        return $run->id;
     }
 }

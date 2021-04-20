@@ -5,6 +5,11 @@
             {{ Form::text('custom_name', $run->custom_name, ['class' => 'form-control' . ($errors->has('custom_name') ? ' is-invalid' : ''), 'placeholder' => 'Custom name']) }}
             {!! $errors->first('custom_name', '<div class="invalid-feedback">:message</p>') !!}
         </div>
+        <div class="form-group class-info">
+            {{ Form::label('information') }}
+            {{ Form::text('information', $run->information, ['class' => 'form-control run-info' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'Extra information']) }}
+            {!! $errors->first('information', '<div class="invalid-feedback">:message</p>') !!}
+        </div>
         @if ((new App\Http\Helpers\AuthenticationHelper)->IsAdmin())
         <div class="form-group">
             {{ Form::label('user_id') }}
@@ -22,3 +27,5 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </div>
+<style>
+</style>
