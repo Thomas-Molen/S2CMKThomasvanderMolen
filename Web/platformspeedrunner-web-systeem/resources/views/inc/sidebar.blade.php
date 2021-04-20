@@ -48,7 +48,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('comment.index') }}" class="nav-link">
+                        <a href="{{ route('personal_comments') }}" class="nav-link">
                             <i class="nav-icon fas fa-comments"></i>
                             <p>
                                 Personal Comments
@@ -57,7 +57,7 @@
                     </li>
                 @endif
 
-                @if((new App\Http\Controllers\AuthenticatorController)->IsAdmin())
+                @if((new App\Http\Helpers\AuthenticationHelper)->IsAdmin())
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-database"></i>

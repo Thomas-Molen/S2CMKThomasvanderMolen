@@ -33,11 +33,7 @@
                     </div>
                 </div>
             </div>
-            @if( (new \App\Http\Controllers\AuthenticatorController)->IsAdmin())
-            <a class="btn btn-secondary" href="{{ route('run.index') }}">Back</a>
-                @else
-                <a class="btn btn-secondary" href="{{ route('personal_runs') }}">Back</a>
-            @endif
+            <a class="btn btn-secondary" href="{{ (new \App\Http\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
         </div>
     </section>
 @endsection

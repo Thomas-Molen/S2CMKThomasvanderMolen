@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Runs</h1>
+                    <h1 class="m-0 text-dark">Comments</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -21,31 +21,28 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped PersonalRunsTable">
+                                <table class="table table-bordered table-striped PersonalCommentsTable">
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Title</th>
-                                        <th>Time (m:s:ms)</th>
+                                        <th>Run</th>
+                                        <th>Content</th>
                                         <th>Date (y-d-m UTC)</th>
                                         <th class="actions">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ( (new App\Http\Controllers\PersonalRunsController)->GetRuns($runs) as $run)
-                                        @if ($run->active === 1)
+                                    @foreach ( (new App\Http\Controllers\PersonalCommentsController)->GetComments($comments) as $comment)
+                                        @if ($comment->active === 1)
                                             <tr>
-                                                <td>{{ $run->id }}</td>
-                                                @if ($run->custom_name === "#" . $run->id)
-                                                <td><a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Add Name</a></td>
-                                                    @else
-                                                    <td>{{ $run->custom_name}}</td>
-                                                @endif
-                                                <td>{{$time = (new App\Http\Controllers\LeaderboardController)->FormatTime($run->duration)}}</td>
-                                                <td>{{ $run->created_at}}</td>
-                                                <td><form action="{{ route('run.destroy',$run->id) }}" method="POST">
-                                                        <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                        <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                <td>{{ $comment->id }}</td>
+                                                <td>{{ (new App\Http\Controllers\RunController())->GetName($comment->run_id) }}</td>
+                                                <td>{{ (new App\Http\Controllers\CommentController())->ShowContent($comment->content) }}</td>
+                                                <td>{{ $comment->created_at . " (UTC)"}}</td>
+                                                <td>
+                                                    <form action="{{ route('comment.destroy',$comment->id) }}" method="POST">
+                                                        <a class="btn btn-sm btn-primary " href="{{ route('run.show',$comment->run_id) }}"><i class="fa fa-fw fa-eye"></i> Show Run</a>
+                                                        <a class="btn btn-sm btn-secondary" href="{{ route('comment.edit',$comment->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
 
                                                         @csrf
                                                         @method('DELETE')
@@ -77,7 +74,7 @@
 @section('pagejs')
     <script>
         window.onload = function () {
-            $("table.PersonalRunsTable").DataTable({
+            $("table.PersonalCommentsTable").DataTable({
                 language: DataTable.Language,
                 pageLength: 25,
                 columnDefs: [

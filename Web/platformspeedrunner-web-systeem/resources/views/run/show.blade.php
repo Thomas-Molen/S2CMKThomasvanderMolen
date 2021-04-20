@@ -12,12 +12,6 @@
                 <div class="col-sm-6">
                     <h1>Run: <strong>{{ $run->id }}</strong></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('run.index') }}">Runs</a></li>
-                        <li class="breadcrumb-item active">Show run</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -48,11 +42,7 @@
                     </div>
                 </div>
             </div>
-            @if( (new \App\Http\Controllers\AuthenticatorController)->IsAdmin())
-            <a class="btn btn-secondary" href="{{ route('run.index') }}">Back</a>
-                @else
-                <a class="btn btn-secondary" href="{{ route('personal_runs') }}">Back</a>
-            @endif
+            <a class="btn btn-secondary" href="{{ (new \App\Http\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
             <a class="btn btn-info" href="{{ route('run.edit',$run->id) }}">Edit</a>
         </div>
     </section>

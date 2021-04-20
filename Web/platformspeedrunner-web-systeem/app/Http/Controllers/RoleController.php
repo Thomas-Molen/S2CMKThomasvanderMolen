@@ -18,7 +18,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $roles = Role::paginate();
 
             return view('role.index', compact('roles'))
@@ -33,7 +33,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $role = new Role();
             return view('role.create', compact('role'));
         }
@@ -63,7 +63,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $role = Role::find($id);
 
             return view('role.show', compact('role'));
@@ -78,7 +78,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $role = Role::find($id);
 
             return view('role.edit', compact('role'));

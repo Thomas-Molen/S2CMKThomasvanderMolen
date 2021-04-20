@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\AuthenticationHelper;
 use App\Models\Run;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class RunController extends Controller
      */
     public function index()
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $runs = Run::paginate();
 
             return view('run.index', compact('runs'))
@@ -34,7 +35,7 @@ class RunController extends Controller
      */
     public function create()
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $run = new Run();
 
             return view('run.create', compact('run'));
@@ -84,7 +85,7 @@ class RunController extends Controller
     public function edit($id)
     {
             $run = Run::find($id);
-        if ((new AuthenticatorController)->IsCurrentUser($run->user_id)) {
+        if ((new AuthenticationHelper)->IsCurrentUser($run->user_id)) {
             return view('run.edit', compact('run'));
         }
     }
@@ -106,7 +107,7 @@ class RunController extends Controller
             $run->update(['custom_name' => "#" . $run->id]);
         }
 
-        if ((new AuthenticatorController)->IsAdmin()) {
+        if ((new AuthenticationHelper)->IsAdmin()) {
             return redirect()->route('run.index')
                 ->with('success', 'Run updated successfully');
         }
@@ -123,7 +124,7 @@ class RunController extends Controller
     {
         $run = Run::find($id)->update(['active' => 0]);
 
-        if ((new AuthenticatorController)->IsAdmin()) {
+        if ((new AuthenticationHelper)->IsAdmin()) {
             return redirect()->route('run.index')
                 ->with('success', 'Run deleted successfully');
         }

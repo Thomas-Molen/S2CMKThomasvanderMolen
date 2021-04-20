@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\AuthenticationHelper;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Run;
@@ -20,7 +21,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $comments = Comment::paginate();
 
             return view('comment.index', compact('comments'))
@@ -46,18 +47,19 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function user_create(Request $request, int $id)
+    public function leaderboard_create(Request $request, int $id)
     {
-        $comment = new Comment();
-
-        return view('comment.user_create')->with(['comment' => $comment, 'run_id' => $id]);
+        if (auth()->user()) {
+            $comment = new Comment();
+            return view('comment.create')->with(['comment' => $comment, 'run_id' => $id]);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -73,8 +75,7 @@ class CommentController extends Controller
         }
         $comment->update(['created_at' => date('Y-m-d H:i:s')]);
 
-
-        return redirect()->route('comment.index')
+        return redirect()->route('leaderboard')
             ->with('success', 'Comment created successfully.');
     }
 
@@ -86,7 +87,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $comment = Comment::find($id);
 
             return view('comment.show', compact('comment'));
@@ -101,9 +102,9 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        if ((new AuthenticatorController)->IsCurrentUser($id)) {
-            $comment = Comment::find($id);
+        $comment = Comment::find($id);
 
+        if ((new AuthenticationHelper)->IsCurrentUser($comment->user_id)) {
             return view('comment.edit', compact('comment'));
         }
     }
@@ -113,7 +114,7 @@ class CommentController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  Comment $comment
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Comment $comment)
     {
@@ -121,7 +122,11 @@ class CommentController extends Controller
 
         $comment->update($request->all());
 
-        return redirect()->route('comment.index')
+        if ((new AuthenticationHelper)->IsAdmin()) {
+            return redirect()->route('comment.index')
+                ->with('success', 'Comment updated successfully');
+        }
+        return redirect()->route('personal_comments')
             ->with('success', 'Comment updated successfully');
     }
 
@@ -134,7 +139,20 @@ class CommentController extends Controller
     {
         $comment = Comment::find($id)->update(['active' => 0]);
 
-        return redirect()->route('comment.index')
+        if ((new AuthenticationHelper)->IsAdmin()) {
+            return redirect()->route('comment.index')
+                ->with('success', 'Comment deleted successfully');
+        }
+        return redirect()->route('personal_runs')
             ->with('success', 'Comment deleted successfully');
+    }
+
+    public function ShowContent($content)
+    {
+        if (strlen($content) > 20)
+        {
+            return substr($content, 0, 20) . "...";
+        }
+        return $content;
     }
 }

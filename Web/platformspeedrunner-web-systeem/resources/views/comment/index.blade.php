@@ -52,7 +52,7 @@
                                                 <td>{{ $comment->id }}</td>
                                                 <td>{{ (new App\Http\Controllers\UserController())->GetUsername($comment->user_id) }}</td>
                                                 <td>{{ (new App\Http\Controllers\RunController())->GetName($comment->run_id) }}</td>
-                                                <td>{{ substr($comment->content, 0, 20) . "..." }}</td>
+                                                <td>{{ (new App\Http\Controllers\CommentController())->ShowContent($comment->content) }}</td>
                                                 <td>{{ $comment->created_at . " (UTC)"}}</td>
                                                 <td>
                                                     <form action="{{ route('comment.destroy',$comment->id) }}" method="POST">

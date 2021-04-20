@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PersonalCommentsController;
 use App\Http\Controllers\PersonalRunsController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RunController;
@@ -41,11 +42,12 @@ Route::get('/', [LeaderboardController::class, 'index'])->name('home');
 Route::group(['middleware' => ['auth']], function () {
     //user accessible pages
     Route::get('personal_runs', [PersonalRunsController::class, 'index'])->name('personal_runs');
-    Route::get('create_comment/{run_id}', [CommentController::class, 'user_create'])->name('user_create_comment');
+    Route::get('personal_comments', [PersonalCommentsController::class, 'index'])->name('personal_comments');
+    Route::get('create_comment/{run_id}', [CommentController::class, 'leaderboard_create'])->name('leaderboard_create_comment');
 
     //admin pages
-    Route::resource('user', UserController::class);
     Route::resource('run', RunController::class);
+    Route::resource('user', UserController::class);
     Route::resource('comment', CommentController::class);
     Route::resource('role', RoleController::class);
 });

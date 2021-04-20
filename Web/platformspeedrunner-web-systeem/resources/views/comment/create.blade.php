@@ -11,12 +11,6 @@
                 <div class="col-sm-6">
                     <h1>Create comment</h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('comment.index') }}">Comments</a></li>
-                        <li class="breadcrumb-item active">Create comment</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -40,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ route('comment.index') }}">Back</a>
+            <a class="btn btn-secondary" href="{{ (new \App\Http\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
         </div>
     </section>
 @endsection

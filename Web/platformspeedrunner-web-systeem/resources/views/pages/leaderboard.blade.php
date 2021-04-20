@@ -53,13 +53,13 @@
                                                 <td><form action="{{ route('run.destroy',$run->id) }}" method="POST">
                                                         <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
                                                         @if (auth()->user())
-                                                            <a class="btn btn-sm btn-success" href="{{ route('user_create_comment', $run->id) }}"><i class="nav-icon fas fa-comments"></i> Comment</a>
+                                                            <a class="btn btn-sm btn-success" href="{{ route('leaderboard_create_comment', $run->id) }}"><i class="nav-icon fas fa-comments"></i> Comment</a>
                                                         @endif
                                                         @if($run->user_id === auth()->id())
                                                             <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this run?');"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                                         @endif
 
                                                     </form></td>

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Helpers;
 
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AuthenticatorController extends Controller
+class AuthenticationHelper
 {
     public function AuthAccess()
     {
@@ -22,9 +22,12 @@ class AuthenticatorController extends Controller
 
     public function IsAdmin()
     {
-        if (Role::find(auth()->user()->role_id)->name === "admin")
+        if (auth()->user())
         {
-            return true;
+            if (Role::find(auth()->user()->role_id)->name === "admin")
+            {
+                return true;
+            }
         }
         return false;
     }

@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $users = User::paginate();
 
             return view('user.index', compact('users'))
@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        if ((new AuthenticatorController)->AuthAccess()) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $user = new User();
             return view('user.create', compact('user'));
         }
@@ -70,7 +70,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        if ((new AuthenticatorController)->IsCurrentUser($id)) {
+        if ((new AuthenticationHelper)->IsCurrentUser($id)) {
             $user = User::find($id);
 
             return view('user.show', compact('user'));
@@ -85,7 +85,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if ((new AuthenticatorController)->IsCurrentUser($id)) {
+        if ((new AuthenticationHelper)->IsCurrentUser($id)) {
             $user = User::find($id);
 
             return view('user.edit', compact('user'));
