@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\AuthenticationHelper;
+use App\Models\Comment;
 use App\Models\Run;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -59,7 +60,7 @@ class RunController extends Controller
             $run->update(['custom_name' => "#" . $run->id]);
         }
 
-        return redirect()->route('run.index')
+        return redirect()->route('run.show', $run->id)
             ->with('success', 'Run created successfully.');
     }
 
@@ -67,13 +68,17 @@ class RunController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function show($id)
     {
         $run = Run::find($id);
-
-        return view('run.show', compact('run'));
+        if ($run->active === 1)
+        {
+            return view('run.show', compact('run'));
+        }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The run you where trying to find has been deleted');
     }
 
     /**
@@ -84,10 +89,15 @@ class RunController extends Controller
      */
     public function edit($id)
     {
-            $run = Run::find($id);
-        if ((new AuthenticationHelper)->IsCurrentUser($run->user_id)) {
-            return view('run.edit', compact('run'));
+        $run = Run::find($id);
+        if ($run->active === 1 OR (new AuthenticationHelper)->IsAdmin())
+        {
+            if ((new AuthenticationHelper)->IsCurrentUser($run->user_id)) {
+                return view('run.edit', compact('run'));
+            }
         }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The run you where trying to find has been deleted');
     }
 
     /**
@@ -108,7 +118,7 @@ class RunController extends Controller
         }
 
         if ((new AuthenticationHelper)->IsAdmin()) {
-            return redirect()->route('run.index')
+            return redirect()->route('run.show', $run->id)
                 ->with('success', 'Run updated successfully');
         }
         return redirect()->route('personal_runs')
@@ -122,7 +132,11 @@ class RunController extends Controller
      */
     public function destroy($id)
     {
-        $run = Run::find($id)->update(['active' => 0]);
+        Run::find($id)->update(['active' => 0]);
+        foreach ((new CommentController)->GetCommentsByRunId($id) as $comment)
+        {
+            Comment::find($comment->id)->update(['active' => 0]);
+        }
 
         if ((new AuthenticationHelper)->IsAdmin()) {
             return redirect()->route('run.index')

@@ -41,7 +41,7 @@
                                                     @else
                                                     <td>{{ $run->custom_name}}</td>
                                                 @endif
-                                                <td>{{$time = (new App\Http\Controllers\LeaderboardController)->FormatTime($run->duration)}}</td>
+                                                <td>{{(new App\Http\Controllers\LeaderboardController)->FormatTime($run->duration)}}</td>
                                                 <td>{{ $run->created_at}}</td>
                                                 <td><form action="{{ route('run.destroy',$run->id) }}" method="POST">
                                                         <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>

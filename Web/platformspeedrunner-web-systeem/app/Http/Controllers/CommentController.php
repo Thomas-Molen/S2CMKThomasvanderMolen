@@ -38,7 +38,7 @@ class CommentController extends Controller
     {
         if (auth()->user()) {
             $comment = new Comment();
-            return view('comment.create', compact('comment'));
+            return view('run.create', compact('comment'));
         }
     }
 
@@ -75,7 +75,7 @@ class CommentController extends Controller
         }
         $comment->update(['created_at' => date('Y-m-d H:i:s')]);
 
-        return redirect()->route('leaderboard')
+        return redirect()->route('run.show', $request->run_id)
             ->with('success', 'Comment created successfully.');
     }
 
@@ -154,5 +154,21 @@ class CommentController extends Controller
             return substr($content, 0, 20) . "...";
         }
         return $content;
+    }
+
+    public function GetCommentsByRunId($id)
+    {
+        $array = [];
+        foreach (Comment::all() as $comment)
+        {
+            if ($comment->run_id === (int)$id)
+            {
+                if ($comment->active === 1)
+                {
+                    array_push($array, Comment::find($comment->id));
+                }
+            }
+        }
+        return $array;
     }
 }

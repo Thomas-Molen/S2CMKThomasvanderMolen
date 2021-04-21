@@ -41,17 +41,24 @@
                                         <th>Player</th>
                                         <th>Time</th>
                                         <th>Date</th>
+                                        <th>Deleted</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach ($runs as $run)
-                                        @if ($run->active === 1)
                                             <tr>
                                                 <td>{{ $run->custom_name }}</td>
                                                 <td>{{ (new App\Http\Controllers\UserController)->GetUsername($run->user_id) }}</td>
                                                 <td>{{ $run->duration }}</td>
                                                 <td>{{ $run->created_at . " (UTC)"}}</td>
+                                                <td>
+                                                    @if ($run->active === 1)
+                                                        no
+                                                    @else
+                                                        yes
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <form action="{{ route('run.destroy',$run->id) }}" method="POST">
                                                         <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
@@ -59,11 +66,10 @@
 
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this run?');"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>
-                                        @endif
                                     @endforeach
                                     </tbody>
                                     <tfoot>
@@ -72,6 +78,7 @@
                                         <th>Player</th>
                                         <th>Time</th>
                                         <th>Date</th>
+                                        <th>Deleted</th>
                                         <th>Actions</th>
                                     </tr>
                                     </tfoot>

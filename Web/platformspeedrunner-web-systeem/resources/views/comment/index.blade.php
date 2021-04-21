@@ -22,9 +22,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <a class="btn btn-primary" style="float: right" href="{{ route('comment.create') }}"><i class="fas fa-plus"></i> New comment</a>
-                        </div>
 
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">
@@ -42,18 +39,25 @@
                                         <th>Run</th>
                                         <th>Content</th>
                                         <th>Date</th>
+                                        <th>Deleted</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach ($comments as $comment)
-                                        @if ($comment->active === 1)
                                             <tr>
                                                 <td>{{ $comment->id }}</td>
                                                 <td>{{ (new App\Http\Controllers\UserController())->GetUsername($comment->user_id) }}</td>
                                                 <td>{{ (new App\Http\Controllers\RunController())->GetName($comment->run_id) }}</td>
                                                 <td>{{ (new App\Http\Controllers\CommentController())->ShowContent($comment->content) }}</td>
                                                 <td>{{ $comment->created_at . " (UTC)"}}</td>
+                                                <td>
+                                                    @if ($comment->active === 1)
+                                                        no
+                                                    @else
+                                                        yes
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <form action="{{ route('comment.destroy',$comment->id) }}" method="POST">
                                                         <a class="btn btn-sm btn-primary " href="{{ route('comment.show',$comment->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
@@ -65,7 +69,6 @@
                                                     </form>
                                                 </td>
                                             </tr>
-                                        @endif
                                     @endforeach
                                     </tbody>
                                     <tfoot>
@@ -75,6 +78,7 @@
                                         <th>Run</th>
                                         <th>Content</th>
                                         <th>Date</th>
+                                        <th>Deleted</th>
                                         <th>Actions</th>
                                     </tr>
                                     </tfoot>

@@ -40,16 +40,23 @@
                                         <th>#</th>
                                         <th>name</th>
                                         <th>description</th>
+                                        <th>Deleted</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach ($roles as $role)
-                                        @if ($role->active === 1)
                                             <tr>
                                                 <td>{{ $role->id }}</td>
                                                 <td>{{ $role->name }}</td>
                                                 <td>{{ $role->description }}</td>
+                                                <td>
+                                                    @if ($role->active === 1)
+                                                        no
+                                                    @else
+                                                        yes
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <form action="{{ route('role.destroy',$role->id) }}" method="POST">
                                                         <a class="btn btn-sm btn-primary " href="{{ route('role.show',$role->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
@@ -57,11 +64,10 @@
 
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this role?');"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>
-                                        @endif
                                     @endforeach
                                     </tbody>
                                     <tfoot>
@@ -69,6 +75,7 @@
                                         <th>#</th>
                                         <th>name</th>
                                         <th>description</th>
+                                        <th>Deleted</th>
                                         <th>Actions</th>
                                     </tr>
                                     </tfoot>
