@@ -13,7 +13,7 @@ namespace PlatformerSpeedRunner.Camera
 
         private Matrix position;
         private Matrix offset;
-        public void Follow (Player playerSprite)
+        public void Follow(Player playerSprite)
         {
             if (playerSprite != null)
             {
@@ -29,48 +29,50 @@ namespace PlatformerSpeedRunner.Camera
                         playerSprite.Position.position.Y,
                         0);
                 }
-                else if (playerSprite.cameraState == CameraMode.Horizontal)
-                {
-                    position = Matrix.CreateTranslation(
-                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
-                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
-                        0);
-
-                    offset = Matrix.CreateTranslation(
-                        Program.width / 2,
-                        playerSprite.Position.position.Y,
-                        0);
-                }
-                else if (playerSprite.cameraState == CameraMode.Vertical)
-                {
-                    position = Matrix.CreateTranslation(
-                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
-                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
-                        0);
-
-                    offset = Matrix.CreateTranslation(
-                        Program.width / 2,
-                        playerSprite.Position.position.Y,
-                        0);
-                }
-                else if (playerSprite.cameraState == CameraMode.Free)
-                {
-                    position = Matrix.CreateTranslation(
-                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
-                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
-                        0);
-
-                    offset = Matrix.CreateTranslation(
-                        Program.width / 2,
-                        Program.height / 2,
-                        0);
-                }
                 else
-                { }
-            }
-            else
-            { }
+                {
+                    switch (playerSprite.cameraState)
+                    {
+                        case CameraMode.Free:
+                            position = Matrix.CreateTranslation(
+                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
+                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
+                        0);
 
+                            offset = Matrix.CreateTranslation(
+                                Program.width / 2,
+                                Program.height / 2,
+                                0);
+                            break;
+
+                        case CameraMode.Horizontal:
+                            position = Matrix.CreateTranslation(
+                       -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
+                       -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
+                       0);
+
+                            offset = Matrix.CreateTranslation(
+                                Program.width / 2,
+                                playerSprite.Position.position.Y,
+                                0);
+                            break;
+                        case CameraMode.Vertical:
+                            position = Matrix.CreateTranslation(
+                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
+                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
+                        0);
+
+                            offset = Matrix.CreateTranslation(
+                                Program.width / 2,
+                                playerSprite.Position.position.Y,
+                                0);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
             transform = position * offset;
         }
 

@@ -114,10 +114,6 @@ namespace PlatformerSpeedRunner.States.Base
         {
             foreach (var gameObject in gameObjects)
             {
-                if (debug)
-                {
-                    //gameObject.RenderBoundingBoxes(spriteBatch);
-                }
                 gameObject.RenderSprite(spriteBatch);
             }
         }
