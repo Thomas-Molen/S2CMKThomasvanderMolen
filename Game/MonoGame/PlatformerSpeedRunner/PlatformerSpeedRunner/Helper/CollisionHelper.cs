@@ -13,16 +13,12 @@ namespace PlatformerSpeedRunner.Helper
         {
             collisionDetector.DetectCollisions(playerSprite, FullCollisionList, (player, Object) =>
             {
-                if (Convert.ToInt32(player.Position.position.Y + player.Texture.Height) <= Object.Position.position.Y + 20 &&
-                    Convert.ToInt32(player.Position.position.X + player.Texture.Width) > Object.Position.position.X &&
-                    Convert.ToInt32(player.Position.position.X) < Object.Position.position.X + Object.Texture.Width)
+                if (IsPlayerTopside(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y - player.Texture.Height));
                     player.Movement.yVelocity = 0;
                 }
-                else if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
-                        Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
-                        Convert.ToInt32(player.Position.position.X + player.Texture.Width) >= Object.Position.position.X)
+                else if (IsPlayerBottomside(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y + Object.Texture.Height));
                     if (player.Movement.yVelocity < 0)
@@ -30,9 +26,7 @@ namespace PlatformerSpeedRunner.Helper
                         player.Movement.yVelocity = 0.1f;
                     }
                 }
-                else if (Convert.ToInt32(player.Position.position.X) >= Object.Position.position.X + 20 &&
-                        Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
-                        Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+                else if (IsPlayerRightSide(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X + Object.Texture.Width, player.Position.position.Y));
                     if (player.Movement.xVelocity < 0)
@@ -40,9 +34,7 @@ namespace PlatformerSpeedRunner.Helper
                         player.Movement.xVelocity = 0;
                     }
                 }
-                else if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
-                        Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
-                        Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+                else if (IsPlayerLeftSide(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X - player.Texture.Width, player.Position.position.Y));
                     if (player.Movement.xVelocity > 0)
@@ -57,16 +49,12 @@ namespace PlatformerSpeedRunner.Helper
         {
             collisionDetector.DetectCollisions(playerSprite, TopsCollisionList, (player, Object) =>
             {
-                if (Convert.ToInt32(player.Position.position.Y + player.Texture.Height) <= Object.Position.position.Y + 20 &&
-                    Convert.ToInt32(player.Position.position.X + player.Texture.Width) > Object.Position.position.X &&
-                    Convert.ToInt32(player.Position.position.X) < Object.Position.position.X + Object.Texture.Width)
+                if (IsPlayerTopside(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y - player.Texture.Height));
                     player.Movement.yVelocity = 0;
                 }
-                else if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
-                        Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
-                        Convert.ToInt32(player.Position.position.X + player.Texture.Width) >= Object.Position.position.X)
+                else if (IsPlayerBottomside(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y + Object.Texture.Height));
                     if (player.Movement.yVelocity < 0)
@@ -81,9 +69,7 @@ namespace PlatformerSpeedRunner.Helper
         {
             collisionDetector.DetectCollisions(playerSprite, SidesCollisionList, (player, Object) =>
             {
-                if (Convert.ToInt32(player.Position.position.X) >= Object.Position.position.X + 20 &&
-                        Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
-                        Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+                if (IsPlayerRightSide(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X + Object.Texture.Width, player.Position.position.Y));
                     if (player.Movement.xVelocity < 0)
@@ -91,9 +77,7 @@ namespace PlatformerSpeedRunner.Helper
                         player.Movement.xVelocity = 0;
                     }
                 }
-                else if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
-                        Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
-                        Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+                else if (IsPlayerLeftSide(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X - player.Texture.Width, player.Position.position.Y));
                     if (player.Movement.xVelocity > 0)
@@ -129,18 +113,14 @@ namespace PlatformerSpeedRunner.Helper
             MovingRockHead result = null;
             collisionDetector.DetectCollisions(playerSprite, RockHeadCollisionList, (player, Object) =>
             {
-                if (Convert.ToInt32(player.Position.position.Y + player.Texture.Height) <= Object.Position.position.Y + 20 &&
-                    Convert.ToInt32(player.Position.position.X + player.Texture.Width) > Object.Position.position.X &&
-                    Convert.ToInt32(player.Position.position.X) < Object.Position.position.X + Object.Texture.Width)
+                if (IsPlayerTopside(player, Object))
                 {
                     result = Object;
 
                     player.Position.SetPosition(new Vector2(player.Position.position.X + Object.velocity, Object.Position.position.Y - player.Texture.Height));
                     player.Movement.yVelocity = 0;
                 }
-                else if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
-                        Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
-                        Convert.ToInt32(player.Position.position.X + player.Texture.Width) >= Object.Position.position.X)
+                else if (IsPlayerBottomside(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y + Object.Texture.Height));
                     if (player.Movement.yVelocity < 0)
@@ -148,9 +128,7 @@ namespace PlatformerSpeedRunner.Helper
                         player.Movement.yVelocity = 0.1f;
                     }
                 }
-                else if (Convert.ToInt32(player.Position.position.X) >= Object.Position.position.X + 20 &&
-                        Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
-                        Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+                else if (IsPlayerRightSide(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X + Object.Texture.Width, player.Position.position.Y));
                     if (player.Movement.xVelocity < 0)
@@ -158,9 +136,7 @@ namespace PlatformerSpeedRunner.Helper
                         player.Movement.xVelocity = 0;
                     }
                 }
-                else if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
-                        Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
-                        Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+                else if (IsPlayerLeftSide(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X - player.Texture.Width, player.Position.position.Y));
                     if (player.Movement.xVelocity > 0)
@@ -193,6 +169,96 @@ namespace PlatformerSpeedRunner.Helper
                 result = true;
             });
             return result;
+        }
+
+        //if statement conditions for player
+        private bool IsPlayerTopside(Player player, BasicObject Object)
+        {
+            if (Convert.ToInt32(player.Position.position.Y + player.Texture.Height) <= Object.Position.position.Y + 20 &&
+                Convert.ToInt32(player.Position.position.X + player.Texture.Width) > Object.Position.position.X &&
+                Convert.ToInt32(player.Position.position.X) < Object.Position.position.X + Object.Texture.Width)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsPlayerBottomside(Player player, BasicObject Object)
+        {
+            if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
+                Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
+                Convert.ToInt32(player.Position.position.X + player.Texture.Width) >= Object.Position.position.X)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsPlayerRightSide(Player player, BasicObject Object)
+        {
+            if (Convert.ToInt32(player.Position.position.X) >= Object.Position.position.X + 20 &&
+                Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
+                Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsPlayerLeftSide(Player player, BasicObject Object)
+        {
+            if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
+                Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
+                Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //if statement conditions for Rockhead overloading
+        private bool IsPlayerTopside(Player player, MovingRockHead Object)
+        {
+            if (Convert.ToInt32(player.Position.position.Y + player.Texture.Height) <= Object.Position.position.Y + 20 &&
+                Convert.ToInt32(player.Position.position.X + player.Texture.Width) > Object.Position.position.X &&
+                Convert.ToInt32(player.Position.position.X) < Object.Position.position.X + Object.Texture.Width)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsPlayerBottomside(Player player, MovingRockHead Object)
+        {
+            if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
+                Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
+                Convert.ToInt32(player.Position.position.X + player.Texture.Width) >= Object.Position.position.X)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsPlayerRightSide(Player player, MovingRockHead Object)
+        {
+            if (Convert.ToInt32(player.Position.position.X) >= Object.Position.position.X + 20 &&
+                Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
+                Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsPlayerLeftSide(Player player, MovingRockHead Object)
+        {
+            if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
+                Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
+                Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
