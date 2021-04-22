@@ -16,7 +16,7 @@
                     <h1 class="m-0 text-dark">Run: {{ $run->custom_name }}</h1>
                 </div>
                 <div class="col-5">
-                    @if((new \App\Http\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
+                    @if((new \App\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
                     <form action="{{ route('run.destroy',$run->id) }}" method="POST">
                         <h5><a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
 
@@ -43,7 +43,7 @@
                 <div class="row">
                     <div class="col-11 column">
                         <h5>Comments:</h5>
-                        @foreach((new \App\Http\Controllers\CommentController)->GetCommentsByRunId($run->id) as $comment)
+                        @foreach(\App\Http\Controllers\CommentController::GetCommentsByRunId($run->id) as $comment)
                             <div class="col-11 column3">
                                 <i class="fas fa-user"></i><h7>{{ (new \App\Http\Controllers\UserController)->GetUsername($comment->user_id)}}</h7><br>
                                 <div style="word-wrap: break-word">
@@ -59,8 +59,8 @@
                 <div class="row">
                     <div class="col-9 column">
                         <h5>Details</h5>
-                        Runner: {{ (new \App\Http\Controllers\UserController)->GetUsername($run->user_id) }}<br>
-                        Time: {{ (new \App\Http\Controllers\LeaderboardController)->FormatTime($run->duration) }} (m:s:ms)<br>
+                        Runner: {{ \App\Http\Controllers\UserController::GetUsername($run->user_id) }}<br>
+                        Time: {{ \App\Http\Controllers\LeaderboardController::FormatTime($run->duration) }} (m:s:ms)<br>
                         Age: x days ago
                     </div>
                 </div>

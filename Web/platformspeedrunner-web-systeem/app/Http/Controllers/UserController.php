@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\AuthenticationHelper;
+use App\Helpers\AuthenticationHelper;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -123,7 +123,7 @@ class UserController extends Controller
             ->with('success', 'User deleted successfully');
     }
 
-    public function GetUsername($id)
+    static function GetUsername($id)
     {
         $user = User::find($id);
 

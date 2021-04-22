@@ -33,29 +33,29 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ( (new App\Http\Controllers\LeaderboardController)->SortRuns($runs) as $run)
+                                    @foreach ( App\Http\Controllers\LeaderboardController::SortRuns($runs) as $run)
                                         @if ($run->active === 1)
                                             <tr>
                                                 @if ($i === 0)
-                                                    <td><i class="fas fa-trophy"></i>{{ (new App\Http\Controllers\LeaderboardController)->SetSuffix(++$i) }}</td>
+                                                    <td><i class="fas fa-trophy"></i>{{ App\Http\Controllers\LeaderboardController::SetSuffix(++$i) }}</td>
                                                 @elseif ($i === 1)
-                                                    <td><i class="fas fa-medal"></i>{{ (new App\Http\Controllers\LeaderboardController)->SetSuffix(++$i) }}</td>
+                                                    <td><i class="fas fa-medal"></i>{{ App\Http\Controllers\LeaderboardController::SetSuffix(++$i) }}</td>
                                                 @elseif ($i === 2)
-                                                    <td><i class="fas fa-award"></i>{{ (new App\Http\Controllers\LeaderboardController)->SetSuffix(++$i) }}</td>
+                                                    <td><i class="fas fa-award"></i>{{ App\Http\Controllers\LeaderboardController::SetSuffix(++$i) }}</td>
                                                 @else
-                                                    <td>{{ (new App\Http\Controllers\LeaderboardController)->SetSuffix(++$i) }}</td>
+                                                    <td>{{ App\Http\Controllers\LeaderboardController::SetSuffix(++$i) }}</td>
                                                 @endif
                                                 <td>{{ $run->custom_name}}</td>
-                                                <td>{{ (new App\Http\Controllers\UserController)->GetUsername($run->user_id) }}</td>
+                                                <td>{{ App\Http\Controllers\UserController::GetUsername($run->user_id) }}</td>
 
-                                                <td>{{ (new App\Http\Controllers\LeaderboardController)->FormatTime($run->duration)}}</td>
+                                                <td>{{ \App\Http\Controllers\LeaderboardController::FormatTime($run->duration)}}</td>
                                                 <td>{{ $run->created_at}}</td>
                                                 <td><form action="{{ route('run.destroy',$run->id) }}" method="POST">
                                                         <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
                                                         @if (auth()->user())
                                                             <a class="btn btn-sm btn-success" href="{{ route('leaderboard_create_comment', $run->id) }}"><i class="nav-icon fas fa-comments"></i> Comment</a>
                                                         @endif
-                                                        @if((new \App\Http\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
+                                                        @if((new \App\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
                                                             <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                             @csrf
                                                             @method('DELETE')

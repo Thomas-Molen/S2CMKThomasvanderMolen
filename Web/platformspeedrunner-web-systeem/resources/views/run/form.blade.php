@@ -10,7 +10,7 @@
             {{ Form::textarea('information', $run->information, ['class' => 'form-control run-info' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'Extra information']) }}
             {!! $errors->first('information', '<div class="invalid-feedback">:message</p>') !!}
         </div>
-        @if ((new App\Http\Helpers\AuthenticationHelper)->IsAdmin())
+        @if ((new App\Helpers\AuthenticationHelper)->IsAdmin())
         <div class="form-group">
             {{ Form::label('user_id') }}
             {{ Form::text('user_id', $run->user_id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User id']) }}

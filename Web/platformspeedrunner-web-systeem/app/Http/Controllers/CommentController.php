@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\AuthenticationHelper;
+use App\Helpers\AuthenticationHelper;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Run;
@@ -147,7 +147,7 @@ class CommentController extends Controller
             ->with('success', 'Comment deleted successfully');
     }
 
-    public function ShowContent($content)
+    static function ShowContent($content)
     {
         if (strlen($content) > 20)
         {
@@ -156,7 +156,7 @@ class CommentController extends Controller
         return $content;
     }
 
-    public function GetCommentsByRunId($id)
+    static function GetCommentsByRunId($id)
     {
         $array = [];
         foreach (Comment::all() as $comment)

@@ -57,7 +57,7 @@
                     </li>
                 @endif
 
-                @if((new App\Http\Helpers\AuthenticationHelper)->IsAdmin())
+                @if((new App\Helpers\AuthenticationHelper)->IsAdmin())
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-database"></i>
