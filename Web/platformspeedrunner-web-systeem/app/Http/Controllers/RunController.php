@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Run;
 use App\Models\User;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\isNull;
 
 /**
  * Class RunController
@@ -73,6 +74,11 @@ class RunController extends Controller
     public function show($id)
     {
         $run = Run::find($id);
+        if ($run === null)
+        {
+            return redirect()->route('leaderboard')
+                ->with('error', 'The run you where trying to find does not exist');
+        }
         if ($run->active === 1)
         {
             return view('run.show', compact('run'));
@@ -117,11 +123,7 @@ class RunController extends Controller
             $run->update(['custom_name' => "#" . $run->id]);
         }
 
-        if ((new AuthenticationHelper)->IsAdmin()) {
-            return redirect()->route('run.show', $run->id)
-                ->with('success', 'Run updated successfully');
-        }
-        return redirect()->route('personal_runs')
+        return redirect()->route('run.show', $run->id)
             ->with('success', 'Run updated successfully');
     }
 

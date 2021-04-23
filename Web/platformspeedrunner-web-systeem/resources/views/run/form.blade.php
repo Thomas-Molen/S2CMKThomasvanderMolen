@@ -6,7 +6,7 @@
             {!! $errors->first('custom_name', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group class-info">
-            {{ Form::label('information (max: 2000 characters)') }}
+            {{ Form::label('information (max: 5000 characters)') }}
             {{ Form::textarea('information', $run->information, ['class' => 'form-control run-info' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'Extra information']) }}
             {!! $errors->first('information', '<div class="invalid-feedback">:message</p>') !!}
         </div>

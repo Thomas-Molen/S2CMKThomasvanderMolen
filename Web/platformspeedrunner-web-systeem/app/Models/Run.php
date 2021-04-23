@@ -23,7 +23,7 @@ class Run extends Model
 
     static $rules = [
         'custom_name' => 'max:50',
-        'information' => 'max:2000'
+        'information' => 'max:5000'
     ];
 
     protected $perPage = 100;

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LinkController;
 use App\Http\Controllers\PersonalCommentsController;
 use App\Http\Controllers\PersonalRunsController;
 use App\Http\Controllers\RoleController;
@@ -45,8 +46,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('personal_runs', [PersonalRunsController::class, 'index'])->name('personal_runs');
     Route::get('personal_comments', [PersonalCommentsController::class, 'index'])->name('personal_comments');
     Route::get('create_comment/{run_id}', [CommentController::class, 'leaderboard_create'])->name('leaderboard_create_comment');
+    Route::get('create_link/{run_id}', [LinkController::class, 'run_create'])->name('run_create_link');
 
     //admin pages
+    Route::resource('link', LinkController::class);
     Route::resource('user', UserController::class);
     Route::resource('comment', CommentController::class);
     Route::resource('role', RoleController::class);
