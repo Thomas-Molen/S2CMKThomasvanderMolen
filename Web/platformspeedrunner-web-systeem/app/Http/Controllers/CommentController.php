@@ -37,7 +37,7 @@ class CommentController extends Controller
     public function create()
     {
         return redirect()->route('leaderboard')
-            ->with('error', 'This path is inaccessible');
+            ->with('error', 'The selected path was inaccessible');
     }
 
     /**
@@ -52,7 +52,7 @@ class CommentController extends Controller
             return view('comment.create')->with(['comment' => $comment, 'run_id' => $id]);
         }
         return redirect()->route('leaderboard')
-            ->with('error', 'The path you where trying to reach is inaccessible');
+            ->with('error', 'The selected path was inaccessible');
     }
 
     /**
