@@ -122,11 +122,7 @@ class CommentController extends Controller
 
         $comment->update($request->all());
 
-        if ((new AuthenticationHelper)->IsAdmin()) {
-            return redirect()->route('comment.index')
-                ->with('success', 'Comment updated successfully');
-        }
-        return redirect()->route('personal_comments')
+        return redirect()->route('run.show', $comment->run_id)
             ->with('success', 'Comment updated successfully');
     }
 
@@ -139,11 +135,7 @@ class CommentController extends Controller
     {
         $comment = Comment::find($id)->update(['active' => 0]);
 
-        if ((new AuthenticationHelper)->IsAdmin()) {
-            return redirect()->route('comment.index')
-                ->with('success', 'Comment deleted successfully');
-        }
-        return redirect()->route('personal_runs')
+        return redirect()->route('run.show', Comment::find($id)->user_id)
             ->with('success', 'Comment deleted successfully');
     }
 
@@ -165,7 +157,7 @@ class CommentController extends Controller
             {
                 if ($comment->active === 1)
                 {
-                    array_push($array, Comment::find($comment->id));
+                    array_push($array, $comment);
                 }
             }
         }
