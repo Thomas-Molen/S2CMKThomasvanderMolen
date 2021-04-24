@@ -29,7 +29,7 @@ class RegisterController extends Controller
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'unique_key' => $request->unique_key,
-            'role_id' => (new RoleController)->GetIdByName("user")
+            'role_id' => (new RoleController)->CheckRoleByName("user")
         ]);
 
         return redirect()->route('login');

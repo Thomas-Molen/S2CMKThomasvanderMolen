@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\AuthenticationHelper;
+use App\Helpers\AuthenticationHelper;
 use App\Models\Comment;
 use App\Models\Run;
 use App\Models\User;
@@ -96,7 +96,7 @@ class RunController extends Controller
     public function edit($id)
     {
         $run = Run::find($id);
-        if ($run->active === 1 OR (new AuthenticationHelper)->IsAdmin())
+        if ($run !== null AND ($run->active === 1 OR (new AuthenticationHelper)->IsAdmin()))
         {
             if ((new AuthenticationHelper)->IsCurrentUser($run->user_id)) {
                 return view('run.edit', compact('run'));

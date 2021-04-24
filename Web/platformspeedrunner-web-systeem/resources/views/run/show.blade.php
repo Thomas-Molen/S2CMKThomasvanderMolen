@@ -50,20 +50,13 @@
                                     <div style="word-wrap: break-word">
                                         {{ $comment->content }}
                                     </div>
-                                    @if((new \App\Http\Helpers\AuthenticationHelper)->IsCurrentUser($comment->user_id))
-                                        <form action="{{ route('comment.destroy',$comment->id) }}" method="POST" style="margin-bottom: -1%">
-                                            <a class="btn btn-sm btn-secondary" href="{{ route('comment.edit',$comment->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
-
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this run?');"><i class="fa fa-fw fa-trash"></i> Delete</button>
-                                        </form>
+                                    @if((new \App\Helpers\AuthenticationHelper)->IsCurrentUser($comment->user_id))
+                                        <a class="btn btn-sm btn-secondary" href="{{ route('comment.edit',$comment->id) }}" style="margin-top: 1%"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                     @endif
                                 </blockquote>
                             </div>
                         @endforeach
-                        <a class="btn btn-sm btn-success" href="{{ route('leaderboard_create_comment', $run->id) }}"><i class="fas fa-fw fa-comments"></i> Add Comment</a>
+                        <a class="btn btn-sm btn-success" href="{{ route('leaderboard_create_comment', $run->id) }}" style="margin-top: 1%"><i class="fas fa-fw fa-comments"></i> Add Comment</a>
                     </div>
                 </div>
             </div>
@@ -80,7 +73,7 @@
                 <div class="row info-box shadow">
                     <div class="col-11">
                         <h5 class="card-header">External Links:</h5>
-                        @if((new \App\Http\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
+                        @if((new \App\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
                             <div style="margin-top: 1%; margin-bottom: -4%">
                                 <a class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fa fa-fw fa-edit"></i>Edit Link</a>
                                 <div class="dropdown-menu">
@@ -100,7 +93,7 @@
                 </div>
                 <div class="row" style="margin-top: 1%">
                     <div class="col-9">
-                        @if((new \App\Http\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
+                        @if((new \App\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
                             <form action="{{ route('run.destroy',$run->id) }}" method="POST">
                                 <a class="btn btn-sm btn-success" href="{{ route('run_create_link', $run->id) }}"><i class="fas fa-link"></i> Add Link</a>
                                 <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-edit"></i> Edit</a>
@@ -115,7 +108,7 @@
                 </div>
             </div>
         </div>
-        <a class="btn btn-secondary" href="{{ (new \App\Http\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a><br><br>
+        <a class="btn btn-secondary" href="{{ (new \App\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a><br><br>
     </div>
     @endif
 @endsection

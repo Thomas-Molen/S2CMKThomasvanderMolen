@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
     //user accessible pages
     Route::get('personal_runs', [PersonalRunsController::class, 'index'])->name('personal_runs');
     Route::get('personal_comments', [PersonalCommentsController::class, 'index'])->name('personal_comments');
-    Route::get('create_comment/{run_id}', [CommentController::class, 'leaderboard_create'])->name('leaderboard_create_comment');
+    Route::get('create_comment/{run_id}', [CommentController::class, 'run_create'])->name('leaderboard_create_comment');
     Route::get('create_link/{run_id}', [LinkController::class, 'run_create'])->name('run_create_link');
 
     //admin pages

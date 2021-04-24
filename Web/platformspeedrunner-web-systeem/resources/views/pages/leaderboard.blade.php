@@ -50,19 +50,15 @@
 
                                                 <td>{{ (new App\Http\Controllers\LeaderboardController)->FormatTime($run->duration)}}</td>
                                                 <td>{{ $run->created_at}}</td>
-                                                <td><form action="{{ route('run.destroy',$run->id) }}" method="POST">
+                                                <td>
                                                         <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
                                                         @if (auth()->user())
                                                             <a class="btn btn-sm btn-success" href="{{ route('leaderboard_create_comment', $run->id) }}"><i class="nav-icon fas fa-comments"></i> Comment</a>
                                                         @endif
-                                                        @if((new \App\Http\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
+                                                        @if((new \App\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
                                                             <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this run?');"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                                         @endif
-
-                                                    </form></td>
+                                                </td>
                                             </tr>
                                             @endif
                                             @endforeach

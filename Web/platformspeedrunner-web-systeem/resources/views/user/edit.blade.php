@@ -11,12 +11,6 @@
                 <div class="col-sm-6">
                     <h1>Edit user: <strong>{{ $user->username }}</strong></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('user.index') }}">Users</a></li>
-                        <li class="breadcrumb-item active">Edit user</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -39,7 +33,18 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ route('user.index') }}">Back</a>
+            <div style="display: inline-block">
+                <a class="btn btn-secondary" href="{{ (new \App\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
+            </div>
+                <div style="display: inline-block">
+                    <form action="{{ route('user.destroy',$user->id) }}" method="POST">
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your account?');">Delete</button>
+                    </form>
+                </div>
         </div>
     </section>
 @endsection

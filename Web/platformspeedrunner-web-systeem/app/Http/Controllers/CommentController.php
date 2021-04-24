@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\AuthenticationHelper;
+use App\Helpers\AuthenticationHelper;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Run;
@@ -36,23 +36,23 @@ class CommentController extends Controller
      */
     public function create()
     {
-        if (auth()->user()) {
-            $comment = new Comment();
-            return view('run.create', compact('comment'));
-        }
+        return redirect()->route('leaderboard')
+            ->with('error', 'This path is inaccessible');
     }
 
     /**
      * Show the form for creating a new resource as a normal user.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function leaderboard_create(Request $request, int $id)
+    public function run_create(Request $request, int $id)
     {
-        if (auth()->user()) {
+        if (Run::find($id) !== null) {
             $comment = new Comment();
             return view('comment.create')->with(['comment' => $comment, 'run_id' => $id]);
         }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The path you where trying to reach is inaccessible');
     }
 
     /**
@@ -103,10 +103,11 @@ class CommentController extends Controller
     public function edit($id)
     {
         $comment = Comment::find($id);
-
-        if ((new AuthenticationHelper)->IsCurrentUser($comment->user_id)) {
+        if ($comment !== null AND $comment->active === 1 AND (new AuthenticationHelper)->IsCurrentUser($comment->user_id)) {
             return view('comment.edit', compact('comment'));
         }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The comment you where trying to find has been deleted');
     }
 
     /**

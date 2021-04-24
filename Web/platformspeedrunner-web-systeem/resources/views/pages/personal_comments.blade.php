@@ -40,14 +40,8 @@
                                                 <td>{{ (new App\Http\Controllers\CommentController())->ShowContent($comment->content) }}</td>
                                                 <td>{{ $comment->created_at . " (UTC)"}}</td>
                                                 <td>
-                                                    <form action="{{ route('comment.destroy',$comment->id) }}" method="POST">
-                                                        <a class="btn btn-sm btn-primary " href="{{ route('run.show',$comment->run_id) }}"><i class="fa fa-fw fa-eye"></i> Show Run</a>
-                                                        <a class="btn btn-sm btn-secondary" href="{{ route('comment.edit',$comment->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
-
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this comment?');"><i class="fa fa-fw fa-trash"></i> Delete</button>
-                                                    </form>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('run.show',$comment->run_id) }}"><i class="fa fa-fw fa-eye"></i> Show Run</a>
+                                                    <a class="btn btn-sm btn-secondary" href="{{ route('comment.edit',$comment->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                 </td>
                                             </tr>
                                         @endif

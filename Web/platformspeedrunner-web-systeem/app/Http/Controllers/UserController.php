@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\AuthenticationHelper;
+use App\Helpers\AuthenticationHelper;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,11 +86,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if ((new AuthenticationHelper)->IsCurrentUser($id)) {
+        if ((new AuthenticationHelper)->AuthAccess()) {
             $user = User::find($id);
 
             return view('user.edit', compact('user'));
         }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The path you where trying to reach is inaccessible');
     }
 
     /**

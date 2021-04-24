@@ -57,7 +57,7 @@
                     </li>
                 @endif
 
-                @if((new App\Http\Helpers\AuthenticationHelper)->IsAdmin())
+                @if((new App\Helpers\AuthenticationHelper)->IsAdmin())
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-database"></i>
@@ -88,6 +88,14 @@
                                 <i class="nav-icon fas fa-comments"></i>
                                 <p>
                                     Comments
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('link.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-link"></i>
+                                <p>
+                                    Links
                                 </p>
                             </a>
                         </li>

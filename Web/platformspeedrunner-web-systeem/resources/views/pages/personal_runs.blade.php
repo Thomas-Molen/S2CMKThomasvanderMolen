@@ -43,14 +43,9 @@
                                                 @endif
                                                 <td>{{(new App\Http\Controllers\LeaderboardController)->FormatTime($run->duration)}}</td>
                                                 <td>{{ $run->created_at}}</td>
-                                                <td><form action="{{ route('run.destroy',$run->id) }}" method="POST">
-                                                        <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                        <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
-
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this run?');"><i class="fa fa-fw fa-trash"></i> Delete</button>
-                                                    </form>
+                                                <td>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
+                                                    <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                 </td>
                                             </tr>
                                         @endif

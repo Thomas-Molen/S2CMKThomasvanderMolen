@@ -33,7 +33,20 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ (new \App\Http\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
+            <div style="display: inline-block">
+                <a class="btn btn-secondary" href="{{ (new \App\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
+            </div>
+            @if($comment->id !== null)
+                <div style="display: inline-block">
+                    <form action="{{ route('comment.destroy',$comment->id) }}" method="POST">
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this comment?');">Delete</button>
+                    </form>
+                </div>
+            @endif
         </div>
     </section>
 @endsection
