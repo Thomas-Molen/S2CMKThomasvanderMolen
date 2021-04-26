@@ -1,0 +1,13 @@
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\bin\Debug\netcoreapp3.1\CircusTreinV2.exe
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\bin\Debug\netcoreapp3.1\CircusTreinV2.deps.json
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\bin\Debug\netcoreapp3.1\CircusTreinV2.runtimeconfig.json
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\bin\Debug\netcoreapp3.1\CircusTreinV2.runtimeconfig.dev.json
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\bin\Debug\netcoreapp3.1\CircusTreinV2.dll
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\bin\Debug\netcoreapp3.1\CircusTreinV2.pdb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\obj\Debug\netcoreapp3.1\CircusTreinV2.csprojAssemblyReference.cache
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\obj\Debug\netcoreapp3.1\CircusTreinV2.AssemblyInfoInputs.cache
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\obj\Debug\netcoreapp3.1\CircusTreinV2.AssemblyInfo.cs
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\obj\Debug\netcoreapp3.1\CircusTreinV2.csproj.CoreCompileInputs.cache
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\obj\Debug\netcoreapp3.1\CircusTreinV2.dll
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\obj\Debug\netcoreapp3.1\CircusTreinV2.pdb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\CircusTreinV2\CircusTreinV2\obj\Debug\netcoreapp3.1\CircusTreinV2.genruntimeconfig.cache

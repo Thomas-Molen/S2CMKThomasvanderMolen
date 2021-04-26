@@ -14,6 +14,10 @@ namespace PlatformerSpeedRunner.Input
             {
                 commands.Add(new SplashInputCommand.GameSelect());
             }
+            if (state.IsKeyDown(Keys.Escape))
+            {
+                commands.Add(new SplashInputCommand.GameExit());
+            }
 
             return commands;
         }

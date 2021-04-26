@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Terrain/StoneSlabHorizontal.png</SourceFile>
-  <SourceTime>2021-03-12T15:42:25.8655331+01:00</SourceTime>
-  <DestFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Terrain/StoneSlabHorizontal.xnb</DestFile>
-  <DestTime>2021-03-19T11:46:51.029939+01:00</DestTime>
+  <SourceFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Terrain/StoneSlabHorizontal.png</SourceFile>
+  <SourceTime>2021-03-12T15:42:26+01:00</SourceTime>
+  <DestFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Terrain/StoneSlabHorizontal.xnb</DestFile>
+  <DestTime>2021-04-26T10:27:28.5672279+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -20,6 +20,7 @@ namespace PlatformerSpeedRunner.States
 
             backgroundImage = new BasicObject(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
             AddGameObject(backgroundImage);
+            LoadObjects();
         }
 
         public override void HandleInput()
@@ -29,6 +30,10 @@ namespace PlatformerSpeedRunner.States
                 if (cmd is SplashInputCommand.GameSelect)
                 {
                     SwitchState(new GameplayState());
+                }
+                if (cmd is SplashInputCommand.GameExit)
+                {
+                    Environment.Exit(1);
                 }
             });
         }
@@ -48,6 +53,11 @@ namespace PlatformerSpeedRunner.States
             Text textObject = new Text(content, new Vector2(PosX, PosY));
             AddTextObject(textObject);
             return textObject;
+        }
+
+        private void LoadObjects()
+        {
+            AddText("MAIN MENU", 900, 100);
         }
     }
 }
