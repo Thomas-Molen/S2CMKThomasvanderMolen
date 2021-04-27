@@ -17,7 +17,7 @@ namespace CircusTreinV2
         }
         public override string ToString()
         {
-            return "Animal: " + animalSize + " " + animalType;
+            return animalSize + " " + animalType;
         }
 
     }

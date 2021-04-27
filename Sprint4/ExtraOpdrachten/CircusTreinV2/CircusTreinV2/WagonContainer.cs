@@ -7,7 +7,7 @@ namespace CircusTreinV2
     public class WagonContainer
     {
         private List<Wagon> wagons;
-        private List<Animal> animals;
+        public List<Animal> animals { get; private set; }
 
         public WagonContainer()
         {
@@ -33,26 +33,30 @@ namespace CircusTreinV2
             while (animals.Count != 0)
             {
                 Wagon wagon = new Wagon();
-                List<Animal> animalsToAdd = animals;
-                List<Animal> animalsToRemove = new List<Animal>();
                 
-                foreach (Animal animal in animalsToAdd)
+                foreach (Animal animal in animals.ToArray())
                 {
                     if (wagon.CanAnimalFit(animal))
                     {
-                        if (wagon.WillAnimalBeSafe(animal))
+                        if (wagon.WillAnimalBeSafe(animal) && wagon.WillWagonBeSafe(animal))
                         {
                             wagon.AddAnimal(animal);
-                            animalsToRemove.Add(animal);
+                            animals.Remove(animal);
                         }
                     }
                 }
                 wagons.Add(wagon);
-                foreach (Animal animal in animalsToRemove)
-                {
-                    animals.Remove(animal);
-                }
             }
+        }
+
+        public override string ToString()
+        {
+            string returnString = "Train contains: " + wagons.Count + " Wagons\n\n";
+            foreach (Wagon wagon in wagons)
+            {
+                returnString += wagon.ToString() + "\n";
+            }
+            return returnString;
         }
     }
 }

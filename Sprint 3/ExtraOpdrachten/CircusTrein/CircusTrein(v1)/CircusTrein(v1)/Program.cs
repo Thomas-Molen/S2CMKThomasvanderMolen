@@ -27,27 +27,27 @@ namespace CircusTrein_v1_
 
         private static void CreateAnimals(AnimalContainer container)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 container.AddAnimal(new Animal(AnimalFood.Meat, AnimalSize.Large));
             }
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 1; i++)
             {
                 container.AddAnimal(new Animal(AnimalFood.Meat, AnimalSize.Medium));
             }
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 3; i++)
             {
                 container.AddAnimal(new Animal(AnimalFood.Meat, AnimalSize.Small));
             }
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)
             {
                 container.AddAnimal(new Animal(AnimalFood.Plant, AnimalSize.Large));
             }
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < 6; i++)
             {
                 container.AddAnimal(new Animal(AnimalFood.Plant, AnimalSize.Medium));
             }
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < 4; i++)
             {
                 container.AddAnimal(new Animal(AnimalFood.Plant, AnimalSize.Small));
             }
