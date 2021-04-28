@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function index()
+    public function index(string $unique_key = "")
     {
-        return view('auth.register');
+        return view('auth.register')->with(['unique_key' => $unique_key]);
     }
 
     public function store(Request $request)
@@ -22,7 +22,7 @@ class RegisterController extends Controller
         $this->validate($request, [
             'username' => 'required|max:30',
             'password' => 'required|confirmed',
-            'unique_key' => 'required|max:20',
+            'unique_key' => 'required|max:20|unique:user,unique_key',
         ]);
 
         User::create([

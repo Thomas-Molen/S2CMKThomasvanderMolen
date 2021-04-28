@@ -4,11 +4,10 @@
     <div class="card">
         <div class="card-body register-card-body">
             <p class="login-box-msg">Register</p>
-
-            <form action="{{ route('register') }}" method="post">
+            <form action="{{ route('post_register') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="{{old('username')}}">
+                    <input type="text" name="username" id="username" class="form-control" placeholder="Username">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -31,11 +30,12 @@
                         </div>
                     </div>
                 </div>
+                Unique Game Key
                 <div class="input-group mb-3">
-                    <input type="text" name="unique_key" id="unique_key" class="form-control" placeholder="Authentication Key" value="{{old('unique_key')}}">
+                    <input type="text" name="unique_key" id="unique_key" class="form-control" placeholder="Authentication Key" value="{{ $unique_key }}">
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-user"></span>
+                            <span class="fas fa-key"></span>
                         </div>
                     </div>
                 </div>
