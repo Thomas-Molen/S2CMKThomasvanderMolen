@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CircusTreinV2.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -36,14 +37,15 @@ namespace CircusTreinV2
                 
                 foreach (Animal animal in animals.ToArray())
                 {
-                    if (wagon.CanAnimalFit(animal))
+                    try
                     {
-                        if (wagon.WillAnimalBeSafe(animal) && wagon.WillWagonBeSafe(animal))
-                        {
-                            wagon.AddAnimal(animal);
-                            animals.Remove(animal);
-                        }
+                        wagon.AddAnimal(animal);
                     }
+                    catch (AddAnimalException)
+                    {
+                        continue;
+                    }
+                    animals.Remove(animal);
                 }
                 wagons.Add(wagon);
             }

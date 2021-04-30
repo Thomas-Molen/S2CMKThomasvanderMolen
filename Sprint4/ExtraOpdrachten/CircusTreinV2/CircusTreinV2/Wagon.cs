@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CircusTreinV2.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,46 +18,32 @@ namespace CircusTreinV2
 
         public void AddAnimal(Animal animal)
         {
-            animals.Add(animal);
-            capacity -= (int)animal.animalSize;
-        }
-
-        public bool CanAnimalFit(Animal animal)
-        {
             if ((int)animal.animalSize <= capacity)
             {
-                return true;
+                if (WillAnimalBeSafe(animal) && WillWagonBeSafe(animal))
+                {
+                    animals.Add(animal);
+                    capacity -= (int)animal.animalSize;
+                    return;
+                }
+                throw new AddAnimalException("Animal is incompatible with wagon");
             }
-            return false;
+            throw new AddAnimalException("Animal Does not fit in wagon");
         }
 
-        private bool DoesWagonContainCarnivore()
-        {
-            return animals.Exists(a => a.animalType == Enums.AnimalType.Carnivore);
-        }
-
-        private bool HasWagonDangerousCarnivore(Animal animal)
-        {
-            if (animals.Exists(a => a.animalType == Enums.AnimalType.Carnivore && a.animalSize >= animal.animalSize))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool WillAnimalBeSafe(Animal animal)
+        private bool WillAnimalBeSafe(Animal animal)
         {
             if (animal.animalType == Enums.AnimalType.Carnivore)
             {
-                return !DoesWagonContainCarnivore();
+                return !animals.Exists(a => a.animalType == Enums.AnimalType.Carnivore);
             }
             else
             {
-                return !HasWagonDangerousCarnivore(animal);
+                return !animals.Exists(a => a.animalType == Enums.AnimalType.Carnivore && a.animalSize >= animal.animalSize);
             }
         }
 
-        public bool WillWagonBeSafe(Animal animal)
+        private bool WillWagonBeSafe(Animal animal)
         {
             if (animal.animalType == Enums.AnimalType.Carnivore)
             {
@@ -64,7 +51,6 @@ namespace CircusTreinV2
                 {
                     return false;
                 }
-                return true;
             }
             return true;
         }
