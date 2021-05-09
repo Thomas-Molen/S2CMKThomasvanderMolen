@@ -1,0 +1,13 @@
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\bin\Debug\netcoreapp3.1\ContainerVervoer.exe
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\bin\Debug\netcoreapp3.1\ContainerVervoer.deps.json
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\bin\Debug\netcoreapp3.1\ContainerVervoer.runtimeconfig.json
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\bin\Debug\netcoreapp3.1\ContainerVervoer.runtimeconfig.dev.json
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\bin\Debug\netcoreapp3.1\ContainerVervoer.dll
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\bin\Debug\netcoreapp3.1\ContainerVervoer.pdb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\obj\Debug\netcoreapp3.1\ContainerVervoer.csprojAssemblyReference.cache
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\obj\Debug\netcoreapp3.1\ContainerVervoer.AssemblyInfoInputs.cache
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\obj\Debug\netcoreapp3.1\ContainerVervoer.AssemblyInfo.cs
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\obj\Debug\netcoreapp3.1\ContainerVervoer.csproj.CoreCompileInputs.cache
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\obj\Debug\netcoreapp3.1\ContainerVervoer.dll
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\obj\Debug\netcoreapp3.1\ContainerVervoer.pdb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Sprint4\ExtraOpdrachten\ContainerVervoer\ContainerVervoer\obj\Debug\netcoreapp3.1\ContainerVervoer.genruntimeconfig.cache

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj",
-      "projectName": "CircusTreinV2",
-      "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj",
+      "projectUniqueName": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\ContainerVervoer\\ContainerVervoer\\ContainerVervoer.csproj",
+      "projectName": "ContainerVervoer",
+      "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\ContainerVervoer\\ContainerVervoer\\ContainerVervoer.csproj",
       "packagesPath": "C:\\Users\\Thomas\\.nuget\\packages\\",
-      "outputPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\obj\\",
+      "outputPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\ContainerVervoer\\ContainerVervoer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Thomas\\AppData\\Roaming\\NuGet\\NuGet.Config",
