@@ -43,6 +43,15 @@ namespace ContainerVervoer
             return optimalRows = rows.OrderBy(r => r.GetTotalRowWeight()).ToList();
         }
 
+        public bool WillContainerFit(Container container)
+        {
+            if (rows.Sum(r => r.GetTotalRowWeight()) + container.weight < capacity)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public override string ToString()
         {
             string returnString = "ship contains:\n\n";

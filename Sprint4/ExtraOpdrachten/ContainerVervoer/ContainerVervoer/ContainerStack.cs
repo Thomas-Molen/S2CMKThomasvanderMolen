@@ -115,7 +115,7 @@ namespace ContainerVervoer
 
         public override string ToString()
         {
-            string returnString = "Stack contains: " + containers.Count + " containers and weighs: " + totalWeight + " |" + containers.Sum(c => c.weight) + "| " + "\n\n";
+            string returnString = "Stack contains: " + containers.Count + " containers and weighs: " + totalWeight + "\n\n";
             List<Container> reversedContainers = containers;
             reversedContainers.Reverse();
             foreach (Container container in reversedContainers)
