@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\CircusTrein.Tests.csproj": {}
+    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\CircusTrein.Tests.csproj": {}
   },
   "projects": {
-    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\CircusTrein.Tests.csproj": {
+    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\CircusTrein.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\CircusTrein.Tests.csproj",
+        "projectUniqueName": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\CircusTrein.Tests.csproj",
         "projectName": "CircusTrein.Tests",
-        "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\CircusTrein.Tests.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\obj\\",
+        "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\CircusTrein.Tests.csproj",
+        "packagesPath": "C:\\Users\\Thomas\\.nuget\\packages\\",
+        "outputPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTrein.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Thomas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,8 +29,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj": {
-                "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj"
+              "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj": {
+                "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj"
               }
             }
           }
@@ -77,21 +77,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj": {
+    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj",
+        "projectUniqueName": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj",
         "projectName": "CircusTreinV2",
-        "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\obj\\",
+        "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\CircusTreinV2.csproj",
+        "packagesPath": "C:\\Users\\Thomas\\.nuget\\packages\\",
+        "outputPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Sprint4\\ExtraOpdrachten\\CircusTreinV2\\CircusTreinV2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Thomas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -132,7 +132,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

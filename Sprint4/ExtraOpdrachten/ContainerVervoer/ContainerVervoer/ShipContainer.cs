@@ -38,8 +38,9 @@ namespace ContainerVervoer
             containersLeftOver = new List<Container>();
             while (containers.Count != 0)
             {
-                foreach (Container container in containers.ToArray())
+                for (int i = 0; i < containers.Count; i++)
                 {
+                    Container container = containers[i];
                     Console.WriteLine(containers.Count + "Left");
                     if (!ship.WillContainerFit(container))
                     {

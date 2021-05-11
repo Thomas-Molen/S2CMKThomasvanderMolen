@@ -8,6 +8,7 @@ namespace ContainerVervoer
     public class ContainerRow
     {
         public ContainerStack[] stacks { get; private set; }
+        public int totalWeight { get { return stacks.Sum(stack => stack.totalWeight); } }
         private List<ContainerStack> optimalStacks;
 
         public ContainerRow(int ShipWidth, Enums.ShipPosition Position)
@@ -24,11 +25,6 @@ namespace ContainerVervoer
         public List<ContainerStack> GetOptimalStackOrder()
         {
             return optimalStacks = stacks.OrderBy(s => s.totalWeight).ToList();
-        }
-
-        public int GetTotalRowWeight()
-        {
-            return stacks.Sum(stack => stack.totalWeight);
         }
 
         public override string ToString()

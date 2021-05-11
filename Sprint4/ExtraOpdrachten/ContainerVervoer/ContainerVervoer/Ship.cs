@@ -40,12 +40,12 @@ namespace ContainerVervoer
 
         public List<ContainerRow> GetOptimalRowOrder()
         {
-            return optimalRows = rows.OrderBy(r => r.GetTotalRowWeight()).ToList();
+            return optimalRows = rows.OrderBy(r => r.totalWeight).ToList();
         }
 
         public bool WillContainerFit(Container container)
         {
-            if (rows.Sum(r => r.GetTotalRowWeight()) + container.weight < capacity)
+            if (rows.Sum(r => r.totalWeight) + container.weight < capacity)
             {
                 return true;
             }

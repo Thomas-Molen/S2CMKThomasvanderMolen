@@ -153,4 +153,19 @@ class RunController extends Controller
         $run = Run::find($id);
         return $run->custom_name;
     }
+
+
+    public function apiCreate(Request $request)
+    {
+        $run = Run::create([
+            'user_id' => User::where('unique_key', '=', $request->unique_key),
+            'active' => 1,
+            'created_at' => date('Y-m-d H:i:s'),
+            'duration' => $request->duration,
+            'upvotes' => 0,
+            'information' => "",
+            'custom_name' => ""
+        ]);
+        $run->update(['custom_name' => "#" . $run->id]);
+    }
 }
