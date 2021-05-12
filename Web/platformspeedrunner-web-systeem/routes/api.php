@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('submit_run', [GameApiController::class, 'SubmitRun'])->name('submit_run_game');
+Route::get('get_user', [GameApiController::class, 'GetUserData'])->name('get_user_game');
