@@ -20,4 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('submit_run', [GameApiController::class, 'SubmitRun'])->name('submit_run_game');
-Route::get('get_user', [GameApiController::class, 'GetUserData'])->name('get_user_game');
+Route::get('get_username/{unique_key}', [GameApiController::class, 'GetUsername'])->name('get_user_game');
+Route::get('get_username/', function () { return "Please enter a valid unique key"; });
+Route::get('get_unique_key', [GameApiController::class, 'GetUniqueKey'])->name('get_unique_key_game');

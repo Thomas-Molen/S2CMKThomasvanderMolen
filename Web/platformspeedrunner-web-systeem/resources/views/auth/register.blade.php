@@ -32,7 +32,7 @@
                 </div>
                 Unique Game Key
                 <div class="input-group mb-3">
-                    <input type="text" name="unique_key" id="unique_key" class="form-control" placeholder="Authentication Key" value="{{ $unique_key }}">
+                    <input type="text" name="unique_key" id="unique_key" class="form-control" placeholder="Authentication Key" value="{{ $unique_key }}" disabled>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-key"></span>
