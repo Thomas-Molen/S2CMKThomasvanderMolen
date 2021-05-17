@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\AuthenticationHelper;
+use App\Helpers\AuthenticationHelper;
 use App\Models\Link;
+use App\Models\Run;
 use Illuminate\Http\Request;
 
 /**
@@ -34,10 +35,8 @@ class LinkController extends Controller
      */
     public function create()
     {
-        if (auth()->user()) {
-            $link = new Link();
-            return view('link.create', compact('link'));
-        }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The selected path was inaccessible');
     }
 
     /**
@@ -47,10 +46,12 @@ class LinkController extends Controller
      */
     public function run_create(Request $request, int $id)
     {
-        if (auth()->user()) {
+        if (Run::find($id) !== null AND (new AuthenticationHelper)->IsCurrentUser(Run::find($id)->user_id)) {
             $link = new Link();
             return view('link.create')->with(['link' => $link, 'run_id' => $id]);
         }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The selected path was inaccessible');
     }
 
     /**
@@ -104,11 +105,13 @@ class LinkController extends Controller
      */
     public function edit($id)
     {
-            $link = Link::find($id);
-        if ((new AuthenticationHelper)->IsCurrentUser($link->user_id)) {
+        $link = Link::find($id);
+        if ($link !== null AND(new AuthenticationHelper)->IsCurrentUser($link->user_id)) {
 
             return view('link.edit', compact('link'));
         }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The link you where trying to find has been deleted');
     }
 
     /**

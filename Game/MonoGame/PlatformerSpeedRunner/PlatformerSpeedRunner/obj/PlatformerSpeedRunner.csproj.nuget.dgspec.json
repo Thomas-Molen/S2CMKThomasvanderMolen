@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {}
+    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {}
   },
   "projects": {
-    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {
+    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
+        "projectUniqueName": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
         "projectName": "PlatformerSpeedRunner",
-        "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\obj\\",
+        "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
+        "packagesPath": "C:\\Users\\Thomas\\.nuget\\packages\\",
+        "outputPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Thomas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -41,6 +41,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            },
             "MonoGame.Content.Builder.Task": {
               "target": "Package",
               "version": "[3.8.0.1641, )"
@@ -69,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

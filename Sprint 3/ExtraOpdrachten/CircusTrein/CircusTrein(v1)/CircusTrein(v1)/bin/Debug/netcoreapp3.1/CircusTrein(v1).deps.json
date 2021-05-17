@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "CircusTrein(v1)/1.0.0": {
+        "runtime": {
+          "CircusTrein(v1).dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CircusTrein(v1)/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

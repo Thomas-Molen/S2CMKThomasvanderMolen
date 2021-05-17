@@ -1,61 +1,60 @@
 @extends('layouts.app')
 
-@section('template_title')
-    Link
+@section('title')
+    Comment
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
+    {{--Content Header (Page header)--}}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Links</h1>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                            <span id="card_title">
-                                {{ __('Link') }}
-                            </span>
+    {{--Main Content--}}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
 
-                             <div class="float-right">
-                                <a href="{{ route('link.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
-                        </div>
-                    </div>
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success">
-                            <p>{{ $message }}</p>
-                        </div>
-                    @endif
+                        @if ($message = Session::get('success'))
+                            <div class="alert alert-success">
+                                <p>{{ $message }}</p>
+                            </div>
+                        @endif
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="commentsTable" class="table table-bordered table-striped SpeedRunnerTable">
+                                    <thead>
                                     <tr>
-                                        <th>No</th>
-
-										<th>Name</th>
-										<th>Url</th>
-										<th>Run Id</th>
-
-                                        <th></th>
+                                        <th>#</th>
+                                        <th>User</th>
+                                        <th>Run</th>
+                                        <th>Name</th>
+                                        <th>Url</th>
+                                        <th>Actions</th>
                                     </tr>
-                                </thead>
-                                <tbody>
+                                    </thead>
+                                    <tbody>
                                     @foreach ($links as $link)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
-
-											<td>{{ $link->name }}</td>
-											<td>{{ $link->url }}</td>
-											<td>{{ $link->run_id }}</td>
-
+                                            <td>{{ $link->id }}</td>
+                                            <td>{{ (new App\Http\Controllers\UserController())->GetUsername($link->user_id) }}</td>
+                                            <td>{{ (new App\Http\Controllers\RunController())->GetName($link->run_id) }}</td>
+                                            <td>{{ (new App\Http\Controllers\CommentController())->ShowContent($link->name) }}</td>
+                                            <td><a href="{{ $link->url }}" target="_blank" rel="noopener noreferrer">{{ $link->url}}</a></td>
                                             <td>
                                                 <form action="{{ route('link.destroy',$link->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('link.show',$link->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('link.edit',$link->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                    <a class="btn btn-sm btn-secondary" href="{{ route('link.edit',$link->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
@@ -63,12 +62,23 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>User</th>
+                                        <th>Run</th>
+                                        <th>Name</th>
+                                        <th>Url</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection

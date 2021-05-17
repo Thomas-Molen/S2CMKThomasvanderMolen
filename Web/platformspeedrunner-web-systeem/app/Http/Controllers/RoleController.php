@@ -123,7 +123,7 @@ class RoleController extends Controller
         return $role->name;
     }
 
-    public function GetIdByName($name)
+    public function CheckRoleByName($name)
     {
         foreach (Role::all() as $role)
         {
@@ -132,9 +132,26 @@ class RoleController extends Controller
                 return $role->id;
             }
         }
-        $run = Role::create([
-            'name' => $name
-        ]);
+        switch ($name)
+        {
+            case 'admin':
+                $run = Role::create([
+                    'name' => $name,
+                    'description' => "Role for administrators (Full Access)"
+                ]);
+                break;
+            case 'user':
+                $run = Role::create([
+                    'name' => $name,
+                    'description' => "Role for default members"
+                ]);
+                break;
+            default:
+                $run = Role::create([
+                    'name' => $name
+                ]);
+                break;
+        }
         return $run->id;
     }
 }

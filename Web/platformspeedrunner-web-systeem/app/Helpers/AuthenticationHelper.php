@@ -26,7 +26,7 @@ class AuthenticationHelper
     {
         if (auth()->user())
         {
-            if (auth()->user()->role_id === (new RoleController)->GetIdByName("admin"))
+            if (auth()->user()->role_id === (new RoleController)->CheckRoleByName("admin"))
             {
                 return true;
             }
@@ -40,12 +40,9 @@ class AuthenticationHelper
         {
             return true;
         }
-        else
+        else if (auth()->id() === (int)$id)
         {
-            if (auth()->id() === $id)
-            {
-                return true;
-            }
+            return true;
         }
         return false;
     }

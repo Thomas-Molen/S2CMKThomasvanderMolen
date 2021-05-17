@@ -92,6 +92,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('link.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-link"></i>
+                                <p>
+                                    Links
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('role.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user-tag"></i>
                                 <p>

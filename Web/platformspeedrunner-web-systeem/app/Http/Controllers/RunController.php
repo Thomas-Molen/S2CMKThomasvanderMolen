@@ -96,7 +96,7 @@ class RunController extends Controller
     public function edit($id)
     {
         $run = Run::find($id);
-        if ($run->active === 1 OR (new AuthenticationHelper)->IsAdmin())
+        if ($run !== null AND ($run->active === 1 OR (new AuthenticationHelper)->IsAdmin()))
         {
             if ((new AuthenticationHelper)->IsCurrentUser($run->user_id)) {
                 return view('run.edit', compact('run'));
@@ -152,5 +152,20 @@ class RunController extends Controller
     {
         $run = Run::find($id);
         return $run->custom_name;
+    }
+
+
+    public function apiCreate(Request $request)
+    {
+        $run = Run::create([
+            'user_id' => User::where('unique_key', '=', $request->unique_key),
+            'active' => 1,
+            'created_at' => date('Y-m-d H:i:s'),
+            'duration' => $request->duration,
+            'upvotes' => 0,
+            'information' => "",
+            'custom_name' => ""
+        ]);
+        $run->update(['custom_name' => "#" . $run->id]);
     }
 }

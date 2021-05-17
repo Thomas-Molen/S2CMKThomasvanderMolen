@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ (new \App\Http\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
+            <a class="btn btn-secondary" href="{{ (new \App\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
         </div>
     </section>
 @endsection
