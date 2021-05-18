@@ -8,6 +8,7 @@ use App\Models\Run;
 use App\Models\User;
 use Illuminate\Http\Request;
 use PHPUnit\Util\Json;
+use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
 /**
@@ -35,10 +36,23 @@ class GameApiController extends Controller
         $run->update(['custom_name' => "#" . $run->id]);
     }
 
-    public function GetUserData()
+    public function GetUsername(string $unique_key = null)
     {
-        $return_value = "HELLO FROM THE SERVER I GOT YOU!";
-        return $return_value;
-//        return User::where('unique_key', '=', $request->unique_key)->get()[0];
+        $user = User::where('unique_key', '=', $unique_key)->where('active', '=', true)->first();
+        if ($user === null ) {
+            return "no user found with such key";
+        }
+        return $user->username;
+    }
+
+    public function GetUniqueKey()
+    {
+        $length = 20;
+        $chars = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
+        $unique_key = substr(str_shuffle(str_repeat($chars, ceil($length/strlen($chars)) )),1,$length);
+        while (User::where('unique_key', '=', $unique_key)->exists()) {
+            $unique_key = substr(str_shuffle(str_repeat($chars, ceil($length/strlen($chars)) )),1,$length);
+        }
+        return $unique_key;
     }
 }

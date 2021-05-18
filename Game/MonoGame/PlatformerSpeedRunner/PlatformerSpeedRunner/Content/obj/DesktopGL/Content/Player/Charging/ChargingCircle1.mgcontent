@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Charging/ChargingCircle1.png</SourceFile>
-  <SourceTime>2021-03-16T13:20:10.613851+01:00</SourceTime>
-  <DestFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Player/Charging/ChargingCircle1.xnb</DestFile>
-  <DestTime>2021-05-14T16:12:13.4562057+02:00</DestTime>
+  <SourceFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Charging/ChargingCircle1.png</SourceFile>
+  <SourceTime>2021-03-16T13:20:12+01:00</SourceTime>
+  <DestFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Player/Charging/ChargingCircle1.xnb</DestFile>
+  <DestTime>2021-05-17T14:01:01.1197851+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

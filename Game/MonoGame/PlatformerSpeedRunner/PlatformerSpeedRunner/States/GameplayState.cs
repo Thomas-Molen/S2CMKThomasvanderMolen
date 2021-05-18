@@ -25,6 +25,7 @@ namespace PlatformerSpeedRunner.States
         private Player player;
         private CollisionHelper Collision;
         private AnimationHelper Animation;
+        private DatabaseHelper Database;
         private BasicObject chargeCircle;
         private BasicObject endFlag;
         private TimeSpan startingTime;
@@ -76,6 +77,7 @@ namespace PlatformerSpeedRunner.States
 
             Collision = new CollisionHelper();
             Animation = new AnimationHelper();
+            Database = new DatabaseHelper();
             player = new Player(LoadTexture("Player\\Idle\\IdlePinkMan"));
 
             chargeCircle = new BasicObject(LoadTexture("Player\\Charging\\ChargingCircle1"), new Vector2(0, 0));
@@ -246,6 +248,9 @@ namespace PlatformerSpeedRunner.States
             }
             if (Collision.PlayerEndFlagDetector(player, EndFlagCollisionList))
             {
+                var dbSubmitRun = Database.SendRun(Convert.ToInt32(elapsedTime.TotalMilliseconds));
+                dbSubmitRun.Wait();
+
                 SwitchState(new MenuState());
             }
         }
