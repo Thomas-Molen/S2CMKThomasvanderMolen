@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {}
+    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {}
   },
   "projects": {
-    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {
+    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
+        "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
         "projectName": "PlatformerSpeedRunner",
-        "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
-        "packagesPath": "C:\\Users\\Thomas\\.nuget\\packages\\",
-        "outputPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\obj\\",
+        "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
+        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
+        "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Thomas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
