@@ -25,7 +25,8 @@ namespace PlatformerSpeedRunner.States.Base
 
         private ContentManager baseContentManager;
 
-        private SpriteFont font;
+        private SpriteFont calibriBold25;
+        private SpriteFont calibriBold50;
 
         protected int baseViewportHeight;
         protected int baseViewportWidth;
@@ -47,7 +48,8 @@ namespace PlatformerSpeedRunner.States.Base
 
             baseContentManager = contentManager;
 
-            font = baseContentManager.Load<SpriteFont>("Fonts\\GuiFont");
+            calibriBold25 = baseContentManager.Load<SpriteFont>("Fonts\\GuiFont");
+            calibriBold50 = baseContentManager.Load<SpriteFont>("Fonts\\MenuFont");
 
             SetInputManager();
         }
@@ -122,7 +124,18 @@ namespace PlatformerSpeedRunner.States.Base
         {
             foreach (var textObject in textObjects)
             {
-                textObject.Render.RenderText(spriteBatch, font, textObject);
+                switch (textObject.font)
+                {
+                    case Fonts.CalibriBold25:
+                        textObject.Render.RenderText(spriteBatch, calibriBold25, textObject);
+                        break;
+                    case Fonts.CalibriBold50:
+                        textObject.Render.RenderText(spriteBatch, calibriBold50, textObject);
+                        break;
+                    default:
+                        textObject.Render.RenderText(spriteBatch, calibriBold25, textObject);
+                        break;
+                }
             }
         }
 

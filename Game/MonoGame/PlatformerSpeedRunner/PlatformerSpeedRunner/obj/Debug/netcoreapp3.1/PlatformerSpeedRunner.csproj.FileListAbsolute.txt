@@ -260,3 +260,8 @@ C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\
 C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\obj\Debug\netcoreapp3.1\PlatformerSpeedRunner.dll
 C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\obj\Debug\netcoreapp3.1\PlatformerSpeedRunner.pdb
 C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\obj\Debug\netcoreapp3.1\PlatformerSpeedRunner.genruntimeconfig.cache
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\EmptyButton.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Fonts\MenuFont.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\CreateButton.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\LeaderboardButton.xnb
+D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\PlayButton.xnb

@@ -28,4 +28,7 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
     <PackageReference Include="MySql.Data" Version="8.0.23" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Menu\" />
+  </ItemGroup>
 </Project>

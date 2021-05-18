@@ -9,5 +9,6 @@ namespace PlatformerSpeedRunner.Input
     {
         public class GameSelect : SplashInputCommand { }
         public class GameExit : SplashInputCommand { }
+        public class PlayerLMB : SplashInputCommand { }
     }
 }

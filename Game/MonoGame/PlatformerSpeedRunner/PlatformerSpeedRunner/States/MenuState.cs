@@ -35,6 +35,10 @@ namespace PlatformerSpeedRunner.States
                 {
                     Environment.Exit(1);
                 }
+                if (cmd is SplashInputCommand.PlayerLMB)
+                {
+
+                }
             });
         }
 
@@ -50,14 +54,31 @@ namespace PlatformerSpeedRunner.States
 
         private Text AddText(string content, int PosX, int PosY)
         {
-            Text textObject = new Text(content, new Vector2(PosX, PosY));
+            Text textObject = new Text(content, new Vector2(PosX, PosY), Fonts.CalibriBold50);
             AddTextObject(textObject);
             return textObject;
         }
 
+        private void AddButton(int PosX, int PosY, string TextureName)
+        {
+            BasicObject buttonObject = new BasicObject(LoadTexture(TextureName), new Vector2(PosX, PosY), true);
+            AddGameObject(buttonObject);
+        }
+
         private void LoadObjects()
         {
-            AddText("MAIN MENU", 900, 100);
+            AddText("MAIN MENU", 795, 100);
+            AddText("Start Game", 848, 315);
+            AddText("Leaderboard", 825, 515);
+            AddText("Register Account", 760, 715);
+
+            AddButton(745, 300, "Menu\\EmptyButton");
+            AddButton(745, 500, "Menu\\EmptyButton");
+            AddButton(745, 700, "Menu\\EmptyButton");
+
+            AddButton(645, 300, "Menu\\PlayButton");
+            AddButton(645, 500, "Menu\\LeaderboardButton");
+            AddButton(645, 700, "Menu\\CreateButton");
         }
     }
 }

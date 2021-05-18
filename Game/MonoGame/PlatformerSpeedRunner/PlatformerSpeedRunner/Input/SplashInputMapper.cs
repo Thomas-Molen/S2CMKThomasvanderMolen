@@ -21,5 +21,17 @@ namespace PlatformerSpeedRunner.Input
 
             return commands;
         }
+
+        public override IEnumerable<BaseInputCommand> GetMouseState(MouseState state)
+        {
+            var commands = new List<SplashInputCommand>();
+
+            if (state.LeftButton == ButtonState.Pressed)
+            {
+                commands.Add(new SplashInputCommand.PlayerLMB());
+            }
+
+            return commands;
+        }
     }
 }

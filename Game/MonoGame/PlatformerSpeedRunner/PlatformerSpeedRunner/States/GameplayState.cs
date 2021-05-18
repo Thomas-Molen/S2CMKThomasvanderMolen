@@ -21,6 +21,7 @@ namespace PlatformerSpeedRunner.States
 {
     public class GameplayState : BaseGameState
     {
+        bool exitable = false;
         private Player player;
         private CollisionHelper Collision;
         private AnimationHelper Animation;
@@ -79,7 +80,7 @@ namespace PlatformerSpeedRunner.States
 
             chargeCircle = new BasicObject(LoadTexture("Player\\Charging\\ChargingCircle1"), new Vector2(0, 0));
 
-            endFlag = new BasicObject(LoadTexture("Terrain\\EndFlag"), new Vector2(5720, 950), true);
+            endFlag = new BasicObject(LoadTexture("Terrain\\EndFlag"), new Vector2(5720, 960), true);
             EndFlagCollisionList.Add(endFlag);
 
             backgroundImage = new BasicObject(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
@@ -93,9 +94,13 @@ namespace PlatformerSpeedRunner.States
         {
             InputManager.GetCommands(cmd =>
             {
-                if (cmd is GameplayInputCommand.Exit)
+                if (cmd is GameplayInputCommand.ExitDown)
                 {
-                    Environment.Exit(1);
+                    exitable = true;
+                }
+                if (cmd is GameplayInputCommand.ExitUp && exitable)
+                {
+                    SwitchState(new MenuState());
                 }
                 if (cmd is GameplayInputCommand.PlayerMoveLeft)
                 {
@@ -287,7 +292,7 @@ namespace PlatformerSpeedRunner.States
 
         private Text AddText(string content, int PosX, int PosY)
         {
-            Text textObject = new Text(content, new Vector2(PosX, PosY));
+            Text textObject = new Text(content, new Vector2(PosX, PosY), Fonts.CalibriBold25);
             AddTextObject(textObject);
             return textObject;
         }
@@ -339,7 +344,7 @@ namespace PlatformerSpeedRunner.States
             AddGameObject(backgroundImage);
             //GUI
             timerText = AddText("Timer", 0, 20);
-            debugText = AddText("Debugging", 0, 40);
+            debugText = AddText("Debugging", 0, 60);
 
 
             //First ground grass
