@@ -325,10 +325,17 @@ namespace PlatformerSpeedRunner.States
 
         private void RespawnPlayer()
         {
-            player.Movement.ResetVelocity();
-            player.Position.SetPosition(spawnPoint);
-            startingTime += elapsedTime;
-            startingTime += -checkPointTime;
+            if (CheckPointList.Exists(e => e.activated == true))
+            {
+                player.Movement.ResetVelocity();
+                startingTime += elapsedTime;
+                startingTime += -checkPointTime;
+                player.Position.SetPosition(spawnPoint);
+            }
+            else
+            {
+                SwitchState(new GameplayState());
+            }
         }
 
         private void CheckPointActivation(CheckPoint checkPoint)
@@ -452,8 +459,9 @@ namespace PlatformerSpeedRunner.States
             AddObject(stoneSlabHorizontal, 2875, 1060);
             AddObject(stoneSlabHorizontal, 3067, 1060);
             AddObject(stoneSlabHorizontal, 3259, 1060);
-            AddSpikeHead(2950, 450, 400, 900);
-            AddSpikeHead(3200, 700, 400, 900);
+            AddSpikeHead(2900, 450, 400, 900);
+            AddSpikeHead(3100, 800, 400, 900);
+            AddSpikeHead(3300, 500, 400, 900);
             //post spikes
             AddObject(stoneCubeLarge, 3450, 980, FullCollisionList);
             AddObject(stoneCubeLarge, 3578, 980, FullCollisionList);
@@ -487,7 +495,7 @@ namespace PlatformerSpeedRunner.States
             AddCheckPoint(3800, 848);
             AddGameObject(endFlag);
             AddGameObject(player);
-            RespawnPlayer();
+            player.Position.SetPosition(spawnPoint);
         }
 
         public override void RenderBoundingBoxes(SpriteBatch spriteBatch)
