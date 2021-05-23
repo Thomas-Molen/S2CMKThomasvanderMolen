@@ -66,22 +66,25 @@ namespace PlatformerSpeedRunner.States
                     {
                         SwitchState(new GameplayState());
                     }
-                    if (buttonHelper.IsMouseOnButton(leaderboardButton, camera) || buttonHelper.IsMouseOnButton(leaderboardIcon, camera))
+                    if (username != "Could not connect to server")
                     {
-                        OpenUrl("http://platformerspeedrunner/leaderboard");
-                    }
-                    if (username == "no user found with such key")
-                    {
-                        if (buttonHelper.IsMouseOnButton(createButton, camera) || buttonHelper.IsMouseOnButton(createIcon, camera))
+                        if (buttonHelper.IsMouseOnButton(leaderboardButton, camera) || buttonHelper.IsMouseOnButton(leaderboardIcon, camera))
                         {
-                            OpenUrl("http://platformerspeedrunner/register/" + dataHelper.GetSaveData());
+                            OpenUrl("http://platformerspeedrunner/leaderboard");
                         }
-                    }
-                    else
-                    {
-                        if (buttonHelper.IsMouseOnButton(accountButton, camera) || buttonHelper.IsMouseOnButton(accountIcon, camera))
+                        if (username == "no user found with such key")
                         {
-                            OpenUrl("http://platformerspeedrunner/personal_runs");
+                            if (buttonHelper.IsMouseOnButton(createButton, camera) || buttonHelper.IsMouseOnButton(createIcon, camera))
+                            {
+                                OpenUrl("http://platformerspeedrunner/register/" + dataHelper.GetSaveData());
+                            }
+                        }
+                        else
+                        {
+                            if (buttonHelper.IsMouseOnButton(accountButton, camera) || buttonHelper.IsMouseOnButton(accountIcon, camera))
+                            {
+                                OpenUrl("http://platformerspeedrunner/personal_runs");
+                            }
                         }
                     }
                     LMBPressed = false;
@@ -137,40 +140,46 @@ namespace PlatformerSpeedRunner.States
         {
             AddText("MAIN MENU", 795, 100);
             AddText("Start Game", 848, 315);
-            AddText("Leaderboard", 825, 515);
             
             playButton = AddButton(745, 300, "Menu\\EmptyButton");
-            leaderboardButton = AddButton(745, 500, "Menu\\EmptyButton");
-
             playIcon = AddButton(645, 300, "Menu\\PlayButton");
-            leaderboardIcon = AddButton(645, 500, "Menu\\LeaderboardButton");
 
-            if (username == "no user found with such key")
+            if (username != "Could not connect to server")
             {
-                AddText("Register Account", 760, 715);
-                createButton = AddButton(745, 700, "Menu\\EmptyButton");
-                createIcon = AddButton(645, 700, "Menu\\CreateButton");
-            }
-            else
-            {
-                AddText("Account", 870, 715);
-                accountButton = AddButton(745, 700, "Menu\\EmptyButton");
-                accountIcon = AddButton(645, 700, "Menu\\AccountButton");
-                AddSmallText("Username: " + username, 10, 10);
+                AddText("Leaderboard", 825, 515);
+                leaderboardButton = AddButton(745, 500, "Menu\\EmptyButton");
+                leaderboardIcon = AddButton(645, 500, "Menu\\LeaderboardButton");
 
-                string bestTime = dataBaseHelper.GetBestTime();
-                if (bestTime == "no runs found from user")
+                if (username == "no user found with such key")
                 {
-                    AddSmallText("Best Time: " + bestTime, 10, 50);
+                    AddText("Register Account", 760, 715);
+                    createButton = AddButton(745, 700, "Menu\\EmptyButton");
+                    createIcon = AddButton(645, 700, "Menu\\CreateButton");
                 }
                 else
                 {
-                    string time = TimeSpan.FromMilliseconds(Convert.ToInt32(bestTime)).ToString();
-                    time = time.Substring(0, time.Length - 4);
-                    AddSmallText("Best Time: " + time, 10, 50);
-                }
-                
+                    AddText("Account", 870, 715);
+                    accountButton = AddButton(745, 700, "Menu\\EmptyButton");
+                    accountIcon = AddButton(645, 700, "Menu\\AccountButton");
+                    AddSmallText("Username: " + username, 10, 10);
 
+                    string bestTime = dataBaseHelper.GetBestTime();
+                    if (bestTime == "no runs found from user" || bestTime == "Could not connect to server")
+                    {
+                        AddSmallText("Best Time: " + bestTime, 10, 50);
+                    }
+                    else
+                    {
+                        string time = TimeSpan.FromMilliseconds(Convert.ToInt32(bestTime)).ToString();
+                        time = time.Substring(0, time.Length - 4);
+                        AddSmallText("Best Time: " + time, 10, 50);
+                    }
+                }
+            }
+            else
+            {
+                AddSmallText("Could not connect to servers", 10, 10);
+                AddSmallText("Runs will not be saved", 10, 50);
             }
         }
     }

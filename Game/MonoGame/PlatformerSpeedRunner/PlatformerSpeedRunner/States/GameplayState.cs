@@ -181,8 +181,15 @@ namespace PlatformerSpeedRunner.States
         {
             if (gameEnd)
             {
-                Database.SendRun(Convert.ToInt32(elapsedTime.TotalMilliseconds)).Wait();
-                SwitchState(new MenuState());
+                try
+                {
+                    Database.SendRun(Convert.ToInt32(elapsedTime.TotalMilliseconds)).Wait();
+                    SwitchState(new MenuState());
+                }
+                catch (Exception)
+                {
+                    SwitchState(new MenuState());
+                }
             }
 
             if (localGameTime.ElapsedGameTime == new TimeSpan(0))

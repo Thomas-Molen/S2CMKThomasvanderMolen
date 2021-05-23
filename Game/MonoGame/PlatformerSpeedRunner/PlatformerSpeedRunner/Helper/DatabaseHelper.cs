@@ -41,7 +41,15 @@ namespace PlatformerSpeedRunner.Helper
         {
             using (var client = new HttpClient())
             {
-                return client.GetStringAsync("http://platformerspeedrunner/api/get_username/" + dataHelper.GetSaveData()).Result;
+                try
+                {
+                    return client.GetStringAsync("http://platformerspeedrunner/api/get_username/" + dataHelper.GetSaveData()).Result;
+                }
+                catch (System.Exception)
+                {
+
+                    return "Could not connect to server";
+                }
             }
         }
 
@@ -50,7 +58,15 @@ namespace PlatformerSpeedRunner.Helper
         {
             using (var client = new HttpClient())
             {
-                return client.GetStringAsync("http://platformerspeedrunner/api/get_best_time/" + dataHelper.GetSaveData()).Result;
+                try
+                {
+                    return client.GetStringAsync("http://platformerspeedrunner/api/get_best_time/" + dataHelper.GetSaveData()).Result;
+                }
+                catch (System.Exception)
+                {
+
+                    return "Could not connect to server";
+                }
             }
         }
 
