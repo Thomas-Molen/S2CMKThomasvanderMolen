@@ -323,3 +323,11 @@ D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\Platf
 D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Microsoft.Net.Http.Headers.dll
 D:\Stuff\School\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Fonts\MenuFont.xnb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\CreateButton.xnb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\EmptyButton.xnb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\LeaderboardButton.xnb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\PlayButton.xnb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\AccountButton.xnb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\TutorialMovementIcon.xnb
+C:\Stuff\School\SOFT\S2CMKThomasvanderMolen\Game\MonoGame\PlatformerSpeedRunner\PlatformerSpeedRunner\bin\Debug\netcoreapp3.1\Content\Menu\TutorialMouseIcon.xnb

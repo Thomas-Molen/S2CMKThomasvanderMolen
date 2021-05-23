@@ -1,16 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MySql.Data;
-
-
+using PlatformerSpeedRunner.Camera;
 using PlatformerSpeedRunner.Enum;
-using PlatformerSpeedRunner.Objects;
 using PlatformerSpeedRunner.States;
 using PlatformerSpeedRunner.States.Base;
-using PlatformerSpeedRunner.Camera;
-using System.Data;
-using System;
 
 namespace PlatformerSpeedRunner
 {

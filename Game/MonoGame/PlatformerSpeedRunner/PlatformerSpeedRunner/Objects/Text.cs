@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.Helper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PlatformerSpeedRunner.Objects
 {

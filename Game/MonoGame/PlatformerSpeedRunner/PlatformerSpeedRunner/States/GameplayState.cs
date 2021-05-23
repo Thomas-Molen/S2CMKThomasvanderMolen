@@ -1,27 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using PlatformerSpeedRunner.Objects.Base;
+using Microsoft.Xna.Framework.Input;
 using PlatformerSpeedRunner.Enum;
-using PlatformerSpeedRunner.States.Base;
-using PlatformerSpeedRunner.Objects;
+using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Input;
 using PlatformerSpeedRunner.Input.Base;
-using PlatformerSpeedRunner.Camera;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using PlatformerSpeedRunner.Helper;
-using System.Collections;
+using PlatformerSpeedRunner.Objects;
+using PlatformerSpeedRunner.States.Base;
+using System;
+using System.Collections.Generic;
 
 namespace PlatformerSpeedRunner.States
 {
     public class GameplayState : BaseGameState
     {
+        bool gameEnd = false;
         bool exitable = false;
+        bool restartable = false;
         private Player player;
         private CollisionHelper Collision;
         private AnimationHelper Animation;
@@ -104,6 +99,14 @@ namespace PlatformerSpeedRunner.States
                 {
                     SwitchState(new MenuState());
                 }
+                if (cmd is GameplayInputCommand.RestartDown)
+                {
+                    restartable = true;
+                }
+                if (cmd is GameplayInputCommand.RestartUp && restartable)
+                {
+                    SwitchState(new GameplayState());
+                }
                 if (cmd is GameplayInputCommand.PlayerMoveLeft)
                 {
                     player.Movement.MoveLeft();
@@ -176,6 +179,12 @@ namespace PlatformerSpeedRunner.States
 
         public override void UpdateGameState(GameTime gameTime)
         {
+            if (gameEnd)
+            {
+                Database.SendRun(Convert.ToInt32(elapsedTime.TotalMilliseconds)).Wait();
+                SwitchState(new MenuState());
+            }
+
             if (localGameTime.ElapsedGameTime == new TimeSpan(0))
             {
                 startingTime = gameTime.TotalGameTime;
@@ -217,7 +226,8 @@ namespace PlatformerSpeedRunner.States
         {
             backgroundImage.Position.SetPosition(camera.GetCameraBasedPosition(new Vector2(0, 0)));
             timerText.Position.SetPosition(camera.GetCameraBasedPosition(timerText.originalPosition));
-            timerText.content = elapsedTime.ToString();
+            string currentTime = elapsedTime.ToString().Substring(0, elapsedTime.ToString().Length - 4);
+            timerText.content = "Time: " + currentTime;
 
             debugText.Position.SetPosition(camera.GetCameraBasedPosition(debugText.originalPosition));
             debugText.content = checkPointTime.ToString();
@@ -248,13 +258,11 @@ namespace PlatformerSpeedRunner.States
             }
             if (Collision.PlayerEndFlagDetector(player, EndFlagCollisionList))
             {
-                var dbSubmitRun = Database.SendRun(Convert.ToInt32(elapsedTime.TotalMilliseconds));
-                dbSubmitRun.Wait();
-
-                SwitchState(new MenuState());
+                Vector2 submitTextPosition = camera.GetCameraBasedPosition(new Vector2(800, 500));
+                AddText("Submitting run...", (int)submitTextPosition.X, (int)submitTextPosition.Y);
+                gameEnd = true;
             }
         }
-
         //creating objects in world
         private void AddObject(string TextureName, int PosX, int PosY, List<BasicObject> CollisionList)
         {
@@ -355,10 +363,12 @@ namespace PlatformerSpeedRunner.States
         {
             AddGameObject(backgroundImage);
             //GUI
-            timerText = AddText("Timer", 0, 20);
+            timerText = AddText("Timer", 0, 10);
             debugText = AddText("Debugging", 0, 60);
 
-
+            //TutorialIcons
+            AddObject("Menu\\TutorialMovementIcon", 100, 400);
+            AddObject("Menu\\TutorialMouseIcon", 280, 400);
             //First ground grass
             AddObject(woodenBoxLarge, 475, 705, FullCollisionList);
             AddObject(grassLeft, 0, 803, TopsCollisionList);

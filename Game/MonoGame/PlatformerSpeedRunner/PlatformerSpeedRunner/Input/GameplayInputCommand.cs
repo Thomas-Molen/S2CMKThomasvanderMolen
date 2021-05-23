@@ -15,6 +15,8 @@ namespace PlatformerSpeedRunner.Input
         public class PlayerMoveNone : GameplayInputCommand { }
         public class PlayerLMBHold : GameplayInputCommand { }
         public class PlayerLMBRelease : GameplayInputCommand { }
+        public class RestartUp : GameplayInputCommand { }
+        public class RestartDown : GameplayInputCommand { }
         public class DebugOn : GameplayInputCommand { }
         public class DebugOff : GameplayInputCommand { }
     }

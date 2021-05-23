@@ -23,3 +23,4 @@ Route::post('submit_run', [GameApiController::class, 'SubmitRun'])->name('submit
 Route::get('get_username/{unique_key}', [GameApiController::class, 'GetUsername'])->name('get_user_game');
 Route::get('get_username/', function () { return "Please enter a valid unique key"; });
 Route::get('get_unique_key', [GameApiController::class, 'GetUniqueKey'])->name('get_unique_key_game');
+Route::get('get_best_time/{unique_key}', [GameApiController::class, 'GetBestTime'])->name('get_best_time_game');

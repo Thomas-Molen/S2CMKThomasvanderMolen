@@ -55,4 +55,18 @@ class GameApiController extends Controller
         }
         return $unique_key;
     }
+
+    public function GetBestTime(string $unique_key = null)
+    {
+        $user = User::where('unique_key', '=', $unique_key)->where('active', '=', true)->first();
+        if ($user === null ) {
+            return "no user found with such key";
+        }
+        $bestTime = Run::where('user_id', '=', $user->id)->where('active', '=', true)->min('duration');
+        if ($bestTime === null)
+        {
+            return "no runs found from user";
+        }
+        return $bestTime;
+    }
 }

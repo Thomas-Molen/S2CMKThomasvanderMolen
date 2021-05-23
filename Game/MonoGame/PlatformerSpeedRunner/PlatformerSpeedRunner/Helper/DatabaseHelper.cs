@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,16 +8,20 @@ namespace PlatformerSpeedRunner.Helper
 {
     public class DatabaseHelper
     {
+        private SaveDataHelper dataHelper;
         public class Run
         {
             public string unique_key { get; set; }
             public int duration { get; set; }
         }
+        public DatabaseHelper()
+        {
+            dataHelper = new SaveDataHelper();
+        }
 
         [HttpPost]
         public async Task SendRun(int duration)
         {
-            SaveDataHelper dataHelper = new SaveDataHelper();
             Run run = new Run()
             {
                 unique_key = dataHelper.GetSaveData(),
@@ -34,11 +37,20 @@ namespace PlatformerSpeedRunner.Helper
         }
 
         [HttpGet]
-        public string GetUsername(string unique_key)
+        public string GetUsername()
         {
             using (var client = new HttpClient())
             {
-                return client.GetStringAsync("http://platformerspeedrunner/api/get_username/" + unique_key).Result;
+                return client.GetStringAsync("http://platformerspeedrunner/api/get_username/" + dataHelper.GetSaveData()).Result;
+            }
+        }
+
+        [HttpGet]
+        public string GetBestTime()
+        {
+            using (var client = new HttpClient())
+            {
+                return client.GetStringAsync("http://platformerspeedrunner/api/get_best_time/" + dataHelper.GetSaveData()).Result;
             }
         }
 

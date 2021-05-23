@@ -28,7 +28,11 @@ namespace PlatformerSpeedRunner.Input
 
             if (state.LeftButton == ButtonState.Pressed)
             {
-                commands.Add(new SplashInputCommand.PlayerLMB());
+                commands.Add(new SplashInputCommand.PlayerLMBPress());
+            }
+            if (state.LeftButton == ButtonState.Released)
+            {
+                commands.Add(new SplashInputCommand.PlayerLMBRelease());
             }
 
             return commands;

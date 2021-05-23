@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Terrain/CheckPoint.png</SourceFile>
-  <SourceTime>2021-03-19T14:08:44.3225953+01:00</SourceTime>
-  <DestFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Terrain/CheckPoint.xnb</DestFile>
-  <DestTime>2021-05-18T15:09:02.2812904+02:00</DestTime>
+  <SourceFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Terrain/CheckPoint.png</SourceFile>
+  <SourceTime>2021-03-19T14:08:46+01:00</SourceTime>
+  <DestFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Terrain/CheckPoint.xnb</DestFile>
+  <DestTime>2021-05-23T12:27:05.5200308+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

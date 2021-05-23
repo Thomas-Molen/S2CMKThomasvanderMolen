@@ -19,6 +19,14 @@ namespace PlatformerSpeedRunner.Input
             {
                 commands.Add(new GameplayInputCommand.ExitUp());
             }
+            if (state.IsKeyDown(Keys.R))
+            {
+                commands.Add(new GameplayInputCommand.RestartDown());
+            }
+            if (state.IsKeyUp(Keys.R))
+            {
+                commands.Add(new GameplayInputCommand.RestartUp());
+            }
             //movement
             if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
             {
