@@ -1924,9 +1924,9 @@ let DataTable = {
           language: DataTable.Language,
           pageLength: 25,
           columnDefs: [
-              { orderable: false, targets: ["rank", "actions"] }
+              { orderable: false, targets: ["no-order"] }
           ],
-          order: [[1, 'asc']]
+          order: [[$('th.default-order').index(), 'asc']]
       })
   }
 };

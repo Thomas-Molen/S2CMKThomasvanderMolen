@@ -34,22 +34,22 @@
                                 <table id="commentsTable" class="table table-bordered table-striped SpeedRunnerTable">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th class="default-order">#</th>
                                         <th>User</th>
                                         <th>Run</th>
                                         <th>Content</th>
                                         <th>Date</th>
                                         <th>Deleted</th>
-                                        <th>Actions</th>
+                                        <th class="no-order">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach ($comments as $comment)
                                             <tr>
                                                 <td>{{ $comment->id }}</td>
-                                                <td>{{ (new App\Http\Controllers\UserController())->GetUsername($comment->user_id) }}</td>
-                                                <td>{{ (new App\Http\Controllers\RunController())->GetName($comment->run_id) }}</td>
-                                                <td>{{ (new App\Http\Controllers\CommentController())->ShowContent($comment->content) }}</td>
+                                                <td>{{ $comment->user->username }}</td>
+                                                <td>{{ $comment->run->custom_name }}</td>
+                                                <td>{{ $readabilityHelper->ShortenString($comment->content, 100) }}</td>
                                                 <td>{{ $comment->created_at . " (UTC)"}}</td>
                                                 <td>
                                                     @if ($comment->active === 1)

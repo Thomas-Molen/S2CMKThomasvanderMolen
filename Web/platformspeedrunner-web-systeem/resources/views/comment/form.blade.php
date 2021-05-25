@@ -2,11 +2,28 @@
     <div class="box-body">
         <div class="form-group">
             {{ Form::label('content') }}
-            {{ Form::text('content', $comment->content, ['class' => 'form-control' . ($errors->has('content') ? ' is-invalid' : ''), 'placeholder' => 'Content']) }}
+            {{ Form::textarea('content', $comment->content, ['class' => 'form-control' . ($errors->has('content') ? ' is-invalid' : ''), 'placeholder' => 'Content']) }}
             @if ($comment->run_id === null)
             {{ Form::hidden('run_id', $run_id) }}
             @endif
             {!! $errors->first('content', '<div class="invalid-feedback">:message</p>') !!}
+            @if ($authenticationHelper->IsAdmin())
+                <div class="form-group">
+                    {{ Form::label('user_id') }}
+                    {{ Form::text('user_id', $comment->user_id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User id']) }}
+                    {!! $errors->first('user_id', '<div class="invalid-feedback">:message</p>') !!}
+                </div>
+                <div class="form-group">
+                    {{ Form::label('run_id') }}
+                    {{ Form::text('run_id', $comment->run_id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'Run id']) }}
+                    {!! $errors->first('run_id', '<div class="invalid-feedback">:message</p>') !!}
+                </div>
+                <div class="form-group">
+                    {{ Form::label('active') }}
+                    {{ Form::text('active', $comment->active, ['class' => 'form-control' . ($errors->has('active') ? ' is-invalid' : ''), 'placeholder' => 'active 1 or 0']) }}
+                    {!! $errors->first('active', '<div class="invalid-feedback">:message</p>') !!}
+                </div>
+            @endif
         </div>
     </div>
     <div class="box-footer mt20">

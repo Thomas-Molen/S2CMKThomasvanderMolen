@@ -19,17 +19,16 @@ class GameApiController extends Controller
 {
     public function SubmitRun(Request $request)
     {
-        request()->validate([
-            'unique_key' => 'required|max:20',
-            'duration' => 'required'
-        ]);
+//        request()->validate([
+//            'unique_key' => 'required|max:20',
+//            'duration' => 'required'
+//        ]);
 
         $run = Run::create([
-            'user_id' => User::where('unique_key', '=', $request->unique_key)->get()[0]->id,
+            'user_id' => User::where('unique_key', '=', $request->unique_key)->first()->id,
             'active' => 1,
             'created_at' => date('Y-m-d H:i:s'),
             'duration' => $request->duration,
-            'upvotes' => 0,
             'information' => "",
             'custom_name' => ""
         ]);

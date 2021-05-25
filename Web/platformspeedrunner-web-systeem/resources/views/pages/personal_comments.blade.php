@@ -21,38 +21,36 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped PersonalCommentsTable">
+                                <table class="table table-bordered table-striped SpeedRunnerTable">
                                     <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Run</th>
                                         <th>Content</th>
-                                        <th>Date (y-d-m UTC)</th>
-                                        <th class="actions">Actions</th>
+                                        <th class="default-order">Date (y-m-d UTC)</th>
+                                        <th class="no-order">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ( (new App\Http\Controllers\PersonalCommentsController)->GetComments($comments) as $comment)
-                                        @if ($comment->active === 1)
-                                            <tr>
-                                                <td>{{ $comment->id }}</td>
-                                                <td>{{ (new App\Http\Controllers\RunController())->GetName($comment->run_id) }}</td>
-                                                <td>{{ (new App\Http\Controllers\CommentController())->ShowContent($comment->content) }}</td>
-                                                <td>{{ $comment->created_at . " (UTC)"}}</td>
-                                                <td>
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('run.show',$comment->run_id) }}"><i class="fa fa-fw fa-eye"></i> Show Run</a>
-                                                    <a class="btn btn-sm btn-secondary" href="{{ route('comment.edit',$comment->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
-                                                </td>
-                                            </tr>
-                                        @endif
+                                    @foreach ( $comments as $comment)
+                                        <tr>
+                                            <td>{{ $comment->id }}</td>
+                                            <td>{{ $comment->run->custom_name }}</td>
+                                            <td>{{ $readabilityHelper->ShortenString($comment->content, 100) }}</td>
+                                            <td>{{ $comment->created_at }}</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary " href="{{ route('run.show',$comment->run_id) }}"><i class="fa fa-fw fa-eye"></i> Show Run</a>
+                                                <a class="btn btn-sm btn-secondary" href="{{ route('comment.edit',$comment->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr>
                                         <th>#</th>
                                         <th>Title</th>
-                                        <th>Time (m:s:ms)</th>
-                                        <th>Date (y-d-m UTC)</th>
+                                        <th>Content</th>
+                                        <th>Date (y-m-d UTC)</th>
                                         <th>Actions</th>
                                     </tr>
                                     </tfoot>
@@ -64,19 +62,4 @@
             </div>
         </div>
     </section>
-@endsection
-@section('pagejs')
-    <script>
-        window.onload = function () {
-            $("table.PersonalCommentsTable").DataTable({
-                language: DataTable.Language,
-                pageLength: 25,
-                columnDefs: [
-                    { orderable: false, targets: ["actions"] }
-                ],
-                order: [[3, 'asc']]
-            })
-        }
-        DataTable.init();
-    </script>
 @endsection

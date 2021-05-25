@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\TableReadabilityHelper;
 use App\Models\Link;
 use App\Models\Run;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class LinkController
@@ -18,13 +21,13 @@ class LinkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TableReadabilityHelper $readabilityHelper, AuthenticationHelper $authenticationHelper)
     {
         if ((new AuthenticationHelper)->AuthAccess()) {
-            $links = Link::paginate();
+            $links = Link::all();
 
             return view('link.index', compact('links'))
-                ->with('i', (request()->input('page', 1) - 1) * $links->perPage());
+                ->with(['links' => $links, 'readabilityHelper' => $readabilityHelper]);
         }
     }
 

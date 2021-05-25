@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TableReadabilityHelper;
 use App\Models\Comment;
 use App\Models\Run;
 use Illuminate\Database\Eloquent\Model;
@@ -9,24 +10,11 @@ use Illuminate\Http\Request;
 
 class PersonalCommentsController extends Controller
 {
-    public function index()
+    public function index(TableReadabilityHelper $readabilityHelper)
     {
-        $comments = Comment::paginate();
+        $comments = Comment::where('user_id', '=', auth()->id())->get();
 
         return view('pages.personal_comments', compact('comments'))
-            ->with('i', (request()->input('page', 1) - 1) * $comments->perPage());
-    }
-
-    public function GetComments($comments)
-    {
-        $array = [];
-        foreach ($comments as $comment)
-        {
-            if ($comment->user_id === auth()->id())
-            {
-                array_push($array, $comment);
-            }
-        }
-        return $array;
+            ->with(['comments' => $comments, 'readabilityHelper' => $readabilityHelper]);
     }
 }

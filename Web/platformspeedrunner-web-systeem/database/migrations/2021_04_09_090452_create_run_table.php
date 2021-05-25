@@ -15,13 +15,13 @@ class CreateRunTable extends Migration
     {
         Schema::create('run', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('user');
-            $table->integer('upvotes')->default(0);
+            $table->foreignId('user_id')->nullable();
             $table->bigInteger('duration')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->string('custom_name', 50)->nullable();
             $table->string('information', 5000)->nullable();
             $table->boolean('active')->default(1);
+            $table->foreign('user_id')->references('id')->on('user');
         });
     }
 

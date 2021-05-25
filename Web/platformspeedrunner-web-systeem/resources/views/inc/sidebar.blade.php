@@ -68,14 +68,6 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Users
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{ route('run.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-running"></i>
                                 <p>
@@ -96,6 +88,14 @@
                                 <i class="nav-icon fas fa-link"></i>
                                 <p>
                                     Links
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('user.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Users
                                 </p>
                             </a>
                         </li>

@@ -21,6 +21,13 @@ class RoutingHelper
 
     private function GetValidRoute($route)
     {
+        switch ($route)
+        {
+            case 'run':
+                return route('run.index');
+            default:
+                break;
+        }
         if (str_contains($route, 'run/'))
         {
             if (str_contains($route, 'edit') OR url()->current() === url()->previous())

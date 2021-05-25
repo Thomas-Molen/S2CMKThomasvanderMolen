@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\RoutingHelper;
+use App\Helpers\RunHelper;
+use App\Helpers\TableReadabilityHelper;
 use App\Models\Comment;
+use App\Models\Link;
 use App\Models\Run;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,13 +24,13 @@ class RunController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(AuthenticationHelper $authenticationHelper, TableReadabilityHelper $readabilityHelper)
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $runs = Run::paginate();
+        if ($authenticationHelper->AuthAccess()) {
+            $runs = Run::all();
 
             return view('run.index', compact('runs'))
-                ->with('i', (request()->input('page', 1) - 1) * $runs->perPage());
+                ->with(['runs' => $runs, 'readabilityHelper' => $readabilityHelper]);
         }
     }
 
@@ -37,11 +41,8 @@ class RunController extends Controller
      */
     public function create()
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $run = new Run();
-
-            return view('run.create', compact('run'));
-        }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The selected path was inaccessible');
     }
 
     /**
@@ -71,20 +72,17 @@ class RunController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function show($id)
+    public function show($id, TableReadabilityHelper $readabilityHelper, RoutingHelper $routingHelper, AuthenticationHelper $authenticationHelper)
     {
         $run = Run::find($id);
+
         if ($run === null)
         {
             return redirect()->route('leaderboard')
                 ->with('error', 'The run you where trying to find does not exist');
         }
-        if ($run->active === 1)
-        {
-            return view('run.show', compact('run'));
-        }
-        return redirect()->route('leaderboard')
-            ->with('error', 'The run you where trying to find has been deleted');
+        return view('run.show', compact('run'))
+            ->with(['comments' => Comment::where('run_id', '=', $id)->get(), 'links' => Link::where('run_id', '=', $id)->get(), 'routingHelper' => $routingHelper, 'authenticationHelper' => $authenticationHelper, 'readabilityHelper' => $readabilityHelper]);
     }
 
     /**
@@ -93,13 +91,14 @@ class RunController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, AuthenticationHelper $authenticationHelper, RoutingHelper $routingHelper)
     {
         $run = Run::find($id);
-        if ($run !== null AND ($run->active === 1 OR (new AuthenticationHelper)->IsAdmin()))
+        if ($run !== null AND ($run->active === 1 OR $authenticationHelper->IsAdmin()))
         {
-            if ((new AuthenticationHelper)->IsCurrentUser($run->user_id)) {
-                return view('run.edit', compact('run'));
+            if ($authenticationHelper->IsCurrentUser($run->user_id)) {
+                return view('run.edit', compact('run'))
+                    ->with(['routingHelper' => $routingHelper, 'authenticationHelper' => $authenticationHelper]);
             }
         }
         return redirect()->route('leaderboard')
@@ -132,28 +131,21 @@ class RunController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($id, AuthenticationHelper $authenticationHelper)
     {
-        Run::find($id)->update(['active' => 0]);
-        foreach ((new CommentController)->GetCommentsByRunId($id) as $comment)
+        Run::find($id)->update(['active' => false]);
+        foreach (Comment::where('run_id', '=', $id)->where('active', '=', true) as $comment)
         {
-            Comment::find($comment->id)->update(['active' => 0]);
+            Comment::find($comment->id)->update(['active' => false]);
         }
 
-        if ((new AuthenticationHelper)->IsAdmin()) {
+        if ($authenticationHelper->IsAdmin()) {
             return redirect()->route('run.index')
                 ->with('success', 'Run deleted successfully');
         }
         return redirect()->route('personal_runs')
             ->with('success', 'Run deleted successfully');
     }
-
-    public function GetName($id)
-    {
-        $run = Run::find($id);
-        return $run->custom_name;
-    }
-
 
     public function apiCreate(Request $request)
     {

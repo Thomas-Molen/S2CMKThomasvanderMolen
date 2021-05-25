@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\TableReadabilityHelper;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Run;
@@ -19,13 +20,13 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(AuthenticationHelper $authenticationHelper, TableReadabilityHelper $readabilityHelper)
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $comments = Comment::paginate();
+        if ($authenticationHelper->AuthAccess()) {
+            $comments = Comment::all();
 
             return view('comment.index', compact('comments'))
-                ->with('i', (request()->input('page', 1) - 1) * $comments->perPage());
+                ->with(['comments' => $comments, 'readabilityHelper' => $readabilityHelper]);
         }
     }
 
@@ -85,9 +86,9 @@ class CommentController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, AuthenticationHelper $authenticationHelper)
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
+        if ($authenticationHelper->AuthAccess()) {
             $comment = Comment::find($id);
 
             return view('comment.show', compact('comment'));
@@ -100,14 +101,18 @@ class CommentController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, AuthenticationHelper $authenticationHelper)
     {
         $comment = Comment::find($id);
-        if ($comment !== null AND $comment->active === 1 AND (new AuthenticationHelper)->IsCurrentUser($comment->user_id)) {
-            return view('comment.edit', compact('comment'));
+        if ($comment !== null AND ($comment->active === 1 OR $authenticationHelper->IsAdmin()))
+        {
+            if ($authenticationHelper->IsCurrentUser($comment->user_id)) {
+                return view('comment.edit', compact('comment'))
+                    ->with(['authenticationHelper' => $authenticationHelper]);
+            }
         }
         return redirect()->route('leaderboard')
-            ->with('error', 'The comment you where trying to find has been deleted');
+            ->with('error', 'Could not access comment');
     }
 
     /**
@@ -138,30 +143,5 @@ class CommentController extends Controller
 
         return redirect()->route('run.show', Comment::find($id)->user_id)
             ->with('success', 'Comment deleted successfully');
-    }
-
-    public function ShowContent($content)
-    {
-        if (strlen($content) > 20)
-        {
-            return substr($content, 0, 20) . "...";
-        }
-        return $content;
-    }
-
-    public function GetCommentsByRunId($id)
-    {
-        $array = [];
-        foreach (Comment::all() as $comment)
-        {
-            if ($comment->run_id === (int)$id)
-            {
-                if ($comment->active === 1)
-                {
-                    array_push($array, $comment);
-                }
-            }
-        }
-        return $array;
     }
 }

@@ -21,15 +21,22 @@
                     <div class="card-body">
 
                         <div class="form-group">
-                            <strong>User Id:</strong>
+                            <strong>User ID:</strong>
                             {{ $comment->user_id }}
+                            <br>
+                            <strong>Username:</strong>
+                            {{ $comment->user->username }}
                         </div>
                         <div class="form-group">
-                            <strong>Run Id:</strong>
-                            {{ $comment->run_id }}
+                            <strong>Run ID:</strong>
+                            {{ $comment->run_id}}
+                            <br>
+                            <strong>Run name:</strong>
+                            {{ $comment->run->custom_name }}
                         </div>
                         <div class="form-group">
                             <strong>Content:</strong>
+                            <br>
                             {{ $comment->content }}
                         </div>
                         <div class="form-group">

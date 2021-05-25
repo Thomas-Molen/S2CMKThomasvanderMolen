@@ -14,13 +14,13 @@ namespace DatabaseConntectionTesting
                 duration = 231
             };
             HttpConnector connector = new HttpConnector();
-            //var query = connector.SendRun(run);
+            var query = connector.SendRun(run);
             //var query = connector.GetUsername("1");
 
-            SaveDataHelper saveDataHelper = new SaveDataHelper();
-            saveDataHelper.CreateSaveFile();
-            Console.WriteLine(connector.GetUsername("2"));
-            Console.WriteLine(saveDataHelper.GetSaveData());
+            //SaveDataHelper saveDataHelper = new SaveDataHelper();
+            //saveDataHelper.CreateSaveFile();
+            //Console.WriteLine(connector.GetUsername("1"));
+            //Console.WriteLine(saveDataHelper.GetSaveData());
         }
     }
 }

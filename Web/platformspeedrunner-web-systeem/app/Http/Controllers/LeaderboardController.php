@@ -2,29 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TableReadabilityHelper;
 use App\Models\Run;
-use Illuminate\Http\Request;
-use function GuzzleHttp\Psr7\_caseless_remove;
-
 class LeaderboardController extends Controller
 {
-    public function index()
+    public function index(TableReadabilityHelper $readabilityHelper)
     {
-        $runs = Run::paginate();
+        $runs = $this->SortedRuns();
 
         return view('pages.leaderboard', compact('runs'))
-            ->with('i', (request()->input('page', 1) - 1) * $runs->perPage());
+            ->with(['runs' => $runs, 'readabilityHelper' => $readabilityHelper]);
     }
 
-    public function SortRuns($runs)
+    public function SortedRuns()
     {
-        $array = [];
+        $runs = Run::where('active', '=', true)->get();
+        $leaderboardRuns = [];
         foreach ($runs as $run)
         {
-            array_push($array, $run);
+            $leaderboardRuns[] = $run;
         }
-
-        usort($array,  function ($a, $b)
+        usort($leaderboardRuns,  function ($a, $b)
         {
             if ($a->duration == $b->duration)
             {
@@ -32,96 +30,11 @@ class LeaderboardController extends Controller
             }
             return ($a->duration < $b->duration) ? -1 : 1;
         });
-        return($array);
-    }
 
-    public function FormatTime($ms)
-    {
-        $value = array(
-            'minutes' => 0,
-            'seconds' => 0,
-            'milliseconds' => $ms%1000
-        );
-
-        $totalSeconds = ($ms / 1000);
-
-            $time = '';
-
-            if($totalSeconds >= 6000)
-            {
-                $value['minutes'] = floor($totalSeconds / 60);
-                $totalSeconds = $totalSeconds % 60;
-
-                $time .= $value['minutes'] . ':';
-            }
-        else if($totalSeconds >= 600)
-            {
-                $value['minutes'] = floor($totalSeconds / 60);
-                $totalSeconds = $totalSeconds % 60;
-
-                $time .= '0' .$value['minutes'] . ':';
-            }
-            else if ($totalSeconds >= 60)
-            {
-                $value['minutes'] = floor($totalSeconds / 60);
-                $totalSeconds = $totalSeconds % 60;
-
-                $time .= '00' . $value['minutes'] . ':';
-            }
-            else
-            {
-                $time .= '000:';
-            }
-
-            $value['seconds'] = floor($totalSeconds);
-
-            if($value['seconds'] < 10)
-            {
-                $value['seconds'] = '0' . $value['seconds'];
-            }
-            $time .= $value['seconds'] . ':';
-
-            if ($value['milliseconds'] < 10)
-            {
-                $value['milliseconds'] = '00' . $value['milliseconds'];
-            }
-            else if ($value['milliseconds'] < 100)
-            {
-                $value['milliseconds'] = '0' . $value['milliseconds'];
-            }
-                $time .= $value['milliseconds'];
-
-            return $time;
-        }
-
-        public function SetSuffix($i)
+        foreach ($leaderboardRuns as $run)
         {
-            if ($i <= 20)
-            {
-                switch ($i) {
-                    case 1:
-                        return " " . $i . "st";
-                    case 2:
-                        return " " . $i . "nd";
-                    case 3:
-                        return " " . $i . "rd";
-                    default:
-                        return $i . "th";
-                }
-            }
-            else
-            {
-                switch (substr($i, -1))
-                {
-                    case 1:
-                        return $i . "st";
-                    case 2:
-                        return $i . "nd";
-                    case 3:
-                        return $i . "rd";
-                    default:
-                        return $i . "th";
-                }
-            }
+            $run->{"position"} = array_search($run, $leaderboardRuns)+1;
         }
+        return($leaderboardRuns);
     }
+}

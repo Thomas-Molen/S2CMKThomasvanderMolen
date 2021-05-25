@@ -42,4 +42,9 @@ class Run extends Model
         'upvotes',
         'information'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
