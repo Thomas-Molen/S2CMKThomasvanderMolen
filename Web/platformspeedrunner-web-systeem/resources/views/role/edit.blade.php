@@ -11,12 +11,6 @@
                 <div class="col-sm-6">
                     <h1>Edit role: <strong>{{ $role->name }}</strong></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('role.index') }}">Roles</a></li>
-                        <li class="breadcrumb-item active">Edit role</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -29,7 +23,7 @@
 
                 <div class="card card-default">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('role.update', $run->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('role.update', $role->id) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
@@ -40,6 +34,17 @@
                 </div>
             </div>
             <a class="btn btn-secondary" href="{{ route('role.index') }}">Back</a>
+            @if($role->id !== null)
+                <div style="display: inline-block">
+                    <form action="{{ route('role.destroy',$role->id) }}" method="POST">
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this link?');">Delete</button>
+                    </form>
+                </div>
+            @endif
         </div>
     </section>
 @endsection

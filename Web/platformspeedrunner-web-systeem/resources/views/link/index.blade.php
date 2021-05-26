@@ -82,3 +82,6 @@
         </div>
     </section>
 @endsection
+@section('pagejs')
+    @include('inc.datatablefiltering')
+@endsection

@@ -37,13 +37,13 @@
                             <table id="usersTable" class="table table-bordered table-striped SpeedRunnerTable">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th class="default-order">#</th>
                                     <th>Username</th>
                                     <th>Unique Key</th>
                                     <th>Upvotes</th>
                                     <th>Role</th>
                                     <th>Deleted</th>
-                                    <th>Actions</th>
+                                    <th class="no-order">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -93,4 +93,7 @@
         </div>
     </div>
 </section>
+@endsection
+@section('pagejs')
+    @include('inc.datatablefiltering')
 @endsection

@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-7">
-                    <h1 class="m-0 text-dark">Run: {{ $run->custom_name }}</h1>
+                    <h1 class="m-0 text-dark">Run: <b>{{ $run->custom_name }}</b></h1>
                 </div>
                 <div class="col-4">
                     <h4 class="m-0 text-dark" style="float: right">Created on: {{ $run->created_at }} (UTC)</h4>
@@ -65,7 +65,7 @@
                     <div class="col-11">
                         <h5 class="card-header">External Links:</h5>
                         <div style="margin-left: 4%; margin-top: 2%">
-                        @if($run->user_id === auth()->id())
+                        @if($run->user_id === auth()->id() && count($links) !== 0)
                             <div style="margin-top: 1%; margin-bottom: -4%">
                                 <a class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fa fa-fw fa-edit"></i>Edit Link</a>
                                 <div class="dropdown-menu">

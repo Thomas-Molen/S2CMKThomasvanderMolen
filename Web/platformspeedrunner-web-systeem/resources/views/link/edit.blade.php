@@ -5,40 +5,46 @@
 @endsection
 
 @section('content')
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Edit link: <strong>{{ $link->name }}</strong></h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
     <section class="content container-fluid">
-        <div class="">
+        <div class="container-fluid">
             <div class="col-md-12">
 
                 @includeif('partials.errors')
 
                 <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">Update Link</span>
-                    </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('link.update', $link->id) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
                             @include('link.form')
+
                         </form>
                     </div>
                 </div>
-                <div style="display: inline-block">
-                    <a class="btn btn-secondary" href="{{ (new \App\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
-                </div>
-                @if($link->id !== null)
-                    <div style="display: inline-block">
-                        <form action="{{ route('link.destroy',$link->id) }}" method="POST">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this link?');">Delete</button>
-                        </form>
-                    </div>
-                @endif
             </div>
+            <a class="btn btn-secondary" href="{{ route('link.index') }}">Back</a>
+            @if($link->id !== null)
+                <div style="display: inline-block">
+                    <form action="{{ route('link.destroy',$link->id) }}" method="POST">
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this link?');">Delete</button>
+                    </form>
+                </div>
+            @endif
         </div>
     </section>
 @endsection

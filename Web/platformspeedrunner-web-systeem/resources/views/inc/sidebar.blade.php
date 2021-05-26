@@ -12,20 +12,19 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/" class="brand-link" style="padding-bottom: 30px">
-        <img src="{{ asset('/img/logo.png') }}" alt="Platformer Speedrunner" class="brand-image" style="max-width: 200px;"/>
-        <span class="brand-text font-weight-light"></span>
+    <a href="/" class="brand-link">
+        <h4 class="text-center">PlatformSpeedRunner</h4>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
         @if (auth()->user())
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="info">
-                <a class="d-block">{{ auth()->user()->username }}</a>
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info" style="margin-bottom: -10%; margin-top:-3%">
+                    <p class="d-block" style="color:lightgrey; margin-left: -2%">{{ auth()->user()->username }}</p>
+                </div>
             </div>
-        </div>
         @endif
         <!-- Sidebar Menu -->
         <nav class="mt-2">

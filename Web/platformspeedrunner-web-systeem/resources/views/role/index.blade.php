@@ -37,11 +37,11 @@
                                 <table id="usersTable" class="table table-bordered table-striped SpeedRunnerTable">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th class="default-order">#</th>
                                         <th>name</th>
                                         <th>description</th>
                                         <th>Deleted</th>
-                                        <th>Actions</th>
+                                        <th class="no-order">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -87,4 +87,7 @@
             </div>
         </div>
     </section>
+@endsection
+@section('pagejs')
+    @include('inc.datatablefiltering')
 @endsection

@@ -46,11 +46,12 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function run_create(Request $request, int $id)
+    public function run_create(Request $request, int $id, AuthenticationHelper $authenticationHelper)
     {
         if (Run::find($id) !== null) {
             $comment = new Comment();
-            return view('comment.create')->with(['comment' => $comment, 'run_id' => $id]);
+            return view('comment.create')->with(['comment' => $comment, 'run_id' => $id])
+                ->with(['authenticationHelper' => $authenticationHelper]);
         }
         return redirect()->route('leaderboard')
             ->with('error', 'The selected path was inaccessible');

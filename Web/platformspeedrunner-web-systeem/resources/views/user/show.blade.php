@@ -29,6 +29,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
+                                <strong>ID:</strong>
+                                {{ $user->id }}
+                            </div>
+                            <div class="form-group">
                                 <strong>Username:</strong>
                                 {{ $user->username }}
                             </div>
@@ -37,12 +41,12 @@
                                 {{ $user->unique_key }}
                             </div>
                             <div class="form-group">
-                                <strong>Upvotes:</strong>
-                                {{ $user->upvotes }}
+                                <strong>Role:</strong>
+                                {{ $user->role->name }}
                             </div>
                             <div class="form-group">
-                                <strong>Role:</strong>
-                                {{ $user->role_id }}
+                                <strong>Active:</strong>
+                                {{ $user->active }}
                             </div>
                         </div>
                     </div>
