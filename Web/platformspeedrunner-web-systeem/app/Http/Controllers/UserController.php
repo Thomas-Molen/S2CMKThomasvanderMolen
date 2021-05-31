@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\QueryHelper;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,128 +15,70 @@ use Illuminate\Support\Facades\Hash;
  */
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $query;
+    private $authenticator;
+
+    public function __construct(QueryHelper $queryHelper, AuthenticationHelper $authenticationHelper)
+    {
+        $this->query = $queryHelper;
+        $this->authenticator = $authenticationHelper;
+    }
+
     public function index()
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $users = User::paginate();
-
-            return view('user.index', compact('users'))
-                ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+        if ($this->authenticator->AuthAccess()) {
+            return view('user.index')
+                ->with(['users' => $this->query->GetUser(false)]);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $user = new User();
-            return view('user.create', compact('user'));
+        if ($this->authenticator->AuthAccess()) {
+            return view('user.create')
+                ->with(['user' => $this->query->CreateUser()]);
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        request()->validate(User::$rules);
-        $user = User::create([
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'unique_key' => $request->unique_key,
-            'upvotes' => $request->upvotes,
-            'role' => $request->role_id
-        ]);
+        $this->query->StoreUser($request);
 
         return redirect()->route('user.index')
             ->with('success', 'User created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $user = User::find($id);
-        if ((new AuthenticationHelper)->AuthAccess()) {
-
-            return view('user.show', compact('user'));
+        if ($this->authenticator->AuthAccess()) {
+            return view('user.show')
+                ->with(['user' => $this->query->FindUser($id)]);
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $user = User::find($id);
-
-            return view('user.edit', compact('user'));
+        if ($this->authenticator->AuthAccess()) {
+            return view('user.edit')
+                ->with(['user' => $this->query->FindUser($id)]);
         }
         return redirect()->route('leaderboard')
             ->with('error', 'The path you where trying to reach is inaccessible');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  User $user
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, User $user)
     {
-        request()->validate(User::$rules);
-
-        $user->update($request->all());
+        $this->query->UpdateUser($request, $user);
 
         return redirect()->route('user.index')
             ->with('success', 'User updated successfully');
     }
 
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
     public function destroy($id)
     {
-        $user = User::find($id)->update(['active' => 0]);
+        $this->query->DeleteUser($id);
 
         return redirect()->route('user.index')
             ->with('success', 'User deleted successfully');
-    }
-
-    public function GetUsername($id)
-    {
-        $user = User::find($id);
-
-        if ($user === null)
-        {
-            return "User not found";
-        }
-        else
-        {
-            return $user->username;
-        }
     }
 }

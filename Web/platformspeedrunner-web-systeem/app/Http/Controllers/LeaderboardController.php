@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AuthenticationHelper;
+use App\Helpers\QueryHelper;
 use App\Helpers\TableReadabilityHelper;
 use App\Models\Run;
 class LeaderboardController extends Controller
 {
-    public function index(TableReadabilityHelper $readabilityHelper)
+    public function index(TableReadabilityHelper $readabilityHelper, QueryHelper $query)
     {
-        $runs = $this->SortedRuns();
+        $runs = $this->SortedRuns($query);
 
         return view('pages.leaderboard', compact('runs'))
             ->with(['runs' => $runs, 'readabilityHelper' => $readabilityHelper]);
     }
 
-    public function SortedRuns()
+    public function SortedRuns(QueryHelper $query)
     {
-        $runs = Run::where('active', '=', true)->get();
+        $runs = $query->GetRun();
         $leaderboardRuns = [];
         foreach ($runs as $run)
         {

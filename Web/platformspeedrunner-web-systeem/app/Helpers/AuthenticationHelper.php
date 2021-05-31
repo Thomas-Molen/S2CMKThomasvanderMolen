@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class AuthenticationHelper
 {
+    private $query;
+
+    public function __construct()
+    {
+        $this->query = new QueryHelper();
+    }
     public function AuthAccess()
     {
         if($this->IsAdmin())
@@ -26,7 +32,7 @@ class AuthenticationHelper
     {
         if (auth()->user())
         {
-            if (auth()->user()->role_id === (new RoleController)->CheckRoleByName("admin"))
+            if (auth()->user()->role_id === $this->query->GetRoleByName('admin')->id)
             {
                 return true;
             }

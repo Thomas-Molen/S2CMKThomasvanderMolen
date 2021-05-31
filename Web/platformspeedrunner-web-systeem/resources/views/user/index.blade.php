@@ -40,7 +40,6 @@
                                     <th class="default-order">#</th>
                                     <th>Username</th>
                                     <th>Unique Key</th>
-                                    <th>Upvotes</th>
                                     <th>Role</th>
                                     <th>Deleted</th>
                                     <th class="no-order">Actions</th>
@@ -52,8 +51,7 @@
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->unique_key }}</td>
-                                        <td>{{ $user->upvotes }}</td>
-                                        <td>{{ (new App\Http\Controllers\RoleController)->GetName($user->role_id) }}</td>
+                                        <td>{{ $user->role->name }}</td>
                                         <td>
                                             @if ($user->active === 1)
                                                 no
@@ -79,7 +77,6 @@
                                     <th>#</th>
                                     <th>Username</th>
                                     <th>Unique Key</th>
-                                    <th>Upvotes</th>
                                     <th>Role</th>
                                     <th>Deleted</th>
                                     <th>Actions</th>

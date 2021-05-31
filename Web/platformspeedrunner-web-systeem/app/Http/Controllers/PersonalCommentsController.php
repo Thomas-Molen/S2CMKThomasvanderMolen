@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\QueryHelper;
 use App\Helpers\TableReadabilityHelper;
 use App\Models\Comment;
 use App\Models\Run;
@@ -10,11 +11,9 @@ use Illuminate\Http\Request;
 
 class PersonalCommentsController extends Controller
 {
-    public function index(TableReadabilityHelper $readabilityHelper)
+    public function index(TableReadabilityHelper $readabilityHelper, QueryHelper $query)
     {
-        $comments = Comment::where('user_id', '=', auth()->id())->get();
-
-        return view('pages.personal_comments', compact('comments'))
-            ->with(['comments' => $comments, 'readabilityHelper' => $readabilityHelper]);
+        return view('pages.personal_comments')
+            ->with(['comments' => $query->GetUserComment(), 'readabilityHelper' => $readabilityHelper]);
     }
 }

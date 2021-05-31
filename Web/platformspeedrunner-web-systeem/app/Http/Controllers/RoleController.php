@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\QueryHelper;
 use App\Models\Role;
-use App\Models\Run;
 use Illuminate\Http\Request;
 
 /**
@@ -13,145 +13,68 @@ use Illuminate\Http\Request;
  */
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $query;
+    private $authenticator;
+
+    public function __construct(QueryHelper $queryHelper, AuthenticationHelper $authenticationHelper)
+    {
+        $this->query = $queryHelper;
+        $this->authenticator = $authenticationHelper;
+    }
+
     public function index()
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $roles = Role::paginate();
-
-            return view('role.index', compact('roles'))
-                ->with('i', (request()->input('page', 1) - 1) * $roles->perPage());
+        if ($this->authenticator->AuthAccess()) {
+            return view('role.index')
+                ->with(['roles' => $this->query->GetRole(false)]);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $role = new Role();
-            return view('role.create', compact('role'));
+        if ($this->authenticator->AuthAccess()) {
+            return view('role.create')
+                ->with(['role' => $this->query->CreateRole()]);
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        request()->validate(Role::$rules);
-
-        $role = Role::create($request->all());
+        $this->query->CreateRole($request);
 
         return redirect()->route('role.index')
             ->with('success', 'Role created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $role = Role::find($id);
-
-            return view('role.show', compact('role'));
+        if ($this->authenticator->AuthAccess()) {
+            return view('role.show')
+                ->with(['role' => $this->query->FindRole($id)]);
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $role = Role::find($id);
-
-            return view('role.edit', compact('role'));
+        if ($this->authenticator->AuthAccess()) {
+            return view('role.edit')
+                ->with(['role' => $this->query->FindRole($id)]);
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Role $role
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Role $role)
     {
-        request()->validate(Role::$rules);
-
-        $role->update($request->all());
+        $this->query->UpdateRole($request, $role);
 
         return redirect()->route('role.index')
             ->with('success', 'Role updated successfully');
     }
 
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
     public function destroy($id)
     {
-        $role = Role::find($id)->update(['active' => 0]);
+        $this->query->DeleteRole($id);
 
         return redirect()->route('role.index')
             ->with('success', 'Role deleted successfully');
-    }
-
-    public function GetName($id)
-    {
-        $role = Role::find($id);
-        return $role->name;
-    }
-
-    public function CheckRoleByName($name)
-    {
-        foreach (Role::all() as $role)
-        {
-            if ($role->name === $name)
-            {
-                return $role->id;
-            }
-        }
-        switch ($name)
-        {
-            case 'admin':
-                $run = Role::create([
-                    'name' => $name,
-                    'description' => "Role for administrators (Full Access)"
-                ]);
-                break;
-            case 'user':
-                $run = Role::create([
-                    'name' => $name,
-                    'description' => "Role for default members"
-                ]);
-                break;
-            default:
-                $run = Role::create([
-                    'name' => $name
-                ]);
-                break;
-        }
-        return $run->id;
     }
 }

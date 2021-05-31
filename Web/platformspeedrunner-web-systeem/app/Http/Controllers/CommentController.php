@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\QueryHelper;
 use App\Helpers\TableReadabilityHelper;
 use App\Models\Comment;
 use App\Models\User;
@@ -15,134 +16,86 @@ use Illuminate\Http\Request;
  */
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(AuthenticationHelper $authenticationHelper, TableReadabilityHelper $readabilityHelper)
-    {
-        if ($authenticationHelper->AuthAccess()) {
-            $comments = Comment::all();
+    private $query;
+    private $authenticator;
 
-            return view('comment.index', compact('comments'))
-                ->with(['comments' => $comments, 'readabilityHelper' => $readabilityHelper]);
+    public function __construct(QueryHelper $queryHelper, AuthenticationHelper $authenticationHelper)
+    {
+        $this->query = $queryHelper;
+        $this->authenticator = $authenticationHelper;
+    }
+
+    public function index(TableReadabilityHelper $readabilityHelper)
+    {
+        if ($this->authenticator->AuthAccess()) {
+
+            return view('comment.index')
+                ->with(['comments' => $this->query->GetComment(false), 'readabilityHelper' => $readabilityHelper]);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return redirect()->route('leaderboard')
             ->with('error', 'The selected path was inaccessible');
     }
 
-    /**
-     * Show the form for creating a new resource as a normal user.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function run_create(Request $request, int $id, AuthenticationHelper $authenticationHelper)
+    public function run_create(int $id)
     {
-        if (Run::find($id) !== null) {
-            $comment = new Comment();
-            return view('comment.create')->with(['comment' => $comment, 'run_id' => $id])
-                ->with(['authenticationHelper' => $authenticationHelper]);
+        if ($this->query->FindRun($id) !== null) {
+            $comment = $this->query->CreateComment();
+
+            return view('comment.create')
+                ->with(['comment' => $comment, 'run_id' => $id, 'authenticationHelper' => $this->authenticator]);
         }
         return redirect()->route('leaderboard')
             ->with('error', 'The selected path was inaccessible');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
-        request()->validate(Comment::$rules);
-        $comment = Comment::create($request->all());
-        if (empty($request->user_id))
-        {
-            $comment->update(['user_id' => auth()->id()]);
-        }
-        if (empty($request->run_id))
-        {
-            $comment->update(['run_id' => $request->run_id]);
-        }
-        $comment->update(['created_at' => date('Y-m-d H:i:s')]);
+        $this->query->StoreComment($request);
 
         return redirect()->route('run.show', $request->run_id)
             ->with('success', 'Comment created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id, AuthenticationHelper $authenticationHelper)
+    public function show($id)
     {
-        if ($authenticationHelper->AuthAccess()) {
-            $comment = Comment::find($id);
+        if ($this->authenticator->AuthAccess()) {
 
-            return view('comment.show', compact('comment'));
+            return view('comment.show')
+                ->with(['comment' => $this->query->FindComment($id)]);
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id, AuthenticationHelper $authenticationHelper)
+    public function edit($id)
     {
-        $comment = Comment::find($id);
-        if ($comment !== null AND ($comment->active === 1 OR $authenticationHelper->IsAdmin()))
+        $comment = $this->query->FindComment($id);
+        if ($comment !== null AND ($comment->active === 1 OR $this->authenticator->IsAdmin()))
         {
-            if ($authenticationHelper->IsCurrentUser($comment->user_id)) {
+            if ($this->authenticator->IsCurrentUser($comment->user_id)) {
                 return view('comment.edit', compact('comment'))
-                    ->with(['authenticationHelper' => $authenticationHelper]);
+                    ->with(['authenticationHelper' => $this->authenticator]);
             }
         }
         return redirect()->route('leaderboard')
             ->with('error', 'Could not access comment');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Comment $comment
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, Comment $comment)
     {
-        request()->validate(Comment::$rules);
-
-        $comment->update($request->all());
+        $this->query->UpdateComment($request, $comment);
 
         return redirect()->route('run.show', $comment->run_id)
             ->with('success', 'Comment updated successfully');
     }
 
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
     public function destroy($id)
     {
-        $comment = Comment::find($id)->update(['active' => 0]);
+        $this->query->DeleteComment($id);
 
-        return redirect()->route('run.show', Comment::find($id)->user_id)
+        return redirect()->route('run.show', $this->query->FindComment($id)->user_id)
             ->with('success', 'Comment deleted successfully');
     }
 }

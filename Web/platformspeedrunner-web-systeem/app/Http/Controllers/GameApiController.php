@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\QueryHelper;
 use App\Models\Comment;
 use App\Models\Run;
 use App\Models\User;
@@ -17,13 +18,9 @@ use function PHPUnit\Framework\isNull;
  */
 class GameApiController extends Controller
 {
-    public function SubmitRun(Request $request)
+    public function SubmitRun(Request $request, QueryHelper $query)
     {
-//        request()->validate([
-//            'unique_key' => 'required|max:20',
-//            'duration' => 'required'
-//        ]);
-
+        request()->validate(Run::$rules);
         $run = Run::create([
             'user_id' => User::where('unique_key', '=', $request->unique_key)->first()->id,
             'active' => 1,

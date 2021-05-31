@@ -265,7 +265,7 @@ namespace PlatformerSpeedRunner.States
             }
             if (Collision.PlayerEndFlagDetector(player, EndFlagCollisionList))
             {
-                Vector2 submitTextPosition = camera.GetCameraBasedPosition(new Vector2(800, 500));
+                Vector2 submitTextPosition = camera.GetCameraBasedPosition(new Vector2(800, 500));d
                 AddText("Submitting run...", (int)submitTextPosition.X, (int)submitTextPosition.Y);
                 gameEnd = true;
             }
