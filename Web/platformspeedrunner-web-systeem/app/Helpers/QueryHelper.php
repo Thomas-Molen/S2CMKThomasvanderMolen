@@ -93,6 +93,11 @@ class QueryHelper
         return Run::find((int)$id);
     }
 
+    public function FindBestUserRun($user_id)
+    {
+        return Run::where('user_id', '=', $user_id)->where('active', '=', true)->min('duration');
+    }
+
     public function UpdateRun(Request $request, Run $run)
     {
         request()->validate(Run::$rules);
@@ -108,7 +113,7 @@ class QueryHelper
     {
         request()->validate(Run::$rules);
         $run = Run::create([
-            'user_id' => User::where('unique_key', '=', $request->unique_key),
+            'user_id' => User::where('unique_key', '=', $request->unique_key)->first()->id,
             'active' => 1,
             'created_at' => date('Y-m-d H:i:s'),
             'duration' => $request->duration,
@@ -228,7 +233,32 @@ class QueryHelper
 
     public function GetRoleByName($name)
     {
-        return Role::where('name', '=', $name)->first();
+        $role = Role::where('name', '=', $name)->where('active', '=', true)->first();
+        if ($role !== null)
+        {
+            return $role;
+        }
+        switch ($name)
+        {
+            case 'admin':
+                $role = Role::create([
+                    'name' => $name,
+                    'description' => "Role for administrators (Full Access)"
+                ]);
+                break;
+            case 'user':
+                $role = Role::create([
+                    'name' => $name,
+                    'description' => "Role for default members"
+                ]);
+                break;
+            default:
+                $role = Role::create([
+                    'name' => $name
+                ]);
+                break;
+        }
+        return $role;
     }
 
     //User
@@ -244,6 +274,15 @@ class QueryHelper
     public function FindUser($id)
     {
         return User::find((int)$id);
+    }
+
+    public function FindUserByUniqueKey($unique_key, $onlyActive = true)
+    {
+        if ($onlyActive)
+        {
+            return User::where('unique_key', '=', $unique_key)->where('active', '=', true)->first();
+        }
+        return User::where('unique_key', '=', $unique_key)->first();
     }
 
     public function UpdateUser(Request $request, User $user)

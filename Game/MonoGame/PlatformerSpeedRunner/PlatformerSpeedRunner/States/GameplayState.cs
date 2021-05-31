@@ -31,7 +31,8 @@ namespace PlatformerSpeedRunner.States
         private Text debugText;
 
         private int TimeCharged;
-        private Vector2 spawnPoint = new Vector2(200, 750);
+        //private Vector2 spawnPoint = new Vector2(200, 750);
+        private Vector2 spawnPoint = new Vector2(4800, 750);
 
         //textures
         private const string woodenBoxLarge = "Terrain\\WoodenBoxLarge";
@@ -265,7 +266,7 @@ namespace PlatformerSpeedRunner.States
             }
             if (Collision.PlayerEndFlagDetector(player, EndFlagCollisionList))
             {
-                Vector2 submitTextPosition = camera.GetCameraBasedPosition(new Vector2(800, 500));d
+                Vector2 submitTextPosition = camera.GetCameraBasedPosition(new Vector2(800, 500));
                 AddText("Submitting run...", (int)submitTextPosition.X, (int)submitTextPosition.Y);
                 gameEnd = true;
             }

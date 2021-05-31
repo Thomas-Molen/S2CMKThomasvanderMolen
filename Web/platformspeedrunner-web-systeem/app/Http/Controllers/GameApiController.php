@@ -18,23 +18,21 @@ use function PHPUnit\Framework\isNull;
  */
 class GameApiController extends Controller
 {
-    public function SubmitRun(Request $request, QueryHelper $query)
+    private $query;
+
+    public function __construct(QueryHelper $queryHelper)
     {
-        request()->validate(Run::$rules);
-        $run = Run::create([
-            'user_id' => User::where('unique_key', '=', $request->unique_key)->first()->id,
-            'active' => 1,
-            'created_at' => date('Y-m-d H:i:s'),
-            'duration' => $request->duration,
-            'information' => "",
-            'custom_name' => ""
-        ]);
-        $run->update(['custom_name' => "#" . $run->id]);
+        $this->query = new $queryHelper();
+    }
+
+    public function SubmitRun(Request $request)
+    {
+        $this->query->CreateRun($request);
     }
 
     public function GetUsername(string $unique_key = null)
     {
-        $user = User::where('unique_key', '=', $unique_key)->where('active', '=', true)->first();
+        $user = $this->query->FindUserByUniqueKey($unique_key);
         if ($user === null ) {
             return "no user found with such key";
         }
@@ -46,7 +44,7 @@ class GameApiController extends Controller
         $length = 20;
         $chars = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
         $unique_key = substr(str_shuffle(str_repeat($chars, ceil($length/strlen($chars)) )),1,$length);
-        while (User::where('unique_key', '=', $unique_key)->exists()) {
+        while ($this->query->FindUserByUniqueKey($unique_key, false) !== null) {
             $unique_key = substr(str_shuffle(str_repeat($chars, ceil($length/strlen($chars)) )),1,$length);
         }
         return $unique_key;
@@ -54,11 +52,11 @@ class GameApiController extends Controller
 
     public function GetBestTime(string $unique_key = null)
     {
-        $user = User::where('unique_key', '=', $unique_key)->where('active', '=', true)->first();
+        $user = $this->query->FindUserByUniqueKey($unique_key);
         if ($user === null ) {
             return "no user found with such key";
         }
-        $bestTime = Run::where('user_id', '=', $user->id)->where('active', '=', true)->min('duration');
+        $bestTime = $this->query->FindBestUserRun($user->id);
         if ($bestTime === null)
         {
             return "no runs found from user";
