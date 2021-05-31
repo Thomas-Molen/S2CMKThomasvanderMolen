@@ -39,7 +39,6 @@ class Run extends Model
         'custom_name',
         'created_at',
         'duration',
-        'upvotes',
         'information'
     ];
 

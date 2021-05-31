@@ -16,6 +16,7 @@ class AuthenticationHelper
     {
         $this->query = new QueryHelper();
     }
+
     public function AuthAccess()
     {
         if($this->IsAdmin())

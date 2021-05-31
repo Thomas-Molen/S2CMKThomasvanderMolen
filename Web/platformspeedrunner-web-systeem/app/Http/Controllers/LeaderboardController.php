@@ -16,7 +16,7 @@ class LeaderboardController extends Controller
             ->with(['runs' => $runs, 'readabilityHelper' => $readabilityHelper]);
     }
 
-    public function SortedRuns(QueryHelper $query)
+    private function SortedRuns(QueryHelper $query)
     {
         $runs = $query->GetRun();
         $leaderboardRuns = [];
