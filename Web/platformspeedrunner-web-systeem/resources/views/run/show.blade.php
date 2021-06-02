@@ -109,7 +109,7 @@
             <h5><i class="icon fas fa-ban"></i>Attention!</h5>
             This run has been archived and is no longer visible on the leaderboards or personal run lists!
         </div>
-        <a class="btn btn-secondary" href="{{ route('leaderboard') }}" style="margin-left: 1%">Back</a>
+        <a class="btn btn-secondary" href="{{ back() }}" style="margin-left: 1%">Back</a>
     @endif
 @endsection
 <style>

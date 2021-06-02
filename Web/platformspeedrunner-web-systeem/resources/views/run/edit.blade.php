@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div style="display: inline-block">
-                <a class="btn btn-secondary" href="{{ $routingHelper->PreviousRoute() }}">Back</a>
+                <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
             </div>
             @if($run->id !== null)
                 <div style="display: inline-block">
