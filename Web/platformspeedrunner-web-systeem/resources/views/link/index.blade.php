@@ -34,22 +34,22 @@
                                 <table id="commentsTable" class="table table-bordered table-striped SpeedRunnerTable">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th class="default-order">#</th>
                                         <th>User</th>
                                         <th>Run</th>
                                         <th>Name</th>
                                         <th>Url</th>
-                                        <th>Actions</th>
+                                        <th class="no-order">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach ($links as $link)
                                         <tr>
                                             <td>{{ $link->id }}</td>
-                                            <td>{{ (new App\Http\Controllers\UserController())->GetUsername($link->user_id) }}</td>
-                                            <td>{{ (new App\Http\Controllers\RunController())->GetName($link->run_id) }}</td>
-                                            <td>{{ (new App\Http\Controllers\CommentController())->ShowContent($link->name) }}</td>
-                                            <td><a href="{{ $link->url }}" target="_blank" rel="noopener noreferrer">{{ $link->url}}</a></td>
+                                            <td>{{ $link->user->username }}</td>
+                                            <td>{{ $link->run->custom_name }}</td>
+                                            <td>{{ $link->name }}</td>
+                                            <td><a href="{{ $link->url }}" target="_blank" rel="noopener noreferrer">{{ $readabilityHelper->ShortenString($link->url, 100)}}</a></td>
                                             <td>
                                                 <form action="{{ route('link.destroy',$link->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('link.show',$link->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
@@ -81,4 +81,7 @@
             </div>
         </div>
     </section>
+@endsection
+@section('pagejs')
+    @include('inc.datatablefiltering')
 @endsection

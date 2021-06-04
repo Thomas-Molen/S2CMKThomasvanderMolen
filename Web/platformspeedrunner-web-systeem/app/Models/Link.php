@@ -21,7 +21,8 @@ class Link extends Model
     public $timestamps = false;
 
     static $rules = [
-		'url' => 'required',
+		'url' => 'required | max:250',
+        'name' => 'required | max:50'
     ];
 
     protected $perPage = 1e20;
@@ -38,6 +39,13 @@ class Link extends Model
         'user_id'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-
+    public function run()
+    {
+        return $this->belongsTo(Run::class);
+    }
 }

@@ -55,9 +55,6 @@
                 </div>
             </form>
 
-            <p class="mb-0">
-                <a href="{{ route('register', "") }}" class="text-center">Don't have an account?</a>
-            </p>
         </div>
         <!-- /.login-card-body -->
     </div>

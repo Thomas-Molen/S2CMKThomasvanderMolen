@@ -39,7 +39,21 @@ class Run extends Model
         'custom_name',
         'created_at',
         'duration',
-        'upvotes',
         'information'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function link()
+    {
+        return $this->hasMany(Link::class, 'run_id', 'id');
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'run_id', 'id');
+    }
 }

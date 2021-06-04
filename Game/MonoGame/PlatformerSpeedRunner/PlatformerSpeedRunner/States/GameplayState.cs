@@ -1,26 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using PlatformerSpeedRunner.Objects.Base;
+using Microsoft.Xna.Framework.Input;
 using PlatformerSpeedRunner.Enum;
-using PlatformerSpeedRunner.States.Base;
-using PlatformerSpeedRunner.Objects;
+using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Input;
 using PlatformerSpeedRunner.Input.Base;
-using PlatformerSpeedRunner.Camera;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using PlatformerSpeedRunner.Helper;
-using System.Collections;
+using PlatformerSpeedRunner.Objects;
+using PlatformerSpeedRunner.States.Base;
+using System;
+using System.Collections.Generic;
 
 namespace PlatformerSpeedRunner.States
 {
     public class GameplayState : BaseGameState
     {
+        bool gameEnd = false;
+        bool exitable = false;
+        bool restartable = false;
         private Player player;
         private CollisionHelper Collision;
         private AnimationHelper Animation;
@@ -35,7 +31,8 @@ namespace PlatformerSpeedRunner.States
         private Text debugText;
 
         private int TimeCharged;
-        private Vector2 spawnPoint = new Vector2(200, 750);
+        //private Vector2 spawnPoint = new Vector2(200, 750);
+        private Vector2 spawnPoint = new Vector2(4800, 750);
 
         //textures
         private const string woodenBoxLarge = "Terrain\\WoodenBoxLarge";
@@ -81,7 +78,7 @@ namespace PlatformerSpeedRunner.States
 
             chargeCircle = new BasicObject(LoadTexture("Player\\Charging\\ChargingCircle1"), new Vector2(0, 0));
 
-            endFlag = new BasicObject(LoadTexture("Terrain\\EndFlag"), new Vector2(5720, 950), true);
+            endFlag = new BasicObject(LoadTexture("Terrain\\EndFlag"), new Vector2(5720, 960), true);
             EndFlagCollisionList.Add(endFlag);
 
             backgroundImage = new BasicObject(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
@@ -95,9 +92,21 @@ namespace PlatformerSpeedRunner.States
         {
             InputManager.GetCommands(cmd =>
             {
-                if (cmd is GameplayInputCommand.Exit)
+                if (cmd is GameplayInputCommand.ExitDown)
                 {
-                    Environment.Exit(1);
+                    exitable = true;
+                }
+                if (cmd is GameplayInputCommand.ExitUp && exitable)
+                {
+                    SwitchState(new MenuState());
+                }
+                if (cmd is GameplayInputCommand.RestartDown)
+                {
+                    restartable = true;
+                }
+                if (cmd is GameplayInputCommand.RestartUp && restartable)
+                {
+                    SwitchState(new GameplayState());
                 }
                 if (cmd is GameplayInputCommand.PlayerMoveLeft)
                 {
@@ -171,6 +180,19 @@ namespace PlatformerSpeedRunner.States
 
         public override void UpdateGameState(GameTime gameTime)
         {
+            if (gameEnd)
+            {
+                try
+                {
+                    Database.SendRun(Convert.ToInt32(elapsedTime.TotalMilliseconds)).Wait();
+                    SwitchState(new MenuState());
+                }
+                catch (Exception)
+                {
+                    SwitchState(new MenuState());
+                }
+            }
+
             if (localGameTime.ElapsedGameTime == new TimeSpan(0))
             {
                 startingTime = gameTime.TotalGameTime;
@@ -212,7 +234,8 @@ namespace PlatformerSpeedRunner.States
         {
             backgroundImage.Position.SetPosition(camera.GetCameraBasedPosition(new Vector2(0, 0)));
             timerText.Position.SetPosition(camera.GetCameraBasedPosition(timerText.originalPosition));
-            timerText.content = elapsedTime.ToString();
+            string currentTime = elapsedTime.ToString().Substring(0, elapsedTime.ToString().Length - 4);
+            timerText.content = "Time: " + currentTime;
 
             debugText.Position.SetPosition(camera.GetCameraBasedPosition(debugText.originalPosition));
             debugText.content = checkPointTime.ToString();
@@ -243,13 +266,11 @@ namespace PlatformerSpeedRunner.States
             }
             if (Collision.PlayerEndFlagDetector(player, EndFlagCollisionList))
             {
-                var dbSubmitRun = Database.SendRun(Convert.ToInt32(elapsedTime.TotalMilliseconds));
-                dbSubmitRun.Wait();
-
-                SwitchState(new MenuState());
+                Vector2 submitTextPosition = camera.GetCameraBasedPosition(new Vector2(800, 500));
+                AddText("Submitting run...", (int)submitTextPosition.X, (int)submitTextPosition.Y);
+                gameEnd = true;
             }
         }
-
         //creating objects in world
         private void AddObject(string TextureName, int PosX, int PosY, List<BasicObject> CollisionList)
         {
@@ -292,7 +313,7 @@ namespace PlatformerSpeedRunner.States
 
         private Text AddText(string content, int PosX, int PosY)
         {
-            Text textObject = new Text(content, new Vector2(PosX, PosY));
+            Text textObject = new Text(content, new Vector2(PosX, PosY), Fonts.CalibriBold25);
             AddTextObject(textObject);
             return textObject;
         }
@@ -320,10 +341,17 @@ namespace PlatformerSpeedRunner.States
 
         private void RespawnPlayer()
         {
-            player.Movement.ResetVelocity();
-            player.Position.SetPosition(spawnPoint);
-            startingTime += elapsedTime;
-            startingTime += -checkPointTime;
+            if (CheckPointList.Exists(e => e.activated == true))
+            {
+                player.Movement.ResetVelocity();
+                startingTime += elapsedTime;
+                startingTime += -checkPointTime;
+                player.Position.SetPosition(spawnPoint);
+            }
+            else
+            {
+                SwitchState(new GameplayState());
+            }
         }
 
         private void CheckPointActivation(CheckPoint checkPoint)
@@ -343,10 +371,12 @@ namespace PlatformerSpeedRunner.States
         {
             AddGameObject(backgroundImage);
             //GUI
-            timerText = AddText("Timer", 0, 20);
-            debugText = AddText("Debugging", 0, 40);
+            timerText = AddText("Timer", 0, 10);
+            debugText = AddText("Debugging", 0, 60);
 
-
+            //TutorialIcons
+            AddObject("Menu\\TutorialMovementIcon", 100, 400);
+            AddObject("Menu\\TutorialMouseIcon", 280, 400);
             //First ground grass
             AddObject(woodenBoxLarge, 475, 705, FullCollisionList);
             AddObject(grassLeft, 0, 803, TopsCollisionList);
@@ -447,8 +477,9 @@ namespace PlatformerSpeedRunner.States
             AddObject(stoneSlabHorizontal, 2875, 1060);
             AddObject(stoneSlabHorizontal, 3067, 1060);
             AddObject(stoneSlabHorizontal, 3259, 1060);
-            AddSpikeHead(2950, 450, 400, 900);
-            AddSpikeHead(3200, 700, 400, 900);
+            AddSpikeHead(2900, 450, 400, 900);
+            AddSpikeHead(3100, 800, 400, 900);
+            AddSpikeHead(3300, 500, 400, 900);
             //post spikes
             AddObject(stoneCubeLarge, 3450, 980, FullCollisionList);
             AddObject(stoneCubeLarge, 3578, 980, FullCollisionList);
@@ -482,7 +513,7 @@ namespace PlatformerSpeedRunner.States
             AddCheckPoint(3800, 848);
             AddGameObject(endFlag);
             AddGameObject(player);
-            RespawnPlayer();
+            player.Position.SetPosition(spawnPoint);
         }
 
         public override void RenderBoundingBoxes(SpriteBatch spriteBatch)

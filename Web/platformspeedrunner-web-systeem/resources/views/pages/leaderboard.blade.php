@@ -31,47 +31,43 @@
                         @endif
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped LeaderboardTable">
+                                <table class="table table-bordered table-striped SpeedRunnerTable">
                                     <thead>
                                     <tr>
-                                        <th class="rank">Rank</th>
+                                        <th class="no-order">Rank</th>
                                         <th>Title</th>
                                         <th>Player</th>
-                                        <th>Time (m:s:ms)</th>
-                                        <th>Date (y-d-m UTC)</th>
-                                        <th class="actions">Actions</th>
+                                        <th class="default-order">Time (m:s:ms)</th>
+                                        <th>Date (y-m-d UTC)</th>
+                                        <th class="no-order">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ( App\Http\Controllers\LeaderboardController::SortRuns($runs) as $run)
-                                        @if ($run->active === 1)
-                                            <tr>
-                                                @if ($i === 0)
-                                                    <td><i class="fas fa-trophy"></i>{{ App\Http\Controllers\LeaderboardController::SetSuffix(++$i) }}</td>
-                                                @elseif ($i === 1)
-                                                    <td><i class="fas fa-medal"></i>{{ App\Http\Controllers\LeaderboardController::SetSuffix(++$i) }}</td>
-                                                @elseif ($i === 2)
-                                                    <td><i class="fas fa-award"></i>{{ App\Http\Controllers\LeaderboardController::SetSuffix(++$i) }}</td>
-                                                @else
-                                                    <td>{{ App\Http\Controllers\LeaderboardController::SetSuffix(++$i) }}</td>
-                                                @endif
-                                                <td>{{ $run->custom_name}}</td>
-                                                <td>{{ App\Http\Controllers\UserController::GetUsername($run->user_id) }}</td>
-
-                                                <td>{{ \App\Http\Controllers\LeaderboardController::FormatTime($run->duration)}}</td>
-                                                <td>{{ $run->created_at}}</td>
-                                                <td>
-                                                        <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                        @if (auth()->user())
-                                                            <a class="btn btn-sm btn-success" href="{{ route('leaderboard_create_comment', $run->id) }}"><i class="nav-icon fas fa-comments"></i> Comment</a>
-                                                        @endif
-                                                        @if((new \App\Helpers\AuthenticationHelper)->IsCurrentUser($run->user_id))
-                                                            <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
-                                                        @endif
-                                                </td>
-                                            </tr>
+                                    @foreach ( $runs as $run)
+                                        <tr>
+                                            @if ($run->position === 1)
+                                                <td><i class="fas fa-trophy"></i>{{ $run->position }}</td>
+                                            @elseif ($run->position === 2)
+                                                <td><i class="fas fa-medal"></i>{{ $run->position }}</td>
+                                            @elseif ($run->position === 3)
+                                                <td><i class="fas fa-award"></i>{{ $run->position }}</td>
+                                            @else
+                                                <td>{{ $run->position }}</td>
                                             @endif
-                                            @endforeach
+                                            <td>{{ $run->custom_name}}</td>
+                                            <td>{{ $run->user->username }}</td>
+
+                                            <td>{{ $readabilityHelper->FormatTime($run->duration) }}</td>
+                                            <td>{{ $run->created_at}}</td>
+                                            <td>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('run.show',$run->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('leaderboard_create_comment', $run->id) }}"><i class="nav-icon fas fa-comments"></i> Comment</a>
+                                                    @if( auth()->id() === $run->user->id)
+                                                        <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                    @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr>
@@ -79,7 +75,7 @@
                                         <th>Title</th>
                                         <th>Player</th>
                                         <th>Time (m:s:ms)</th>
-                                        <th>Date (y-d-m UTC)</th>
+                                        <th>Date (y-m-d UTC)</th>
                                         <th>Actions</th>
                                     </tr>
                                     </tfoot>
@@ -93,17 +89,5 @@
     </section>
 @endsection
 @section('pagejs')
-    <script>
-        window.onload = function () {
-            $("table.LeaderboardTable").DataTable({
-                language: DataTable.Language,
-                pageLength: 25,
-                columnDefs: [
-                    { orderable: false, targets: ["rank", "actions"] }
-                ],
-                order: [[3, 'asc']]
-            })
-        }
-        DataTable.init();
-    </script>
+    @include('inc.datatablefiltering')
 @endsection

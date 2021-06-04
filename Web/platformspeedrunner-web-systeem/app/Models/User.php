@@ -12,7 +12,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property $username
  * @property $password
  * @property $unique_key
- * @property $upvotes
  *
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -39,7 +38,6 @@ class User extends Authenticatable
         'username',
         'password',
         'unique_key',
-        'upvotes',
         'active',
         'role_id'
     ];
@@ -48,4 +46,8 @@ class User extends Authenticatable
         'password'
     ];
 
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
 }

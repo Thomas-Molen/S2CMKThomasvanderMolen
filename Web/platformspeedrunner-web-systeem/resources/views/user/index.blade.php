@@ -37,13 +37,12 @@
                             <table id="usersTable" class="table table-bordered table-striped SpeedRunnerTable">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th class="default-order">#</th>
                                     <th>Username</th>
                                     <th>Unique Key</th>
-                                    <th>Upvotes</th>
-                                    <th>Role</th>
+                                    <th>Admin</th>
                                     <th>Deleted</th>
-                                    <th>Actions</th>
+                                    <th class="no-order">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -52,10 +51,15 @@
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->unique_key }}</td>
-                                        <td>{{ $user->upvotes }}</td>
-                                        <td>{{ (new App\Http\Controllers\RoleController)->GetName($user->role_id) }}</td>
                                         <td>
-                                            @if ($user->active === 1)
+                                            @if ($user->admin)
+                                                yes
+                                            @else
+                                                no
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->active)
                                                 no
                                             @else
                                                 yes
@@ -79,8 +83,7 @@
                                     <th>#</th>
                                     <th>Username</th>
                                     <th>Unique Key</th>
-                                    <th>Upvotes</th>
-                                    <th>Role</th>
+                                    <th>Admin</th>
                                     <th>Deleted</th>
                                     <th>Actions</th>
                                 </tr>
@@ -93,4 +96,7 @@
         </div>
     </div>
 </section>
+@endsection
+@section('pagejs')
+    @include('inc.datatablefiltering')
 @endsection

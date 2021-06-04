@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div style="display: inline-block">
-                <a class="btn btn-secondary" href="{{ (new \App\Helpers\RoutingHelper)->PreviousRoute() }}">Back</a>
+                <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
             </div>
                 <div style="display: inline-block">
                     <form action="{{ route('user.destroy',$user->id) }}" method="POST">

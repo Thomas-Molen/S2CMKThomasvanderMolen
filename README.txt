@@ -2,27 +2,30 @@
 
 #This repository is used to store all personal work made during Semester2
 	
-SPRINT 4
-	Deze sprint heb ik me voornamelijk gefocused op leerdoelen aan te tonen met onderdelen buiten mijn 
-	game/web, hierbij heb ik beide Circustrein opnieuw gemaakt na feedback en Containervervoer gemaakt.
-	Verder heb ik gewerkt om mijn web visueel duidelijk te maken en de connecties op te zetten voor
-	verbinding met de game.
+SPRINT 5
+	Deze sprint ben ik voornamelijk tewerk gegaan op basis van feedback ontvangen uit laatste oplevering,
+	Ik heb tijdens de laatste oplevering punten gekregen die ik moest verbeteren om van beginnend naar geoefend
+	te gaan. Dit heb ik dus gedaan en met de docenten overgenomen, ik mis alleen nog unit tests in de game.
 
 Web Functionaliteit:
-	- Pagina's afgemaakt (nu volledig functioneel).
-	- Permissions opgezet voor users en pagina's.
-	- File structure aangepast om meer in lijn te zijn met andere web projecten.
-	- Registration systeem af en klaar gemaakt voor connectie met game.
-	- Web API opgesteld voor connectie met game.
+	- API gemaakt voor connectie met game.
+	- Leaderboard pagina gemaakt met nieuwe correcte data.
+	- Redisigned web pages om meer uniform te zijn.
+	- database abstractielaag toegevoegd tussen controller en database.
+	- algemeen web meer SOLID gemaakt.
+	- authentication systeem veranderd.
+	- routing systeem aangepast.
 
 Game Functionaliteit:
-	- Nieuwe klassen diagram gemaakt die meer in lijn is met OO.
-	- Camera logica herschreven.
-	- Structuur gedeeltelijk aangepast voor betere OO.
-	- Test environment gemaakt voor het connecten met website API.
+	- database helpers toegevoegd voor connectie maken met web.
+	- Unique_Key creation toegevoegd (!NOTE: als de game nu geopened wordt zal er een folder worden aangemaakt in AppData).
+	- Respawn systeem aangepast voor betere speedrun exeperience
+	- Main menu gemaakt met clickable buttons.
 
 Extra onderdelen:
-	- CircustreinV2 gemaakt (met nieuwe klassen diagram).
-	- Containervervoer gemaakt (met klassen diagram en flowchart).
-	- Unit tests voor beide extra opdrachten gemaakt.
-	
+	- Web ERD verbeterd.
+	- Web klassendiagram gemaakt.
+	- Game klassendiagram verbeterd.
+	- Requirements Web en Game veranderd.
+	- Use-cases voor Web en Game gemaakt.
+	- Test-cases voor Web en Game gemaakt.

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Repository\Repository;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -16,16 +14,14 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Repository $repository)
     {
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
         ]);
 
-        $user = DB::table('user')
-            ->where('active', '=', 1)
-            ->get();
+        $user = $repository->Get(User::class);
 
         if ($user->isEmpty())
         {

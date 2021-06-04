@@ -12,11 +12,22 @@
             {!! $errors->first('unique_key', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('role_id') }}
-            {{ Form::text('role_id', $user->role_id, ['class' => 'form-control' . ($errors->has('role_id') ? ' is-invalid' : ''), 'placeholder' => 'Role']) }}
+            {{ Form::label('admin') }}
+            {{ Form::text('admin', $user->admin, ['class' => 'form-control' . ($errors->has('admin') ? ' is-invalid' : ''), 'placeholder' => 'admin 1 or 0']) }}
+            {!! $errors->first('admin', '<div class="invalid-feedback">:message</p>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('password') }}
+            {{ Form::text('password', "", ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''), 'placeholder' => 'New Password']) }}
             {!! $errors->first('role_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group">
+            {{ Form::label('active') }}
+            {{ Form::text('active', $user->active, ['class' => 'form-control' . ($errors->has('active') ? ' is-invalid' : ''), 'placeholder' => 'active 1 or 0']) }}
+            {!! $errors->first('active', '<div class="invalid-feedback">:message</p>') !!}
+        </div>
+        <div class="box-footer mt20">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
     </div>
 </div>

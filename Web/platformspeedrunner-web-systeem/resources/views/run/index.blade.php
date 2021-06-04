@@ -22,38 +22,42 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <a class="btn btn-primary" style="float: right" href="{{ route('run.create') }}"><i class="fas fa-plus"></i> New run</a>
-                        </div>
 
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">
                                 <p>{{ $message }}</p>
                             </div>
                         @endif
+                        @if ($message = Session::get('error'))
+                            <div class="alert alert-danger">
+                                <p>{{ $message }}</p>
+                            </div>
+                        @endif
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="runsTable" class="table table-bordered table-striped SpeedRunnerTable">
+                                <table class="table table-bordered table-striped SpeedRunnerTable">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th class="default-order">#</th>
+                                        <th>Name</th>
                                         <th>Player</th>
                                         <th>Time</th>
                                         <th>Date</th>
                                         <th>Deleted</th>
-                                        <th>Actions</th>
+                                        <th class="no-order">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach ($runs as $run)
                                             <tr>
+                                                <td>{{ $run->id }}</td>
                                                 <td>{{ $run->custom_name }}</td>
-                                                <td>{{ (new App\Http\Controllers\UserController)->GetUsername($run->user_id) }}</td>
-                                                <td>{{ $run->duration }}</td>
+                                                <td>{{ $run->user->username }}</td>
+                                                <td>{{ $readabilityHelper->FormatTime($run->duration) }}</td>
                                                 <td>{{ $run->created_at . " (UTC)"}}</td>
                                                 <td>
-                                                    @if ($run->active === 1)
+                                                    @if ($run->active)
                                                         no
                                                     @else
                                                         yes
@@ -75,6 +79,7 @@
                                     <tfoot>
                                     <tr>
                                         <th>#</th>
+                                        <th>Name</th>
                                         <th>Player</th>
                                         <th>Time</th>
                                         <th>Date</th>
@@ -90,4 +95,7 @@
             </div>
         </div>
     </section>
+@endsection
+@section('pagejs')
+    @include('inc.datatablefiltering')
 @endsection

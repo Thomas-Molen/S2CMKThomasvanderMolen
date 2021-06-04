@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
-use App\Models\Comment;
+use App\Repository\CommentRepository;
+use App\Repository\Repository;
+use App\Helpers\TableReadabilityHelper;
 use App\Models\Run;
-use App\Models\User;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\isNull;
 
 /**
  * Class RunController
@@ -15,157 +15,77 @@ use function PHPUnit\Framework\isNull;
  */
 class RunController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $runs = Run::paginate();
+    private $query;
+    private $authenticator;
 
-            return view('run.index', compact('runs'))
-                ->with('i', (request()->input('page', 1) - 1) * $runs->perPage());
+    public function __construct(Repository $queryHelper, AuthenticationHelper $authenticationHelper)
+    {
+        $this->query = $queryHelper;
+        $this->authenticator = $authenticationHelper;
+    }
+
+    public function index(TableReadabilityHelper $readabilityHelper)
+    {
+        if ($this->authenticator->AuthAccess()) {
+
+            return view('run.index')
+                ->with(['runs' => $this->query->Get(Run::class, false), 'readabilityHelper' => $readabilityHelper]);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        if ((new AuthenticationHelper)->AuthAccess()) {
-            $run = new Run();
-
-            return view('run.create', compact('run'));
-        }
+        return redirect()->route('leaderboard')
+            ->with('error', 'The selected path was inaccessible');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store()
     {
-        request()->validate(Run::$rules);
-
-        $run = Run::create($request->all());
-        $run->update(['created_at' => date('Y-m-d H:i:s')]);
-        if ($request->custom_name === null OR $request->custom_name === "")
-        {
-            $run->update(['custom_name' => "#" . $run->id]);
-        }
-
-        return redirect()->route('run.show', $run->id)
-            ->with('success', 'Run created successfully.');
+        return redirect()->route('leaderboard')
+            ->with('error', 'The selected path was inaccessible');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function show($id)
+    public function show($id, TableReadabilityHelper $readabilityHelper, CommentRepository $commentRepository)
     {
-        $run = Run::find($id);
+        $run = $this->query->Find(Run::class, $id);
+
         if ($run === null)
         {
             return redirect()->route('leaderboard')
                 ->with('error', 'The run you where trying to find does not exist');
         }
-        if ($run->active === 1)
-        {
-            return view('run.show', compact('run'));
-        }
-        return redirect()->route('leaderboard')
-            ->with('error', 'The run you where trying to find has been deleted');
+        return view('run.show')
+            ->with(['run' => $run, 'comments' => $commentRepository->GetRunComment($run->id), 'links' => $run->link()->get(),
+                    'authenticationHelper' => $this->authenticator, 'readabilityHelper' => $readabilityHelper]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $run = Run::find($id);
-        if ($run !== null AND ($run->active === 1 OR (new AuthenticationHelper)->IsAdmin()))
+        $run = $this->query->Find(Run::class, $id);
+        if ($run !== null AND ($run->active === 1 OR auth()->user()->admin))
         {
-            if ((new AuthenticationHelper)->IsCurrentUser($run->user_id)) {
-                return view('run.edit', compact('run'));
+            if ($this->authenticator->IsCurrentUser($run->user_id)) {
+                return view('run.edit')
+                    ->with(['run' => $run, 'authenticationHelper' => $this->authenticator]);
             }
         }
         return redirect()->route('leaderboard')
             ->with('error', 'The run you where trying to find has been deleted');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Run $run
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Run $run)
     {
-        request()->validate(Run::$rules);
-
-        $run->update($request->all());
-        if ($request->custom_name === null OR $request->custom_name === "")
-        {
-            $run->update(['custom_name' => "#" . $run->id]);
-        }
+        $this->query->Update(Run::class, $run, $request);
 
         return redirect()->route('run.show', $run->id)
             ->with('success', 'Run updated successfully');
     }
 
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
     public function destroy($id)
     {
-        Run::find($id)->update(['active' => 0]);
-        foreach ((new CommentController)->GetCommentsByRunId($id) as $comment)
-        {
-            Comment::find($comment->id)->update(['active' => 0]);
-        }
+        $this->query->Delete(Run::class, $id);
 
-        if ((new AuthenticationHelper)->IsAdmin()) {
-            return redirect()->route('run.index')
-                ->with('success', 'Run deleted successfully');
-        }
-        return redirect()->route('personal_runs')
+        return redirect()->route('leaderboard')
             ->with('success', 'Run deleted successfully');
-    }
-
-    public function GetName($id)
-    {
-        $run = Run::find($id);
-        return $run->custom_name;
-    }
-
-
-    public function apiCreate(Request $request)
-    {
-        $run = Run::create([
-            'user_id' => User::where('unique_key', '=', $request->unique_key),
-            'active' => 1,
-            'created_at' => date('Y-m-d H:i:s'),
-            'duration' => $request->duration,
-            'upvotes' => 0,
-            'information' => "",
-            'custom_name' => ""
-        ]);
-        $run->update(['custom_name' => "#" . $run->id]);
     }
 }

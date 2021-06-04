@@ -2,30 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Run;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use App\Repository\Repository;
+use App\Helpers\TableReadabilityHelper;
+use App\Repository\RunRepository;
 
 class PersonalRunsController extends Controller
 {
-    public function index()
+    public function index(TableReadabilityHelper $readabilityHelper, RunRepository $runRepository)
     {
-        $runs = Run::paginate();
-
-        return view('pages.personal_runs', compact('runs'))
-            ->with('i', (request()->input('page', 1) - 1) * $runs->perPage());
-    }
-
-    public function GetRuns($runs)
-    {
-        $array = [];
-        foreach ($runs as $run)
-        {
-            if ($run->user_id === auth()->id())
-            {
-                array_push($array, $run);
-            }
-        }
-        return $array;
+        return view('pages.personal_runs')
+            ->with(['runs' => $runRepository->GetUserRun(), 'readabilityHelper' => $readabilityHelper]);
     }
 }

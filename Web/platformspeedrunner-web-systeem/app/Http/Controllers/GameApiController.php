@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\AuthenticationHelper;
-use App\Models\Comment;
+
 use App\Models\Run;
-use App\Models\User;
+use App\Repository\Repository;
+use App\Repository\RunRepository;
+use App\Repository\UserRepository;
 use Illuminate\Http\Request;
-use PHPUnit\Util\Json;
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
 
 /**
  * Class GameApiController
@@ -17,28 +15,21 @@ use function PHPUnit\Framework\isNull;
  */
 class GameApiController extends Controller
 {
-    public function SubmitRun(Request $request)
-    {
-        request()->validate([
-            'unique_key' => 'required|max:20',
-            'duration' => 'required'
-        ]);
+    private $userRepository;
 
-        $run = Run::create([
-            'user_id' => User::where('unique_key', '=', $request->unique_key)->get()[0]->id,
-            'active' => 1,
-            'created_at' => date('Y-m-d H:i:s'),
-            'duration' => $request->duration,
-            'upvotes' => 0,
-            'information' => "",
-            'custom_name' => ""
-        ]);
-        $run->update(['custom_name' => "#" . $run->id]);
+    public function __construct(UserRepository $queryHelper)
+    {
+        $this->userRepository = $queryHelper;
+    }
+
+    public function SubmitRun(Request $request, Repository $repository)
+    {
+        $repository->Create(Run::class, $request);
     }
 
     public function GetUsername(string $unique_key = null)
     {
-        $user = User::where('unique_key', '=', $unique_key)->where('active', '=', true)->first();
+        $user = $this->userRepository->FindUserByUniqueKey($unique_key);
         if ($user === null ) {
             return "no user found with such key";
         }
@@ -50,9 +41,23 @@ class GameApiController extends Controller
         $length = 20;
         $chars = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
         $unique_key = substr(str_shuffle(str_repeat($chars, ceil($length/strlen($chars)) )),1,$length);
-        while (User::where('unique_key', '=', $unique_key)->exists()) {
+        while ($this->userRepository->FindUserByUniqueKey($unique_key, false) !== null) {
             $unique_key = substr(str_shuffle(str_repeat($chars, ceil($length/strlen($chars)) )),1,$length);
         }
         return $unique_key;
+    }
+
+    public function GetBestTime(string $unique_key = null, RunRepository $runRepository)
+    {
+        $user = $this->userRepository->FindUserByUniqueKey($unique_key);
+        if ($user === null ) {
+            return "no user found with such key";
+        }
+        $bestTime = $runRepository->FindBestUserRun($user->id);
+        if ($bestTime === null)
+        {
+            return "no runs found from user";
+        }
+        return $bestTime;
     }
 }

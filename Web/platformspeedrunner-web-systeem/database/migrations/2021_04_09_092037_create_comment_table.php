@@ -15,12 +15,13 @@ class CreateCommentTable extends Migration
     {
         Schema::create('comment', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('user');
-            $table->foreignId('run_id')->nullable()->constrained('run');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('run_id')->nullable();
             $table->string('content', '500');
-            $table->integer('upvotes')->default(0);
             $table->dateTimeTz('created_at')->nullable();
             $table->boolean('active')->default(1);
+            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('run_id')->references('id')->on('run');
         });
     }
 
