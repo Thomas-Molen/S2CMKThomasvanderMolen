@@ -52,7 +52,7 @@
                                                 <td>{{ $readabilityHelper->ShortenString($comment->content, 100) }}</td>
                                                 <td>{{ $comment->created_at . " (UTC)"}}</td>
                                                 <td>
-                                                    @if ($comment->active === 1)
+                                                    @if ($comment->active)
                                                         no
                                                     @else
                                                         yes

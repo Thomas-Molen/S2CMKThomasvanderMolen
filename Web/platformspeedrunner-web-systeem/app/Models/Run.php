@@ -46,4 +46,14 @@ class Run extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function link()
+    {
+        return $this->hasMany(Link::class, 'run_id', 'id');
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'run_id', 'id');
+    }
 }

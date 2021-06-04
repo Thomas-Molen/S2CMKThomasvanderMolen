@@ -10,17 +10,7 @@
             {{ Form::textarea('information', $run->information, ['class' => 'form-control run-info' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'Extra information']) }}
             {!! $errors->first('information', '<div class="invalid-feedback">:message</p>') !!}
         </div>
-        @if ($authenticationHelper->IsAdmin())
-        <div class="form-group">
-            {{ Form::label('user_id') }}
-            {{ Form::text('user_id', $run->user_id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User id']) }}
-            {!! $errors->first('user_id', '<div class="invalid-feedback">:message</p>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('duration') }}
-            {{ Form::number('duration', $run->duration, ['class' => 'form-control' . ($errors->has('duration') ? ' is-invalid' : ''), 'placeholder' => 'Millisecond']) }}
-            {!! $errors->first('duration', '<div class="invalid-feedback">:message</p>') !!}
-        </div>
+        @if (auth()->user()->admin)
         <div class="form-group">
             {{ Form::label('active') }}
             {{ Form::text('active', $run->active, ['class' => 'form-control' . ($errors->has('active') ? ' is-invalid' : ''), 'placeholder' => 'active 1 or 0']) }}

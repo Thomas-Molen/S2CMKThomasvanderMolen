@@ -54,74 +54,62 @@
                             </p>
                         </a>
                     </li>
-                @endif
-
-                @if((new App\Helpers\AuthenticationHelper)->IsAdmin())
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-database"></i>
-                        <p>
-                            Data management
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('run.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-running"></i>
+                    @if(auth()->user()->admin)
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-database"></i>
                                 <p>
-                                    Runs
+                                    Data management
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('run.index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-running"></i>
+                                        <p>
+                                            Runs
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('comment.index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-comments"></i>
+                                        <p>
+                                            Comments
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('link.index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-link"></i>
+                                        <p>
+                                            Links
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('user.index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-users"></i>
+                                        <p>
+                                            Users
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('comment.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-comments"></i>
-                                <p>
-                                    Comments
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('link.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-link"></i>
-                                <p>
-                                    Links
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Users
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('role.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-user-tag"></i>
-                                <p>
-                                    Roles
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                @endif
-
-                @if (auth()->user())
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('logout') }}">
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <p>
-                            Logout
-                        </p>
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;">
-                        @csrf
-                    </form>
-                    @else
+                    @endif
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}">
+                            <i class="nav-icon fas fa-sign-out-alt"></i>
+                            <p>
+                                Logout
+                            </p>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;">
+                            @csrf
+                        </form>
+                @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">
                             <i class="nav-icon fas fa-sign-in-alt"></i>
@@ -129,8 +117,8 @@
                                 Login
                             </p>
                         </a>
-                    @endif
-                </li>
+                    </li>
+                @endif
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

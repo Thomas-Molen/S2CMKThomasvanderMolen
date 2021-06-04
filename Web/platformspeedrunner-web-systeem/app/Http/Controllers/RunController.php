@@ -3,16 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
-use App\Helpers\QueryHelper;
-use App\Helpers\RoutingHelper;
-use App\Helpers\RunHelper;
+use App\Repository\CommentRepository;
+use App\Repository\Repository;
 use App\Helpers\TableReadabilityHelper;
-use App\Models\Comment;
-use App\Models\Link;
 use App\Models\Run;
-use App\Models\User;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\isNull;
 
 /**
  * Class RunController
@@ -23,7 +18,7 @@ class RunController extends Controller
     private $query;
     private $authenticator;
 
-    public function __construct(QueryHelper $queryHelper, AuthenticationHelper $authenticationHelper)
+    public function __construct(Repository $queryHelper, AuthenticationHelper $authenticationHelper)
     {
         $this->query = $queryHelper;
         $this->authenticator = $authenticationHelper;
@@ -34,7 +29,7 @@ class RunController extends Controller
         if ($this->authenticator->AuthAccess()) {
 
             return view('run.index')
-                ->with(['runs' => $this->query->GetRun(false), 'readabilityHelper' => $readabilityHelper]);
+                ->with(['runs' => $this->query->Get(Run::class, false), 'readabilityHelper' => $readabilityHelper]);
         }
     }
 
@@ -50,9 +45,9 @@ class RunController extends Controller
             ->with('error', 'The selected path was inaccessible');
     }
 
-    public function show($id, TableReadabilityHelper $readabilityHelper, RoutingHelper $routingHelper)
+    public function show($id, TableReadabilityHelper $readabilityHelper, CommentRepository $commentRepository)
     {
-        $run = $this->query->FindRun($id);
+        $run = $this->query->Find(Run::class, $id);
 
         if ($run === null)
         {
@@ -60,18 +55,18 @@ class RunController extends Controller
                 ->with('error', 'The run you where trying to find does not exist');
         }
         return view('run.show')
-            ->with(['run' => $run, 'comments' => $this->query->GetRunComment($id), 'links' => $this->query->GetRunLink($id), 'routingHelper' => $routingHelper,
+            ->with(['run' => $run, 'comments' => $commentRepository->GetRunComment($run->id), 'links' => $run->link()->get(),
                     'authenticationHelper' => $this->authenticator, 'readabilityHelper' => $readabilityHelper]);
     }
 
-    public function edit($id, RoutingHelper $routingHelper)
+    public function edit($id)
     {
-        $run = $this->query->FindRun($id);
-        if ($run !== null AND ($run->active === 1 OR $this->authenticator->IsAdmin()))
+        $run = $this->query->Find(Run::class, $id);
+        if ($run !== null AND ($run->active === 1 OR auth()->user()->admin))
         {
             if ($this->authenticator->IsCurrentUser($run->user_id)) {
                 return view('run.edit')
-                    ->with(['run' => $run, 'routingHelper' => $routingHelper, 'authenticationHelper' => $this->authenticator]);
+                    ->with(['run' => $run, 'authenticationHelper' => $this->authenticator]);
             }
         }
         return redirect()->route('leaderboard')
@@ -80,7 +75,7 @@ class RunController extends Controller
 
     public function update(Request $request, Run $run)
     {
-        $this->query->UpdateRun($request, $run);
+        $this->query->Update(Run::class, $run, $request);
 
         return redirect()->route('run.show', $run->id)
             ->with('success', 'Run updated successfully');
@@ -88,7 +83,7 @@ class RunController extends Controller
 
     public function destroy($id)
     {
-        $this->query->DeleteRun($id);
+        $this->query->Delete(Run::class, $id);
 
         return redirect()->route('leaderboard')
             ->with('success', 'Run deleted successfully');

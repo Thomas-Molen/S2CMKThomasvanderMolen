@@ -2,7 +2,7 @@
 @section('title', 'Ticket')
 @section('content')
     <!-- Content Header (Page header) -->
-    @if($run->active === 1 OR $authenticationHelper->isAdmin())
+    @if($run->active === 1 OR auth()->user()->admin)
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
@@ -35,7 +35,7 @@
                         @foreach($comments as $comment)
                             <div class="col-11">
                                 <blockquote>
-                                    <i class="fas fa-user"></i><b>{{ $comment->user->username}}</b>
+                                    <i class="fas fa-user"></i><b>{{$comment->user->username}}</b>
                                     <small>{{ $comment->created_at }}</small>
                                     <p style="white-space: pre-line; word-wrap: break-word; margin-top:-3%">
                                         {{ $comment->content }}
@@ -90,18 +90,15 @@
                             <form action="{{ route('run.destroy',$run->id) }}" method="POST">
                                 <a class="btn btn-sm btn-success" href="{{ route('run_create_link', $run->id) }}"><i class="fas fa-link"></i> Add Link</a>
                                 <a class="btn btn-sm btn-secondary" href="{{ route('run.edit',$run->id) }}"><i class="fa fa-edit"></i> Edit Run</a>
-
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this run?');"><i class="fa fa-fw fa-trash"></i> Delete Run</button>
                             </form>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
-        <a class="btn btn-secondary" href="{{ $routingHelper->PreviousRoute() }}">Back</a><br><br>
+        <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
+        <br>
+        <br>
     </div>
     @else
         <div class="alert alert-danger alert-dismissible">
@@ -109,7 +106,7 @@
             <h5><i class="icon fas fa-ban"></i>Attention!</h5>
             This run has been archived and is no longer visible on the leaderboards or personal run lists!
         </div>
-        <a class="btn btn-secondary" href="{{ back() }}" style="margin-left: 1%">Back</a>
+        <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
     @endif
 @endsection
 <style>

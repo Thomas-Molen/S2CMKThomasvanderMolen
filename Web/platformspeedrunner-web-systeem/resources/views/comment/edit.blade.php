@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ route('comment.index') }}">Back</a>
+            <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
             @if($comment->id !== null)
                 <div style="display: inline-block">
                     <form action="{{ route('comment.destroy',$comment->id) }}" method="POST">

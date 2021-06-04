@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ route('link.index') }}">Back</a>
+            <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
             <a class="btn btn-info" href="{{ route('link.edit',$link->id) }}">Edit</a>
         </div>
     </section>

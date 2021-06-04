@@ -18,10 +18,9 @@ class CreateUserTable extends Migration
             $table->string('username', 30);
             $table->string('password', 150);
             $table->string('unique_key', 20);
-            $table->unsignedBigInteger('role_id')->default(1);
+            $table->boolean('admin')->default(0);
             $table->boolean('active')->default(1);
             $table->rememberToken();
-            $table->foreign('role_id')->references('id')->on('role');
         });
     }
 

@@ -22,7 +22,7 @@ class Link extends Model
 
     static $rules = [
 		'url' => 'required | max:250',
-        'name' => 'max:50'
+        'name' => 'required | max:50'
     ];
 
     protected $perPage = 1e20;
@@ -48,5 +48,4 @@ class Link extends Model
     {
         return $this->belongsTo(Run::class);
     }
-
 }

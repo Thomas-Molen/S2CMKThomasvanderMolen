@@ -53,5 +53,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('link', LinkController::class);
     Route::resource('user', UserController::class);
     Route::resource('comment', CommentController::class);
-    Route::resource('role', RoleController::class);
 });

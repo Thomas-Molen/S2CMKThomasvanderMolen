@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ route('link.index') }}">Back</a>
+            <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
             @if($link->id !== null)
                 <div style="display: inline-block">
                     <form action="{{ route('link.destroy',$link->id) }}" method="POST">

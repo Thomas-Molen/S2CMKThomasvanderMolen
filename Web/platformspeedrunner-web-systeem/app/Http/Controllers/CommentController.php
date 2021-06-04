@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
-use App\Helpers\QueryHelper;
+use App\Repository\Repository;
 use App\Helpers\TableReadabilityHelper;
 use App\Models\Comment;
-use App\Models\User;
 use App\Models\Run;
 use Illuminate\Http\Request;
 
@@ -16,12 +15,12 @@ use Illuminate\Http\Request;
  */
 class CommentController extends Controller
 {
-    private $query;
+    private $repository;
     private $authenticator;
 
-    public function __construct(QueryHelper $queryHelper, AuthenticationHelper $authenticationHelper)
+    public function __construct(Repository $queryHelper, AuthenticationHelper $authenticationHelper)
     {
-        $this->query = $queryHelper;
+        $this->repository = $queryHelper;
         $this->authenticator = $authenticationHelper;
     }
 
@@ -30,7 +29,7 @@ class CommentController extends Controller
         if ($this->authenticator->AuthAccess()) {
 
             return view('comment.index')
-                ->with(['comments' => $this->query->GetComment(false), 'readabilityHelper' => $readabilityHelper]);
+                ->with(['comments' => $this->repository->Get(Comment::class, false), 'readabilityHelper' => $readabilityHelper]);
         }
     }
 
@@ -42,8 +41,8 @@ class CommentController extends Controller
 
     public function run_create(int $id)
     {
-        if ($this->query->FindRun($id) !== null) {
-            $comment = $this->query->CreateComment();
+        if ($this->repository->Find(Run::class, $id) !== null) {
+            $comment = $this->repository->Create(Comment::class);
 
             return view('comment.create')
                 ->with(['comment' => $comment, 'run_id' => $id, 'authenticationHelper' => $this->authenticator]);
@@ -54,7 +53,7 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
-        $this->query->StoreComment($request);
+        $this->repository->Create(Comment::class, $request);
 
         return redirect()->route('run.show', $request->run_id)
             ->with('success', 'Comment created successfully.');
@@ -65,14 +64,14 @@ class CommentController extends Controller
         if ($this->authenticator->AuthAccess()) {
 
             return view('comment.show')
-                ->with(['comment' => $this->query->FindComment($id)]);
+                ->with(['comment' => $this->repository->Find(Comment::class, $id)]);
         }
     }
 
     public function edit($id)
     {
-        $comment = $this->query->FindComment($id);
-        if ($comment !== null AND ($comment->active === 1 OR $this->authenticator->IsAdmin()))
+        $comment = $this->repository->Find(Comment::class, $id);
+        if ($comment !== null AND ($comment->active === 1 OR auth()->user()->admin))
         {
             if ($this->authenticator->IsCurrentUser($comment->user_id)) {
                 return view('comment.edit', compact('comment'))
@@ -85,7 +84,7 @@ class CommentController extends Controller
 
     public function update(Request $request, Comment $comment)
     {
-        $this->query->UpdateComment($request, $comment);
+        $this->repository->Update(Comment::class, $comment, $request);
 
         return redirect()->route('run.show', $comment->run_id)
             ->with('success', 'Comment updated successfully');
@@ -93,9 +92,9 @@ class CommentController extends Controller
 
     public function destroy($id)
     {
-        $this->query->DeleteComment($id);
+        $this->repository->Delete(Comment::class, $id);
 
-        return redirect()->route('run.show', $this->query->FindComment($id)->user_id)
+        return redirect()->route('run.show', $this->repository->Find(Comment::class, $id)->user_id)
             ->with('success', 'Comment deleted successfully');
     }
 }

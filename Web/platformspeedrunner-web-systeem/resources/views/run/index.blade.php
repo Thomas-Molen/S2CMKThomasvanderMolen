@@ -57,7 +57,7 @@
                                                 <td>{{ $readabilityHelper->FormatTime($run->duration) }}</td>
                                                 <td>{{ $run->created_at . " (UTC)"}}</td>
                                                 <td>
-                                                    @if ($run->active === 1)
+                                                    @if ($run->active)
                                                         no
                                                     @else
                                                         yes

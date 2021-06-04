@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ route('comment.index') }}">Back</a>
+            <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
             <a class="btn btn-info" href="{{ route('comment.edit',$comment->id) }}">Edit</a>
         </div>
     </section>

@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ route('user.index') }}">Back</a>
+            <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
         </div>
     </section>
 @endsection

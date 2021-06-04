@@ -28,8 +28,7 @@ class RegisterController extends Controller
         User::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'unique_key' => $request->unique_key,
-            'role_id' => (new RoleController)->CheckRoleByName("user")
+            'unique_key' => $request->unique_key
         ]);
 
         return redirect()->route('login');

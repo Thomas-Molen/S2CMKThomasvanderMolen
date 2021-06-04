@@ -12,9 +12,9 @@
             {!! $errors->first('unique_key', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('role_id') }}
-            {{ Form::text('role_id', $user->role_id, ['class' => 'form-control' . ($errors->has('role_id') ? ' is-invalid' : ''), 'placeholder' => 'Role']) }}
-            {!! $errors->first('role_id', '<div class="invalid-feedback">:message</p>') !!}
+            {{ Form::label('admin') }}
+            {{ Form::text('admin', $user->admin, ['class' => 'form-control' . ($errors->has('admin') ? ' is-invalid' : ''), 'placeholder' => 'admin 1 or 0']) }}
+            {!! $errors->first('admin', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('password') }}

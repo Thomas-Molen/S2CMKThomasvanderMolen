@@ -15,7 +15,7 @@ class CreateLinkTable extends Migration
     {
         Schema::create('link', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->string('url', 250);
             $table->unsignedBigInteger('run_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();

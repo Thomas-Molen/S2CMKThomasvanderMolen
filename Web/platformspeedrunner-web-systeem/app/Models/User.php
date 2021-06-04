@@ -46,9 +46,8 @@ class User extends Authenticatable
         'password'
     ];
 
-    public function role()
+    public function comment()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasMany(Comment::class, 'user_id', 'id');
     }
-
 }

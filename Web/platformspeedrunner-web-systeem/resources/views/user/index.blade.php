@@ -40,7 +40,7 @@
                                     <th class="default-order">#</th>
                                     <th>Username</th>
                                     <th>Unique Key</th>
-                                    <th>Role</th>
+                                    <th>Admin</th>
                                     <th>Deleted</th>
                                     <th class="no-order">Actions</th>
                                 </tr>
@@ -51,9 +51,15 @@
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->unique_key }}</td>
-                                        <td>{{ $user->role->name }}</td>
                                         <td>
-                                            @if ($user->active === 1)
+                                            @if ($user->admin)
+                                                yes
+                                            @else
+                                                no
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->active)
                                                 no
                                             @else
                                                 yes
@@ -77,7 +83,7 @@
                                     <th>#</th>
                                     <th>Username</th>
                                     <th>Unique Key</th>
-                                    <th>Role</th>
+                                    <th>Admin</th>
                                     <th>Deleted</th>
                                     <th>Actions</th>
                                 </tr>

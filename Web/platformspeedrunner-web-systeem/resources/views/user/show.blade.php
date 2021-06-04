@@ -41,8 +41,8 @@
                                 {{ $user->unique_key }}
                             </div>
                             <div class="form-group">
-                                <strong>Role:</strong>
-                                {{ $user->role->name }}
+                                <strong>Admin:</strong>
+                                {{ $user->admin }}
                             </div>
                             <div class="form-group">
                                 <strong>Active:</strong>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-secondary" href="{{ route('user.index') }}">Back</a>
+            <a class="btn btn-secondary" href="javascript:history.go(-1)">Back</a>
             <a class="btn btn-info" href="{{ route('user.edit',$user->id) }}">Edit</a>
         </div>
     </section>
