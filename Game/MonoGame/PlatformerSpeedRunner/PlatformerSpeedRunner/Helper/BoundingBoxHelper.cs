@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using PlatformerSpeedRunner.Objects;
 using System.Collections.Generic;
 
@@ -8,8 +7,7 @@ namespace PlatformerSpeedRunner.Helper
     public class BoundingBoxHelper
     {
         public List<BoundingBoxObject> boundingBoxes { get; private set; }
-        private Texture2D boundingBoxTexture;
-        private Vector2 basePosition = Vector2.One;
+        private Vector2 basePosition = Vector2.Zero;
 
         public BoundingBoxHelper()
         {
@@ -19,25 +17,6 @@ namespace PlatformerSpeedRunner.Helper
         public void AddBoundingBox(BoundingBoxObject bb)
         {
             boundingBoxes.Add(bb);
-        }
-
-        private void CreateBoundingBoxTexture(GraphicsDevice graphicsDevice)
-        {
-            boundingBoxTexture = new Texture2D(graphicsDevice, 1, 1);
-            boundingBoxTexture.SetData<Color>(new Color[] { Color.White });
-        }
-
-        public void RenderBoundingBoxes(SpriteBatch spriteBatch)
-        {
-            if (boundingBoxTexture == null)
-            {
-                CreateBoundingBoxTexture(spriteBatch.GraphicsDevice);
-            }
-
-            foreach (var bb in boundingBoxes)
-            {
-                spriteBatch.Draw(boundingBoxTexture, bb.rectangle, Color.Red);
-            }
         }
 
         public void UpdateBoundingBoxes(Vector2 Position)

@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework.Input;
 using PlatformerSpeedRunner.Camera;
 using PlatformerSpeedRunner.Objects;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PlatformerSpeedRunner.Helper
 {

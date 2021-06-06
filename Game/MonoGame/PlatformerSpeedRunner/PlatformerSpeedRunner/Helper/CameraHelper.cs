@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
-using PlatformerSpeedRunner.Objects;
+﻿using Microsoft.Xna.Framework;
 using PlatformerSpeedRunner.Enum;
+using PlatformerSpeedRunner.Objects;
 
 namespace PlatformerSpeedRunner.Camera
 {
@@ -73,6 +70,22 @@ namespace PlatformerSpeedRunner.Camera
                     }
                 }
             }
+            transform = position * offset;
+        }
+
+        public void Follow(Vector2 newPosition)
+        {
+
+            position = Matrix.CreateTranslation(
+                -newPosition.X,
+                -newPosition.Y,
+                0);
+
+            offset = Matrix.CreateTranslation(
+                Program.width / 2,
+                Program.height / 2,
+                0);
+                           
             transform = position * offset;
         }
 

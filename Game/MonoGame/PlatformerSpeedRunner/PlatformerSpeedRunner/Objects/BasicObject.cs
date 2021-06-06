@@ -27,15 +27,5 @@ namespace PlatformerSpeedRunner.Objects
                 this.BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.X, Position.Y), BBWidth, BBHeight));
             }
         }
-        public BasicObject(Texture2D Texture, int BoundingBoxWidth, int BoundingBoxHeight, Vector2 Position)
-        {
-            base.Position.SetPosition(Position);
-            base.Texture.SetTexture(Texture);
-
-            BBWidth = BoundingBoxWidth + 1;
-            BBHeight = BoundingBoxHeight + 1;
-
-            BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.X, Position.Y), BBWidth, BBHeight));
-        }
     }
 }

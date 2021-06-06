@@ -2,7 +2,6 @@
 using PlatformerSpeedRunner.Objects;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PlatformerSpeedRunner.Helper
 {

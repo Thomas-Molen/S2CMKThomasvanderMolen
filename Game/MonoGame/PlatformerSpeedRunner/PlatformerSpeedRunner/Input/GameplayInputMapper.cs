@@ -41,22 +41,6 @@ namespace PlatformerSpeedRunner.Input
                 commands.Add(new GameplayInputCommand.PlayerMoveNone());
             }
 
-            if (state.IsKeyDown(Keys.W))
-            {
-                commands.Add(new GameplayInputCommand.PlayerMoveUp());
-            }
-
-            //DEBUG BOUNDINGBOXES
-            if (state.IsKeyDown(Keys.OemTilde))
-            {
-                commands.Add(new GameplayInputCommand.DebugOn());
-            }
-
-            if (state.IsKeyDown(Keys.Tab))
-            {
-                commands.Add(new GameplayInputCommand.DebugOff());
-            }
-
             return commands;
         }
 

@@ -28,7 +28,6 @@ namespace PlatformerSpeedRunner.States
         private TimeSpan checkPointTime = new TimeSpan(0);
         private GameTime localGameTime;
         private Text timerText;
-        private Text debugText;
 
         private int TimeCharged;
         //private Vector2 spawnPoint = new Vector2(200, 750);
@@ -160,21 +159,6 @@ namespace PlatformerSpeedRunner.States
                     }
                     TimeCharged = 0;
                 }
-                //DEBUG
-                if (cmd is GameplayInputCommand.DebugOn)
-                {
-                    debug = true;
-                }
-
-                if (cmd is GameplayInputCommand.DebugOff)
-                {
-                    debug = false;
-                }
-
-                if (cmd is GameplayInputCommand.PlayerMoveUp)
-                {
-                    player.Movement.yVelocity = -10;
-                }
             });
         }
 
@@ -236,9 +220,6 @@ namespace PlatformerSpeedRunner.States
             timerText.Position.SetPosition(camera.GetCameraBasedPosition(timerText.originalPosition));
             string currentTime = elapsedTime.ToString().Substring(0, elapsedTime.ToString().Length - 4);
             timerText.content = "Time: " + currentTime;
-
-            debugText.Position.SetPosition(camera.GetCameraBasedPosition(debugText.originalPosition));
-            debugText.content = checkPointTime.ToString();
         }
 
         private void HandleCollisions()
@@ -372,7 +353,6 @@ namespace PlatformerSpeedRunner.States
             AddGameObject(backgroundImage);
             //GUI
             timerText = AddText("Timer", 0, 10);
-            debugText = AddText("Debugging", 0, 60);
 
             //TutorialIcons
             AddObject("Menu\\TutorialMovementIcon", 100, 400);
@@ -514,38 +494,6 @@ namespace PlatformerSpeedRunner.States
             AddGameObject(endFlag);
             AddGameObject(player);
             player.Position.SetPosition(spawnPoint);
-        }
-
-        public override void RenderBoundingBoxes(SpriteBatch spriteBatch)
-        {
-            if (debug)
-            {
-                player.BoundingBox.RenderBoundingBoxes(spriteBatch);
-                foreach (var item in FullCollisionList)
-                {
-                    item.BoundingBox.RenderBoundingBoxes(spriteBatch);
-                }
-                foreach (var item in SidesCollisionList)
-                {
-                    item.BoundingBox.RenderBoundingBoxes(spriteBatch);
-                }
-                foreach (var item in TopsCollisionList)
-                {
-                    item.BoundingBox.RenderBoundingBoxes(spriteBatch);
-                }
-                foreach (var item in SpikeHeadCollisionList)
-                {
-                    item.BoundingBox.RenderBoundingBoxes(spriteBatch);
-                }
-                foreach (var item in RockHeadCollisionList)
-                {
-                    item.BoundingBox.RenderBoundingBoxes(spriteBatch);
-                }
-                foreach (var item in DeathCollisionList)
-                {
-                    item.BoundingBox.RenderBoundingBoxes(spriteBatch);
-                }
-            }
         }
     }
 }

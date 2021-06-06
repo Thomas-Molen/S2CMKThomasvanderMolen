@@ -138,8 +138,5 @@ namespace PlatformerSpeedRunner.States.Base
                 }
             }
         }
-
-        public virtual void RenderBoundingBoxes(SpriteBatch spriteBatch)
-        { }
     }
 }

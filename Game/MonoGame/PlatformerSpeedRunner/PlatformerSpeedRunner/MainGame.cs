@@ -104,7 +104,6 @@ namespace PlatformerSpeedRunner
 
             currentGameState.Render(spriteBatch);
             currentGameState.RenderText(spriteBatch);
-            currentGameState.RenderBoundingBoxes(spriteBatch);
 
             spriteBatch.End();
 
