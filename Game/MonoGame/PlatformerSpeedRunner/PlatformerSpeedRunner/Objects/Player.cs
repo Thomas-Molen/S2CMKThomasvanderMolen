@@ -30,7 +30,7 @@ namespace PlatformerSpeedRunner.Objects
         private readonly AnimationObject JumpingLeftAnimation;
         private readonly AnimationObject DeathAnimation;
 
-        public Player(Texture2D Texture)
+        public Player(Texture2D Texture = null)
         {
             base.Texture.SetTexture(Texture);
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(1, 0), BBWidth, BBHeight));

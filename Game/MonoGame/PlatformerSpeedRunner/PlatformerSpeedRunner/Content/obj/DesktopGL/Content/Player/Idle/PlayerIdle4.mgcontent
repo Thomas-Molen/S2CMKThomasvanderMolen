@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Idle/PlayerIdle4.png</SourceFile>
-  <SourceTime>2021-03-15T14:41:35.3376655+01:00</SourceTime>
-  <DestFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Player/Idle/PlayerIdle4.xnb</DestFile>
-  <DestTime>2021-06-04T12:58:09.4809882+02:00</DestTime>
+  <SourceFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Idle/PlayerIdle4.png</SourceFile>
+  <SourceTime>2021-03-15T14:41:36+01:00</SourceTime>
+  <DestFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Player/Idle/PlayerIdle4.xnb</DestFile>
+  <DestTime>2021-06-06T14:49:48.0956693+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
