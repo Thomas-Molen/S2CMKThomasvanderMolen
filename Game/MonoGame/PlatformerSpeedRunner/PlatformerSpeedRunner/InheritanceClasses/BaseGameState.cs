@@ -72,7 +72,7 @@ namespace PlatformerSpeedRunner.States.Base
         public event EventHandler<BaseGameState> OnStateSwitched;
 
 
-        protected Texture2D LoadTexture(string textureName)
+        public Texture2D LoadTexture(string textureName)
         {
             try
             {

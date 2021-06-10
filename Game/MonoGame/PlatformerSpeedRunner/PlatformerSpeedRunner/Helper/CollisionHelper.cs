@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using PlatformerSpeedRunner.Objects;
+using PlatformerSpeedRunner.Objects.Base;
 using System;
 using System.Collections.Generic;
 
@@ -8,13 +9,13 @@ namespace PlatformerSpeedRunner.Helper
     public class CollisionHelper
     {
         private CollisionDetector collisionDetector = new CollisionDetector();
-        public void PlayerFullDetector(Player playerSprite, List<BasicObject>FullCollisionList)
+        public void PlayerFullDetector(Player playerSprite, List<RenderAbleObject>FullCollisionList)
         {
             PlayerTopDetector(playerSprite, FullCollisionList);
             PlayerSideDetector(playerSprite, FullCollisionList);
         }
 
-        public void PlayerTopDetector(Player playerSprite, List<BasicObject> TopsCollisionList)
+        public void PlayerTopDetector(Player playerSprite, List<RenderAbleObject> TopsCollisionList)
         {
             collisionDetector.DetectCollisions(playerSprite, TopsCollisionList, (player, Object) =>
             {
@@ -34,7 +35,7 @@ namespace PlatformerSpeedRunner.Helper
             });
         }
 
-        public void PlayerSideDetector(Player playerSprite, List<BasicObject> SidesCollisionList)
+        public void PlayerSideDetector(Player playerSprite, List<RenderAbleObject> SidesCollisionList)
         {
             collisionDetector.DetectCollisions(playerSprite, SidesCollisionList, (player, Object) =>
             {
@@ -57,36 +58,35 @@ namespace PlatformerSpeedRunner.Helper
             });
         }
 
-        public bool PlayerDeathDetector(Player playerSprite, List<BasicObject> DeathCollisionList)
+        public bool PlayerDeathDetector(Player playerSprite, List<RenderAbleObject> CollisionList)
         {
             bool result = false;
-            collisionDetector.DetectCollisions(playerSprite, DeathCollisionList, (player, Object) =>
+            collisionDetector.DetectCollisions(playerSprite, CollisionList, (player, Object) =>
             {
                 result = true;
             });
             return result;
         }
 
-        public bool PlayerSpikeHeadDetector(Player playerSprite, List<MovingSpikeHead> SpikeHeadCollisionList)
+        public bool PlayerSpikeHeadDetector(Player playerSprite, List<RenderAbleObject> CollisionList)
         {
-            bool result = false;
-            if (collisionDetector.DetectCollisions(playerSprite, SpikeHeadCollisionList))
+            if (collisionDetector.DetectCollisions(playerSprite, CollisionList))
             {
-                result = true;
+                return true;
             }
-            return result;
+            return false;
         }
 
-        public MovingRockHead PlayerRockHeadDetector(Player playerSprite, List<MovingRockHead> RockHeadCollisionList)
+        public void PlayerRockHeadDetector(Player playerSprite, List<RenderAbleObject> RockHeadCollisionList)
         {
-            MovingRockHead result = null;
             collisionDetector.DetectCollisions(playerSprite, RockHeadCollisionList, (player, Object) =>
             {
                 if (IsPlayerOnTop(player, Object))
                 {
-                    result = Object;
+                    MovingRockHead rockHead = (MovingRockHead)Object;
+                    rockHead.MakeRockheadMad();
 
-                    player.Position.SetPosition(new Vector2(player.Position.position.X + Object.velocity, Object.Position.position.Y - player.Texture.Height));
+                    player.Position.SetPosition(new Vector2(player.Position.position.X + rockHead.velocity, Object.Position.position.Y - player.Texture.Height));
                     player.Movement.yVelocity = 0;
                 }
                 else if (IsPlayerBelow(player, Object))
@@ -114,23 +114,18 @@ namespace PlatformerSpeedRunner.Helper
                     }
                 }
             });
-            return result;
         }
 
-        public CheckPoint PlayerCheckPointDetector(Player playerSprite, List<CheckPoint> CheckPointCollisionList)
+        public bool PlayerCheckPointDetector(Player playerSprite, CheckPoint checkPoint)
         {
-            CheckPoint result = null;
-            collisionDetector.DetectCollisions(playerSprite, CheckPointCollisionList, (player, Object) =>
+            if (collisionDetector.DetectCollision(playerSprite, checkPoint) && !checkPoint.activated)
             {
-                if (Object.activated == false)
-                {
-                    result = Object;
-                }
-            });
-            return result;
+                return true;
+            }
+            return false;
         }
 
-        public bool PlayerEndFlagDetector(Player playerSprite, List<BasicObject> EndFlagCollisionList)
+        public bool PlayerEndFlagDetector(Player playerSprite, List<RenderAbleObject> EndFlagCollisionList)
         {
             bool result = false;
             collisionDetector.DetectCollisions(playerSprite, EndFlagCollisionList, (player, Object) =>
@@ -140,17 +135,7 @@ namespace PlatformerSpeedRunner.Helper
             return result;
         }
 
-        private bool IsPlayerOnTop(Player player, BasicObject Object)
-        {
-            if (Convert.ToInt32(player.Position.position.Y + player.Texture.Height) <= Object.Position.position.Y + 20 &&
-                    Convert.ToInt32(player.Position.position.X + player.Texture.Width) > Object.Position.position.X &&
-                    Convert.ToInt32(player.Position.position.X) < Object.Position.position.X + Object.Texture.Width)
-            {
-                return true;
-            }
-            return false;
-        }
-        private bool IsPlayerOnTop(Player player, MovingRockHead Object)
+        private bool IsPlayerOnTop(Player player, RenderAbleObject Object)
         {
             if (Convert.ToInt32(player.Position.position.Y + player.Texture.Height) <= Object.Position.position.Y + 20 &&
                     Convert.ToInt32(player.Position.position.X + player.Texture.Width) > Object.Position.position.X &&
@@ -161,17 +146,7 @@ namespace PlatformerSpeedRunner.Helper
             return false;
         }
 
-        private bool IsPlayerBelow(Player player, BasicObject Object)
-        {
-            if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
-                        Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
-                        Convert.ToInt32(player.Position.position.X + player.Texture.Width) >= Object.Position.position.X)
-            {
-                return true;
-            }
-            return false;
-        }
-        private bool IsPlayerBelow(Player player, MovingRockHead Object)
+        private bool IsPlayerBelow(Player player, RenderAbleObject Object)
         {
             if (Convert.ToInt32(player.Position.position.Y) >= Object.Position.position.Y + Object.Texture.Height - 20 &&
                         Convert.ToInt32(player.Position.position.X) <= Object.Position.position.X + Object.Texture.Width &&
@@ -182,17 +157,7 @@ namespace PlatformerSpeedRunner.Helper
             return false;
         }
 
-        private bool IsPlayerToLeft(Player player, BasicObject Object)
-        {
-            if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
-                        Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
-                        Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
-            {
-                return true;
-            }
-            return false;
-        }
-        private bool IsPlayerToLeft(Player player, MovingRockHead Object)
+        private bool IsPlayerToLeft(Player player, RenderAbleObject Object)
         {
             if (Convert.ToInt32(player.Position.position.X + player.Texture.Width) < Object.Position.position.X + 20 &&
                         Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
@@ -203,17 +168,7 @@ namespace PlatformerSpeedRunner.Helper
             return false;
         }
 
-        private bool IsPlayerToRight(Player player, BasicObject Object)
-        {
-            if (Convert.ToInt32(player.Position.position.X) >= Object.Position.position.X + 20 &&
-                        Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&
-                        Convert.ToInt32(player.Position.position.Y) < Object.Position.position.Y + Object.Texture.Height)
-            {
-                return true;
-            }
-            return false;
-        }
-        private bool IsPlayerToRight(Player player, MovingRockHead Object)
+        private bool IsPlayerToRight(Player player, RenderAbleObject Object)
         {
             if (Convert.ToInt32(player.Position.position.X) >= Object.Position.position.X + 20 &&
                         Convert.ToInt32(player.Position.position.Y + player.Texture.Height) > Object.Position.position.Y &&

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Objects.Base;
 
 namespace PlatformerSpeedRunner.Objects
 {
     public class MovingSpikeHead : RenderAbleObject
     {
-        public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
         private const int BBWidth1 = 75;
         private const int BBHeight1 = 129;
         private const int BBWidth2 = 129;

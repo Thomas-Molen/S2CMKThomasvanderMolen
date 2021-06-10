@@ -5,7 +5,6 @@
   <Config />
   <SourceFiles>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Backgrounds/PinkWallpaper.png</File>
-    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Backgrounds/splash.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Enemies/RockHeadIdle.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Enemies/RockHeadMad.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Enemies/Spike.png</File>
@@ -13,10 +12,13 @@
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/ErrorSprite.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Fonts/GuiFont.spritefont</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Fonts/MenuFont.spritefont</File>
+    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Menu/AccountButton.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Menu/CreateButton.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Menu/EmptyButton.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Menu/LeaderboardButton.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Menu/PlayButton.png</File>
+    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Menu/TutorialMouseIcon.png</File>
+    <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Menu/TutorialMovementIcon.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Charging/ChargingCircle1.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Charging/ChargingCircle2.png</File>
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Charging/ChargingCircle3.png</File>
@@ -84,6 +86,8 @@
     <File>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Terrain/WoodenBoxSmall.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

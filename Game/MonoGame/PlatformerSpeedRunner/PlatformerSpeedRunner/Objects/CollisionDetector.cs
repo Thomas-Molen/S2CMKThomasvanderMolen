@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlatformerSpeedRunner.Objects.Base;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,57 +7,10 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class CollisionDetector
     {
-        private bool DetectCollision(Player playerSprite, BasicObject objectSprite)
+        public bool DetectCollision(Player playerSprite, RenderAbleObject collisionObject)
         {
             playerSprite.BoundingBox.UpdateBoundingBoxes(playerSprite.Position.position);
-            foreach (var passiveBB in objectSprite.BoundingBox.boundingBoxes)
-            {
-                foreach (var activeBB in playerSprite.BoundingBox.boundingBoxes)
-                {
-                    if (passiveBB.CollidesWith(activeBB))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        private bool DetectCollision(Player playerSprite, MovingSpikeHead spikeHeadSprite)
-        {
-            playerSprite.BoundingBox.UpdateBoundingBoxes(playerSprite.Position.position);
-            spikeHeadSprite.BoundingBox.UpdateBoundingBoxes(spikeHeadSprite.Position.position);
-            foreach (var passiveBB in spikeHeadSprite.BoundingBox.boundingBoxes)
-            {
-                foreach (var activeBB in playerSprite.BoundingBox.boundingBoxes)
-                {
-                    if (passiveBB.CollidesWith(activeBB))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        private bool DetectCollision(Player playerSprite, MovingRockHead rockHeadSprite)
-        {
-            playerSprite.BoundingBox.UpdateBoundingBoxes(playerSprite.Position.position);
-            rockHeadSprite.BoundingBox.UpdateBoundingBoxes(rockHeadSprite.Position.position);
-            foreach (var passiveBB in rockHeadSprite.BoundingBox.boundingBoxes)
-            {
-                foreach (var activeBB in playerSprite.BoundingBox.boundingBoxes)
-                {
-                    if (passiveBB.CollidesWith(activeBB))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        private bool DetectCollision(Player playerSprite, CheckPoint checkPointSprite)
-        {
-            playerSprite.BoundingBox.UpdateBoundingBoxes(playerSprite.Position.position);
-            foreach (var passiveBB in checkPointSprite.BoundingBox.boundingBoxes)
+            foreach (var passiveBB in collisionObject.BoundingBox.boundingBoxes)
             {
                 foreach (var activeBB in playerSprite.BoundingBox.boundingBoxes)
                 {
@@ -69,7 +23,7 @@ namespace PlatformerSpeedRunner.Objects
             return false;
         }
 
-        public void DetectCollisions(Player playerSprite, List<BasicObject> objectSprites, Action<Player, BasicObject> collisionHandler)
+        public void DetectCollisions(Player playerSprite, List<RenderAbleObject> objectSprites, Action<Player, RenderAbleObject> collisionHandler)
         {
             foreach (var objectSprite in objectSprites)
             {
@@ -79,37 +33,19 @@ namespace PlatformerSpeedRunner.Objects
                 }
             }
         }
-        public bool DetectCollisions(Player playerSprite, List<MovingSpikeHead> spikeHeadSprites)
+
+        public bool DetectCollisions(Player playerSprite, List<RenderAbleObject> objectSprites)
         {
-            bool result = false;
-            foreach (var spikeHeadSprite in spikeHeadSprites)
+            foreach (var objectSprite in objectSprites)
             {
-                if (DetectCollision(playerSprite, spikeHeadSprite))
+                if (DetectCollision(playerSprite, objectSprite))
                 {
-                    result = true;
+                    return true;
                 }
             }
-            return result;
+            return false;
         }
-        public void DetectCollisions(Player playerSprite, List<MovingRockHead> rockHeadSprites, Action<Player, MovingRockHead> collisionHandler)
-        {
-            foreach (var rockHeadSprite in rockHeadSprites)
-            {
-                if (DetectCollision(playerSprite, rockHeadSprite))
-                {
-                    collisionHandler(playerSprite, rockHeadSprite);
-                }
-            }
-        }
-        public void DetectCollisions(Player playerSprite, List<CheckPoint> checkPointSprites, Action<Player, CheckPoint> collisionHandler)
-        {
-            foreach (var checkPointSprite in checkPointSprites)
-            {
-                if (DetectCollision(playerSprite, checkPointSprite))
-                {
-                    collisionHandler(playerSprite, checkPointSprite);
-                }
-            }
-        }
+
+
     }
 }

@@ -10,7 +10,6 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class MovingRockHead : RenderAbleObject
     {
-        public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
         private const int BBWidth = 129;
         private const int BBHeight = 129;
         private readonly int minPos;
@@ -19,12 +18,14 @@ namespace PlatformerSpeedRunner.Objects
         private readonly int movementSpeed = 2;
         public int velocity;
         private readonly Texture2D idleTexture;
+        private readonly Texture2D angryTexture;
 
-        public MovingRockHead(Texture2D Texture, Vector2 Position, int inputMinPos, int inputMaxPos)
+        public MovingRockHead(Texture2D defaultTexture, Texture2D otherTexture, Vector2 Position, int inputMinPos, int inputMaxPos)
         {
             base.Position.SetPosition(Position);
-            base.Texture.SetTexture(Texture);
-            idleTexture = Texture;
+            base.Texture.SetTexture(defaultTexture);
+            idleTexture = defaultTexture;
+            angryTexture = otherTexture;
             minPos = inputMinPos;
             maxPos = inputMaxPos;
 
@@ -50,6 +51,11 @@ namespace PlatformerSpeedRunner.Objects
                 velocity = movementSpeed;
             }
             Position.SetPosition(new Vector2(Position.position.X + velocity, Position.position.Y));
+        }
+
+        public void MakeRockheadMad()
+        {
+            base.Texture.SetTexture(angryTexture);
         }
     }
 }

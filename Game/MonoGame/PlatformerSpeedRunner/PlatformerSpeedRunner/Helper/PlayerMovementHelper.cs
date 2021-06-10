@@ -10,7 +10,7 @@ namespace PlatformerSpeedRunner.Helper
     {
         private const int maxXVelocity = 10;
         private const int maxYVelocity = 15;
-        private const float Gravity = 0.3f;
+        private const float Gravity = 0.1f; //Change to 0.3f after testing
         private const float playerSpeed = 3.0f;
 
         public float xVelocity = 0.0f;
@@ -87,6 +87,23 @@ namespace PlatformerSpeedRunner.Helper
         {
             xVelocity = 0;
             yVelocity = 0;
+        }
+
+        public void KeepPlayerInbound(Player player, int xGameBorderMin, int xGameBorderMax, int yGameBorderMin)
+        {
+            if (player.Position.position.X < xGameBorderMin)
+            {
+                player.Position.SetPosition(new Vector2(xGameBorderMin, player.Position.position.Y));
+            }
+            if (player.Position.position.X + player.Texture.Width > xGameBorderMax)
+            {
+                player.Position.SetPosition(new Vector2(xGameBorderMax - player.Texture.Width, player.Position.position.Y));
+            }
+            if (player.Position.position.Y < yGameBorderMin)
+            {
+                player.Position.SetPosition(new Vector2(player.Position.position.X, yGameBorderMin));
+                yVelocity /= 2;
+            }
         }
     }
 }

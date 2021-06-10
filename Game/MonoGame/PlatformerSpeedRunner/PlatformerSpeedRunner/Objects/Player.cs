@@ -13,7 +13,6 @@ namespace PlatformerSpeedRunner.Objects
     public class Player : RenderAbleObject
     {
         public PlayerMovementHelper Movement = new PlayerMovementHelper();
-        public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
         private AnimationHelper Animation = new AnimationHelper();
         public CameraMode cameraState = CameraMode.Horizontal;
         private Animations AnimationState;
@@ -48,25 +47,24 @@ namespace PlatformerSpeedRunner.Objects
 
         public void PlayerUpdate()
         {
-            CheckAnimationState();
+            SetCorrectAnimation();
             Movement.PlayerPhysics(this);
         }
 
         public void Grapple(int timeCharged, CameraHelper camera)
         {
-            MouseState mouseState = Mouse.GetState();
-
-            float yGrappleDistance = mouseState.Y - Position.position.Y;
-            
-            if (yGrappleDistance < -700)
+            if (timeCharged < 10)
             {
-                Movement.yVelocity += -700 / 135 * timeCharged / 10;
+                return;
+            }
+            else if (timeCharged >= 30)
+            {
+                CalculateGrapple(30, camera);
             }
             else
             {
-                Movement.yVelocity += yGrappleDistance / 135 * timeCharged / 10;
+                CalculateGrapple(timeCharged, camera);
             }
-            Movement.xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (Position.position.X + (Texture.Width / 2))) / 150 * timeCharged / 10;
         }
 
         public AnimationObject GetAnimationState()
@@ -85,7 +83,23 @@ namespace PlatformerSpeedRunner.Objects
             };
         }
 
-        private void CheckAnimationState()
+        private void CalculateGrapple(int timeCharged, CameraHelper camera)
+        {
+            MouseState mouseState = Mouse.GetState();
+            float yGrappleDistance = mouseState.Y - Position.position.Y;
+
+            if (yGrappleDistance < -700)
+            {
+                Movement.yVelocity += -700 / 135 * timeCharged / 10;
+            }
+            else
+            {
+                Movement.yVelocity += yGrappleDistance / 135 * timeCharged / 10;
+            }
+            Movement.xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (Position.position.X + (Texture.Width / 2))) / 150 * timeCharged / 10;
+        }
+
+        private void SetCorrectAnimation()
         {
             if (Movement.xVelocity == 0 && Movement.yVelocity == 0 && AnimationState != Animations.Idle)
             {

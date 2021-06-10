@@ -10,7 +10,6 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class BasicObject : RenderAbleObject
     {
-        public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
         private int BBWidth;
         private int BBHeight;
 

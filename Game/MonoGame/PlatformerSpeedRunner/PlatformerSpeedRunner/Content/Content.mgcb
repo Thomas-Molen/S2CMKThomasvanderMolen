@@ -25,18 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:Backgrounds/PinkWallpaper.png
 
-#begin Backgrounds/splash.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Backgrounds/splash.png
-
 #begin Enemies/RockHeadIdle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -111,6 +99,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/MenuFont.spritefont
 
+#begin Menu/AccountButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Menu/AccountButton.png
+
 #begin Menu/CreateButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -158,6 +158,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Menu/PlayButton.png
+
+#begin Menu/TutorialMouseIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Menu/TutorialMouseIcon.png
+
+#begin Menu/TutorialMovementIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Menu/TutorialMovementIcon.png
 
 #begin Player/Charging/ChargingCircle1.png
 /importer:TextureImporter
@@ -938,40 +962,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Terrain/WoodenBoxSmall.png
-
-#begin Menu/AccountButton.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Menu/AccountButton.png
-
-#begin Menu/TutorialMovementIcon.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Menu/TutorialMovementIcon.png
-
-#begin Menu/TutorialMouseIcon.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Menu/TutorialMouseIcon.png
 

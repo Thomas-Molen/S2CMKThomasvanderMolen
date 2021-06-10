@@ -10,8 +10,6 @@ namespace PlatformerSpeedRunner.Objects
 {
     public class CheckPoint : RenderAbleObject
     {
-        public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
-        
         private const int BBWidth = 38;
         private const int BBHeight = 72;
 
@@ -20,9 +18,9 @@ namespace PlatformerSpeedRunner.Objects
         public CheckPoint(Texture2D Texture, Vector2 Position)
         {
             base.Texture.SetTexture(Texture);
-            BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.X, Position.Y), BBWidth, BBHeight));
-
             base.Position.SetPosition(Position);
+
+            BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.X, Position.Y), BBWidth, BBHeight));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace PlatformerSpeedRunner.Objects.Base
     {
         public TextureHelper Texture = new TextureHelper();
         public PositionHelper Position = new PositionHelper();
+        public BoundingBoxHelper BoundingBox = new BoundingBoxHelper();
 
         public void RenderSprite(SpriteBatch spriteBatch)
         {

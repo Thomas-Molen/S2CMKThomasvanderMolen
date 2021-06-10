@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Input;
 using PlatformerSpeedRunner.Input.Base;
 using PlatformerSpeedRunner.Objects;
+using PlatformerSpeedRunner.Objects.Base;
 using PlatformerSpeedRunner.States.Base;
 using System;
 using System.Collections.Generic;
@@ -21,6 +21,7 @@ namespace PlatformerSpeedRunner.States
         private CollisionHelper Collision;
         private AnimationHelper Animation;
         private DatabaseHelper Database;
+        private ChargeCircleHelper Charge;
         private BasicObject chargeCircle;
         private BasicObject endFlag;
         private TimeSpan startingTime;
@@ -28,8 +29,9 @@ namespace PlatformerSpeedRunner.States
         private TimeSpan checkPointTime = new TimeSpan(0);
         private GameTime localGameTime;
         private Text timerText;
+        private CheckPoint checkPoint;
 
-        private int TimeCharged;
+        private int timeCharged;
         //private Vector2 spawnPoint = new Vector2(200, 750);
         private Vector2 spawnPoint = new Vector2(4800, 750);
 
@@ -50,16 +52,14 @@ namespace PlatformerSpeedRunner.States
         private readonly List<BasicObject> ObjectSpriteList = new List<BasicObject>();
         private readonly List<MovingRockHead> RockHeadSpriteList = new List<MovingRockHead>();
         private readonly List<MovingSpikeHead> SpikeHeadSpriteList = new List<MovingSpikeHead>();
-        private readonly List<CheckPoint> CheckPointList = new List<CheckPoint>();
-
-        private readonly List<BasicObject> TopsCollisionList = new List<BasicObject>();
-        private readonly List<BasicObject> SidesCollisionList = new List<BasicObject>();
-        private readonly List<BasicObject> FullCollisionList = new List<BasicObject>();
-        private readonly List<BasicObject> DeathCollisionList = new List<BasicObject>();
-        private readonly List<MovingRockHead> RockHeadCollisionList = new List<MovingRockHead>();
-        private readonly List<MovingSpikeHead> SpikeHeadCollisionList = new List<MovingSpikeHead>();
+        private readonly List<RenderAbleObject> TopsCollisionList = new List<RenderAbleObject>();
+        private readonly List<RenderAbleObject> SidesCollisionList = new List<RenderAbleObject>();
+        private readonly List<RenderAbleObject> FullCollisionList = new List<RenderAbleObject>();
+        private readonly List<RenderAbleObject> DeathCollisionList = new List<RenderAbleObject>();
+        private readonly List<RenderAbleObject> RockHeadCollisionList = new List<RenderAbleObject>();
+        private readonly List<RenderAbleObject> SpikeHeadCollisionList = new List<RenderAbleObject>();
         private readonly List<CheckPoint> CheckPointCollisionList = new List<CheckPoint>();
-        private readonly List<BasicObject> EndFlagCollisionList = new List<BasicObject>();
+        private readonly List<RenderAbleObject> EndFlagCollisionList = new List<RenderAbleObject>();
 
         private int xGameBorderMin = 23;
         private int xGameBorderMax = 5980;
@@ -73,18 +73,18 @@ namespace PlatformerSpeedRunner.States
             Collision = new CollisionHelper();
             Animation = new AnimationHelper();
             Database = new DatabaseHelper();
+
             player = new Player(LoadTexture("Player\\Idle\\IdlePinkMan"));
-
-            chargeCircle = new BasicObject(LoadTexture("Player\\Charging\\ChargingCircle1"), new Vector2(0, 0));
-
+            chargeCircle = new BasicObject(LoadTexture("Player\\Charging\\ChargingCircle1"), new Vector2(-50, -50));
             endFlag = new BasicObject(LoadTexture("Terrain\\EndFlag"), new Vector2(5720, 960), true);
-            EndFlagCollisionList.Add(endFlag);
+
+            Charge = new ChargeCircleHelper(chargeCircle);
 
             backgroundImage = new BasicObject(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
 
             localGameTime = new GameTime();
 
-            LoadObjects();
+            LoadWorld();
         }
 
         public override void HandleInput()
@@ -122,42 +122,15 @@ namespace PlatformerSpeedRunner.States
                 if (cmd is GameplayInputCommand.PlayerLMBHold)
                 {
                     AddGameObject(chargeCircle);
-                    TimeCharged += 1;
-
-                    chargeCircle.Position.SetPosition(new Vector2(player.Position.position.X, player.Position.position.Y - 10));
-
-                    if (TimeCharged < 10)
-                    {
-                        chargeCircle.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle1"));
-                    }
-                    else if (TimeCharged < 20)
-                    {
-                        chargeCircle.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle2"));
-                    }
-                    else if (TimeCharged < 30)
-                    {
-                        chargeCircle.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle3"));
-                    }
-                    else if (TimeCharged >= 30)
-                    {
-                        chargeCircle.Texture.SetTexture(LoadTexture("Player\\Charging\\ChargingCircle4"));
-                    }
+                    timeCharged++;
+                    Charge.AnimateCharge(timeCharged, player, this);
                 }
                 if (cmd is GameplayInputCommand.PlayerLMBRelease)
                 {
-                    chargeCircle.Position.SetPosition(new Vector2(chargeCircle.Position.position.X, chargeCircle.Position.position.X + 2000));
+                    chargeCircle.Position.SetPosition(new Vector2(-50, -50));
                     RemoveGameObject(chargeCircle);
-                    if (TimeCharged >= 30)
-                    {
-                        player.Grapple(30, camera);
-                    }
-                    else if (TimeCharged < 10)
-                    { }
-                    else
-                    {
-                        player.Grapple(TimeCharged, camera);
-                    }
-                    TimeCharged = 0;
+                    player.Grapple(timeCharged, camera);
+                    timeCharged = 0;
                 }
             });
         }
@@ -206,15 +179,13 @@ namespace PlatformerSpeedRunner.States
                 spikeHead.Movement();
             }
 
-            MouseState mouseState = Mouse.GetState();
-
             KeepPlayerInBounds();
             HandleCollisions();
             camera.Follow(player);
-            UpdateCameraBasedObjects(gameTime);
+            UpdateCameraBasedObjects();
         }
 
-        private void UpdateCameraBasedObjects(GameTime gameTime)
+        private void UpdateCameraBasedObjects()
         {
             backgroundImage.Position.SetPosition(camera.GetCameraBasedPosition(new Vector2(0, 0)));
             timerText.Position.SetPosition(camera.GetCameraBasedPosition(timerText.originalPosition));
@@ -227,23 +198,14 @@ namespace PlatformerSpeedRunner.States
             Collision.PlayerFullDetector(player, FullCollisionList);
             Collision.PlayerTopDetector(player, TopsCollisionList);
             Collision.PlayerSideDetector(player, SidesCollisionList);
-            var returnRockHead = Collision.PlayerRockHeadDetector(player, RockHeadCollisionList);
-            if (returnRockHead != null)
-            {
-                returnRockHead.Texture.SetTexture(LoadTexture("Enemies\\RockHeadMad"));
-            }
-            if (Collision.PlayerSpikeHeadDetector(player, SpikeHeadCollisionList))
+            Collision.PlayerRockHeadDetector(player, RockHeadCollisionList);
+            if (Collision.PlayerSpikeHeadDetector(player, SpikeHeadCollisionList) || Collision.PlayerSpikeHeadDetector(player, DeathCollisionList))
             {
                 RespawnPlayer();
             }
-            if (Collision.PlayerDeathDetector(player, DeathCollisionList))
+            if (Collision.PlayerCheckPointDetector(player, checkPoint))
             {
-                RespawnPlayer();
-            }
-            var returnCheckPoint = Collision.PlayerCheckPointDetector(player, CheckPointCollisionList);
-            if (returnCheckPoint != null)
-            {
-                CheckPointActivation(returnCheckPoint);
+                CheckPointActivation(checkPoint);
             }
             if (Collision.PlayerEndFlagDetector(player, EndFlagCollisionList))
             {
@@ -252,8 +214,9 @@ namespace PlatformerSpeedRunner.States
                 gameEnd = true;
             }
         }
+
         //creating objects in world
-        private void AddObject(string TextureName, int PosX, int PosY, List<BasicObject> CollisionList)
+        private void AddObject(string TextureName, int PosX, int PosY, List<RenderAbleObject> CollisionList)
         {
             BasicObject Object = new BasicObject(LoadTexture(TextureName), new Vector2(PosX, PosY), true);
             CollisionList.Add(Object);
@@ -270,7 +233,7 @@ namespace PlatformerSpeedRunner.States
 
         private void AddRockHead(int PosX, int PosY, int MinPos, int MaxPos)
         {
-            MovingRockHead rockHead = new MovingRockHead(LoadTexture("Enemies\\RockHeadIdle"), new Vector2(PosX, PosY), MinPos, MaxPos);
+            MovingRockHead rockHead = new MovingRockHead(LoadTexture("Enemies\\RockHeadIdle"), LoadTexture("Enemies\\RockHeadMad"), new Vector2(PosX, PosY), MinPos, MaxPos);
             RockHeadCollisionList.Add(rockHead);
             RockHeadSpriteList.Add(rockHead);
             AddGameObject(rockHead);
@@ -284,11 +247,9 @@ namespace PlatformerSpeedRunner.States
             AddGameObject(spikeHead);
         }
 
-        private void AddCheckPoint(int PosX, int PosY)
+        private void SetCheckPoint(int PosX, int PosY)
         {
-            CheckPoint checkPoint = new CheckPoint(LoadTexture(checkPointTexture), new Vector2(PosX, PosY));
-            CheckPointCollisionList.Add(checkPoint);
-            CheckPointList.Add(checkPoint);
+            checkPoint = new CheckPoint(LoadTexture(checkPointTexture), new Vector2(PosX, PosY));
             AddGameObject(checkPoint);
         }
 
@@ -301,19 +262,7 @@ namespace PlatformerSpeedRunner.States
 
         private void KeepPlayerInBounds()
         {
-            if (player.Position.position.X < xGameBorderMin)
-            {
-                player.Position.SetPosition(new Vector2(xGameBorderMin, player.Position.position.Y));
-            }
-            if (player.Position.position.X + player.Texture.Width > xGameBorderMax)
-            {
-                player.Position.SetPosition(new Vector2(xGameBorderMax - player.Texture.Width, player.Position.position.Y));
-            }
-            if (player.Position.position.Y < yGameBorderMin)
-            {
-                player.Position.SetPosition(new Vector2(player.Position.position.X, yGameBorderMin));
-                player.Movement.yVelocity /= 2;
-            }
+            player.Movement.KeepPlayerInbound(player, xGameBorderMin, xGameBorderMax, yGameBorderMin);
             if (player.Position.position.Y > yGameBorderMax)
             {
                 RespawnPlayer();
@@ -322,7 +271,7 @@ namespace PlatformerSpeedRunner.States
 
         private void RespawnPlayer()
         {
-            if (CheckPointList.Exists(e => e.activated == true))
+            if (checkPoint.activated)
             {
                 player.Movement.ResetVelocity();
                 startingTime += elapsedTime;
@@ -348,7 +297,7 @@ namespace PlatformerSpeedRunner.States
             InputManager = new InputManager(new GameplayInputMapper());
         }
 
-        private void LoadObjects()
+        private void LoadWorld()
         {
             AddGameObject(backgroundImage);
             //GUI
@@ -490,8 +439,9 @@ namespace PlatformerSpeedRunner.States
             AddObject(grassMiddle, 5720, 1000, TopsCollisionList);
             AddObject(grassRight, 5848, 1000, TopsCollisionList);
 
-            AddCheckPoint(3800, 848);
+            SetCheckPoint(3800, 848);
             AddGameObject(endFlag);
+            EndFlagCollisionList.Add(endFlag);
             AddGameObject(player);
             player.Position.SetPosition(spawnPoint);
         }
