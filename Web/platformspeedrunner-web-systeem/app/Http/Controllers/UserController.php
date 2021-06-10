@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\AuthenticationHelper;
 use App\Repository\Repository;
 use App\Models\User;
+use App\Repository\UserRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -38,9 +39,9 @@ class UserController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(Request $request, UserRepository $userRepository)
     {
-        $this->query->Create(User::class, $request);
+        $userRepository->Create($request);
 
         return redirect()->route('user.index')
             ->with('success', 'User created successfully.');

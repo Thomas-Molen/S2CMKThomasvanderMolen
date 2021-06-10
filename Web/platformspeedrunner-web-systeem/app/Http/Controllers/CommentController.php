@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuthenticationHelper;
+use App\Repository\CommentRepository;
 use App\Repository\Repository;
 use App\Helpers\TableReadabilityHelper;
 use App\Models\Comment;
@@ -51,9 +52,9 @@ class CommentController extends Controller
             ->with('error', 'The selected path was inaccessible');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, CommentRepository $commentRepository)
     {
-        $this->repository->Create(Comment::class, $request);
+        $commentRepository->Create($request);
 
         return redirect()->route('run.show', $request->run_id)
             ->with('success', 'Comment created successfully.');

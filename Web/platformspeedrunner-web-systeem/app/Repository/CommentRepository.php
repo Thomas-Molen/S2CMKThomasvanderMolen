@@ -25,4 +25,10 @@ class CommentRepository
     {
         return Comment::where('active', '=', true)->where('run_id', '=', $run_id)->get();
     }
+
+    public function Create(Request $request)
+    {
+        request()->validate(Comment::$rules);
+        return Comment::create($request->all())->update(['user_id' => auth()->user()->id, 'created_at' => date('Y-m-d H:i:s')]);
+    }
 }

@@ -7,6 +7,7 @@ use App\Repository\CommentRepository;
 use App\Repository\Repository;
 use App\Helpers\TableReadabilityHelper;
 use App\Models\Run;
+use App\Repository\RunRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -73,17 +74,17 @@ class RunController extends Controller
             ->with('error', 'The run you where trying to find has been deleted');
     }
 
-    public function update(Request $request, Run $run)
+    public function update(Request $request, Run $run, RunRepository $runRepository)
     {
-        $this->query->Update(Run::class, $run, $request);
+        $runRepository->Update($run, $request);
 
         return redirect()->route('run.show', $run->id)
             ->with('success', 'Run updated successfully');
     }
 
-    public function destroy($id)
+    public function destroy($id, RunRepository $runRepository)
     {
-        $this->query->Delete(Run::class, $id);
+        $runRepository->Delete($id, $this->query);
 
         return redirect()->route('leaderboard')
             ->with('success', 'Run deleted successfully');

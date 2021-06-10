@@ -70,7 +70,7 @@ class LinkController extends Controller
     public function edit($id)
     {
         $link = $this->query->Find(Link::class, $id);
-        if ($link !== null AND $this->authenticator->IsCurrentUser($link->user_id)) {
+        if ($link !== null AND $this->authenticator->IsCurrentUser($link->run->user_id)) {
             return view('link.edit')
                 ->with(['link' => $link]);
         }

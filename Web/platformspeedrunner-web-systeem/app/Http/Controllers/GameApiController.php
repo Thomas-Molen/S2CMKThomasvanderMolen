@@ -22,9 +22,9 @@ class GameApiController extends Controller
         $this->userRepository = $queryHelper;
     }
 
-    public function SubmitRun(Request $request, Repository $repository)
+    public function SubmitRun(Request $request, RunRepository $runrepository)
     {
-        $repository->Create(Run::class, $request);
+        $runrepository->Create($request);
     }
 
     public function GetUsername(string $unique_key = null)

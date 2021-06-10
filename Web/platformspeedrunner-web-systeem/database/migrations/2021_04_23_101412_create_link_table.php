@@ -18,10 +18,7 @@ class CreateLinkTable extends Migration
             $table->string('name');
             $table->string('url', 250);
             $table->unsignedBigInteger('run_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('user');
             $table->foreign('run_id')->references('id')->on('run');
-
         });
     }
 
