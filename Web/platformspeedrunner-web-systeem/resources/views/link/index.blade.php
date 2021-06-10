@@ -35,7 +35,6 @@
                                     <thead>
                                     <tr>
                                         <th class="default-order">#</th>
-                                        <th>User</th>
                                         <th>Run</th>
                                         <th>Name</th>
                                         <th>Url</th>
@@ -46,7 +45,6 @@
                                     @foreach ($links as $link)
                                         <tr>
                                             <td>{{ $link->id }}</td>
-                                            <td>{{ $link->user->username }}</td>
                                             <td>{{ $link->run->custom_name }}</td>
                                             <td>{{ $link->name }}</td>
                                             <td><a href="{{ $link->url }}" target="_blank" rel="noopener noreferrer">{{ $readabilityHelper->ShortenString($link->url, 100)}}</a></td>
@@ -66,7 +64,6 @@
                                     <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>User</th>
                                         <th>Run</th>
                                         <th>Name</th>
                                         <th>Url</th>
