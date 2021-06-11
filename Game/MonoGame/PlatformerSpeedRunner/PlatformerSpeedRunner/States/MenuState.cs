@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Input;
@@ -40,7 +39,7 @@ namespace PlatformerSpeedRunner.States
 
             backgroundImage = new BasicObject(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
             AddGameObject(backgroundImage);
-            LoadObjects();
+            LoadWorld();
         }
 
         public override void HandleInput()
@@ -62,31 +61,7 @@ namespace PlatformerSpeedRunner.States
                 }
                 if (cmd is SplashInputCommand.PlayerLMBRelease && LMBPressed)
                 {
-                    if (buttonHelper.IsMouseOnButton(playButton, camera) || buttonHelper.IsMouseOnButton(playIcon, camera))
-                    {
-                        SwitchState(new GameplayState());
-                    }
-                    if (username != "Could not connect to server")
-                    {
-                        if (buttonHelper.IsMouseOnButton(leaderboardButton, camera) || buttonHelper.IsMouseOnButton(leaderboardIcon, camera))
-                        {
-                            OpenUrl("http://platformerspeedrunner/leaderboard");
-                        }
-                        if (username == "no user found with such key")
-                        {
-                            if (buttonHelper.IsMouseOnButton(createButton, camera) || buttonHelper.IsMouseOnButton(createIcon, camera))
-                            {
-                                OpenUrl("http://platformerspeedrunner/register/" + dataHelper.GetSaveData());
-                            }
-                        }
-                        else
-                        {
-                            if (buttonHelper.IsMouseOnButton(accountButton, camera) || buttonHelper.IsMouseOnButton(accountIcon, camera))
-                            {
-                                OpenUrl("http://platformerspeedrunner/personal_runs");
-                            }
-                        }
-                    }
+                    CheckButtonPress();
                     LMBPressed = false;
                 }
             });
@@ -95,6 +70,35 @@ namespace PlatformerSpeedRunner.States
         public override void UpdateGameState(GameTime gameTime) 
         {
             camera.Follow();
+        }
+
+        private void CheckButtonPress()
+        {
+            if (buttonHelper.IsMouseOnButton(playButton, camera) || buttonHelper.IsMouseOnButton(playIcon, camera))
+            {
+                SwitchState(new GameplayState());
+            }
+            if (username != "Could not connect to server")
+            {
+                if (buttonHelper.IsMouseOnButton(leaderboardButton, camera) || buttonHelper.IsMouseOnButton(leaderboardIcon, camera))
+                {
+                    OpenUrl("http://platformerspeedrunner/leaderboard");
+                }
+                if (username == "no user found with such key")
+                {
+                    if (buttonHelper.IsMouseOnButton(createButton, camera) || buttonHelper.IsMouseOnButton(createIcon, camera))
+                    {
+                        OpenUrl("http://platformerspeedrunner/register/" + dataHelper.GetSaveData());
+                    }
+                }
+                else
+                {
+                    if (buttonHelper.IsMouseOnButton(accountButton, camera) || buttonHelper.IsMouseOnButton(accountIcon, camera))
+                    {
+                        OpenUrl("http://platformerspeedrunner/personal_runs");
+                    }
+                }
+            }
         }
 
         private void OpenUrl(string url)
@@ -136,7 +140,7 @@ namespace PlatformerSpeedRunner.States
             return buttonObject;
         }
 
-        private void LoadObjects()
+        private void LoadWorld()
         {
             AddText("MAIN MENU", 795, 100);
             AddText("Start Game", 848, 315);

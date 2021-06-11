@@ -48,7 +48,6 @@ namespace PlatformerSpeedRunner
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //TODO CHANGE THIS TO THE BOOT SCREEN
             SwitchGameState(new MenuState());
         }
 

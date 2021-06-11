@@ -58,16 +58,6 @@ namespace PlatformerSpeedRunner.Helper
             });
         }
 
-        public bool PlayerDeathDetector(Player playerSprite, List<RenderAbleObject> CollisionList)
-        {
-            bool result = false;
-            collisionDetector.DetectCollisions(playerSprite, CollisionList, (player, Object) =>
-            {
-                result = true;
-            });
-            return result;
-        }
-
         public bool PlayerSpikeHeadDetector(Player playerSprite, List<RenderAbleObject> CollisionList)
         {
             if (collisionDetector.DetectCollisions(playerSprite, CollisionList))
@@ -86,7 +76,7 @@ namespace PlatformerSpeedRunner.Helper
                     MovingRockHead rockHead = (MovingRockHead)Object;
                     rockHead.MakeRockheadMad();
 
-                    player.Position.SetPosition(new Vector2(player.Position.position.X + rockHead.velocity, Object.Position.position.Y - player.Texture.Height));
+                    player.Position.SetPosition(new Vector2(player.Position.position.X + rockHead.Movement.xVelocity, Object.Position.position.Y - player.Texture.Height));
                     player.Movement.yVelocity = 0;
                 }
                 else if (IsPlayerBelow(player, Object))

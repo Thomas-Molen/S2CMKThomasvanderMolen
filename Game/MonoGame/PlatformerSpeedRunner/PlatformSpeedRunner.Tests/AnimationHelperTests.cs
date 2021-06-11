@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Xna.Framework;
-using PlatformerSpeedRunner.Camera;
 using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Objects;
 

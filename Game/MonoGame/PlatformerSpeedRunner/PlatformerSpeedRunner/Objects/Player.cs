@@ -1,12 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using PlatformerSpeedRunner.Objects.Base;
-using PlatformerSpeedRunner.Enum;
-using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Camera;
+using PlatformerSpeedRunner.Enum;
+using PlatformerSpeedRunner.Helper;
+using PlatformerSpeedRunner.Objects.Base;
 
 namespace PlatformerSpeedRunner.Objects
 {

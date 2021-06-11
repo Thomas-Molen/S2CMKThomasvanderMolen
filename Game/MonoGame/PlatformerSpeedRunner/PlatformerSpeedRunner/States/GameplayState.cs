@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Input;
@@ -47,7 +46,6 @@ namespace PlatformerSpeedRunner.States
         private const string stoneCubeLarge = "Terrain\\StoneCubeLarge";
         private const string stoneSlabVertical = "Terrain\\StoneSlabVertical";
         private const string stoneSlabHorizontal = "Terrain\\StoneSlabHorizontal";
-        private const string checkPointTexture = "Terrain\\CheckPoint";
 
         private readonly List<BasicObject> ObjectSpriteList = new List<BasicObject>();
         private readonly List<MovingRockHead> RockHeadSpriteList = new List<MovingRockHead>();
@@ -58,7 +56,6 @@ namespace PlatformerSpeedRunner.States
         private readonly List<RenderAbleObject> DeathCollisionList = new List<RenderAbleObject>();
         private readonly List<RenderAbleObject> RockHeadCollisionList = new List<RenderAbleObject>();
         private readonly List<RenderAbleObject> SpikeHeadCollisionList = new List<RenderAbleObject>();
-        private readonly List<CheckPoint> CheckPointCollisionList = new List<CheckPoint>();
         private readonly List<RenderAbleObject> EndFlagCollisionList = new List<RenderAbleObject>();
 
         private int xGameBorderMin = 23;
@@ -172,11 +169,11 @@ namespace PlatformerSpeedRunner.States
 
             foreach (MovingRockHead rockHead in RockHeadCollisionList)
             {
-                rockHead.Movement();
+                rockHead.EnemyUpdate();
             }
             foreach (MovingSpikeHead spikeHead in SpikeHeadCollisionList)
             {
-                spikeHead.Movement();
+                spikeHead.EnemyUpdate();
             }
 
             KeepPlayerInBounds();
@@ -249,7 +246,7 @@ namespace PlatformerSpeedRunner.States
 
         private void SetCheckPoint(int PosX, int PosY)
         {
-            checkPoint = new CheckPoint(LoadTexture(checkPointTexture), new Vector2(PosX, PosY));
+            checkPoint = new CheckPoint(LoadTexture("Terrain\\CheckPoint"), new Vector2(PosX, PosY));
             AddGameObject(checkPoint);
         }
 

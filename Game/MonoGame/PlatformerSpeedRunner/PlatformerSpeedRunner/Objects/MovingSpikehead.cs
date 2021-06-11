@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Objects.Base;
 
 namespace PlatformerSpeedRunner.Objects
@@ -10,37 +11,21 @@ namespace PlatformerSpeedRunner.Objects
         private const int BBHeight1 = 129;
         private const int BBWidth2 = 129;
         private const int BBHeight2 = 75;
-        private int minPosY;
-        private int maxPosY;
+        public EnemyMovementHelper Movement;
 
-        private int movementSpeed = 3;
-        public int yVelocity;
-
-        public MovingSpikeHead(Texture2D Texture, Vector2 Position, int inputMinPosX, int inputMaxPosX)
+        public MovingSpikeHead(Texture2D Texture, Vector2 Position, int inputMinPosY, int inputMaxPosY)
         {
+            Movement = new EnemyMovementHelper(3, newMinPosY: inputMinPosY, newMaxPosY: inputMaxPosY );
             base.Position.SetPosition(Position);
             base.Texture.SetTexture(Texture);
-            minPosY = inputMinPosX;
-            maxPosY = inputMaxPosX;
-
-            yVelocity = movementSpeed;
 
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(30, 0), BBWidth1, BBHeight1));
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(0, 30), BBWidth2, BBHeight2));
         }
 
-        public void Movement()
+        public void EnemyUpdate()
         {
-            BoundingBox.UpdateBoundingBoxes(Position.position);
-            if (Position.position.Y >= maxPosY)
-            {
-                yVelocity = -movementSpeed;
-            }
-            else if (Position.position.Y <= minPosY)
-            {
-                yVelocity = movementSpeed;
-            }
-            Position.SetPosition(new Vector2(Position.position.X, Position.position.Y + yVelocity));
+            Movement.MoveVertical(this);
         }
     }
 }

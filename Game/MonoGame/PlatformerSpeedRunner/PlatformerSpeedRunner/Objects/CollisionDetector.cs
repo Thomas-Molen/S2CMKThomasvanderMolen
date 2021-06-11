@@ -1,7 +1,6 @@
 ﻿using PlatformerSpeedRunner.Objects.Base;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PlatformerSpeedRunner.Objects
 {

@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using PlatformerSpeedRunner.Objects;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PlatformerSpeedRunner.Helper
 {
@@ -10,7 +7,7 @@ namespace PlatformerSpeedRunner.Helper
     {
         private const int maxXVelocity = 10;
         private const int maxYVelocity = 15;
-        private const float Gravity = 0.1f; //Change to 0.3f after testing
+        private const float Gravity = 0.3f;
         private const float playerSpeed = 3.0f;
 
         public float xVelocity = 0.0f;
