@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using PlatformerSpeedRunner.Camera;
 using PlatformerSpeedRunner.Objects;
 
 namespace PlatformerSpeedRunner.Helper
@@ -10,8 +12,8 @@ namespace PlatformerSpeedRunner.Helper
         private const float Gravity = 0.3f;
         private const float playerSpeed = 3.0f;
 
-        public float xVelocity = 0.0f;
-        public float yVelocity = 0.0f;
+        public float xVelocity { get; private set; } = 0.0f;
+        public float yVelocity { get; private set; } = 0.0f;
 
         public void PlayerPhysics(Player player)
         {
@@ -84,6 +86,42 @@ namespace PlatformerSpeedRunner.Helper
         {
             xVelocity = 0;
             yVelocity = 0;
+        }
+
+        public void StopVerticalMovement(bool checkForHeadCollision = false)
+        {
+            if (checkForHeadCollision)
+            {
+                if (yVelocity < 0)
+                {
+                    yVelocity = 0.1f;
+                }
+            }
+            else
+            {
+                yVelocity = 0;
+            }
+        }
+
+        public void StopHorizontalMovement()
+        {
+            xVelocity = 0;
+        }
+
+        public void Grapple(int timeCharged, Player player, CameraHelper camera)
+        {
+            MouseState mouseState = Mouse.GetState();
+            float yGrappleDistance = mouseState.Y - player.Position.position.Y;
+
+            if (yGrappleDistance < -700)
+            {
+                yVelocity += -700 / 135 * timeCharged / 10;
+            }
+            else
+            {
+                yVelocity += yGrappleDistance / 135 * timeCharged / 10;
+            }
+            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (player.Position.position.X + (player.Texture.Width / 2))) / 150 * timeCharged / 10;
         }
 
         public void KeepPlayerInbound(Player player, int xGameBorderMin, int xGameBorderMax, int yGameBorderMin)

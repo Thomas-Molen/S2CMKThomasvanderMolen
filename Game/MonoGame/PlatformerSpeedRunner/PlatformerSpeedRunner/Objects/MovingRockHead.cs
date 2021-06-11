@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Objects.Base;
@@ -14,13 +15,14 @@ namespace PlatformerSpeedRunner.Objects
         private readonly Texture2D angryTexture;
         public EnemyMovementHelper Movement;
 
-        public MovingRockHead(Texture2D defaultTexture, Texture2D otherTexture, Vector2 Position, int inputMinPos, int inputMaxPos)
+        public MovingRockHead(ContentManager contentManager, Vector2 newPosition, int inputMinPos, int inputMaxPos)
         {
+            SetTextureContentManager(contentManager);
             Movement = new EnemyMovementHelper(2, inputMinPos, inputMaxPos);
-            base.Position.SetPosition(Position);
-            base.Texture.SetTexture(defaultTexture);
-            idleTexture = defaultTexture;
-            angryTexture = otherTexture;
+            Position.SetPosition(newPosition);
+            idleTexture = Texture.GetTexture2D("Enemies\\RockHeadIdle");
+            angryTexture = Texture.GetTexture2D("Enemies\\RockHeadMad");
+            Texture.SetTexture(idleTexture);
 
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
         }

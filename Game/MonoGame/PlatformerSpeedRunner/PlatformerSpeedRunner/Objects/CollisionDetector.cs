@@ -32,19 +32,5 @@ namespace PlatformerSpeedRunner.Objects
                 }
             }
         }
-
-        public bool DetectCollisions(Player playerSprite, List<RenderAbleObject> objectSprites)
-        {
-            foreach (var objectSprite in objectSprites)
-            {
-                if (DetectCollision(playerSprite, objectSprite))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-
     }
 }

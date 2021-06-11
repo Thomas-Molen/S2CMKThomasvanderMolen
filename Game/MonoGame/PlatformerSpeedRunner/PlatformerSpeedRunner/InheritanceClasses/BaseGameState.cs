@@ -21,9 +21,9 @@ namespace PlatformerSpeedRunner.States.Base
 
         public BasicObject backgroundImage;
 
-        public CameraHelper camera;
+        public CameraHelper camera { get; private set; }
 
-        private ContentManager baseContentManager;
+        public ContentManager baseContentManager;
 
         private SpriteFont calibriBold25;
         private SpriteFont calibriBold50;
@@ -38,8 +38,6 @@ namespace PlatformerSpeedRunner.States.Base
 
         protected abstract void SetInputManager();
 
-        private const string fallBackTexture = "ErrorSprite";
-
         public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight, CameraHelper inputCamera)
         {
             camera = inputCamera;
@@ -48,8 +46,8 @@ namespace PlatformerSpeedRunner.States.Base
 
             baseContentManager = contentManager;
 
-            calibriBold25 = baseContentManager.Load<SpriteFont>("Fonts\\GuiFont");
-            calibriBold50 = baseContentManager.Load<SpriteFont>("Fonts\\MenuFont");
+            calibriBold25 = contentManager.Load<SpriteFont>("Fonts\\GuiFont");
+            calibriBold50 = contentManager.Load<SpriteFont>("Fonts\\MenuFont");
 
             SetInputManager();
         }
@@ -70,22 +68,6 @@ namespace PlatformerSpeedRunner.States.Base
         public abstract void UpdateGameState(GameTime gameTime);
 
         public event EventHandler<BaseGameState> OnStateSwitched;
-
-
-        public Texture2D LoadTexture(string textureName)
-        {
-            try
-            {
-                var texture = baseContentManager.Load<Texture2D>(textureName);
-                return texture;
-            }
-            catch (Microsoft.Xna.Framework.Content.ContentLoadException)
-            {
-                var texture = baseContentManager.Load<Texture2D>(fallBackTexture);
-                return texture;
-            }
-        }
-
 
         protected void SwitchState(BaseGameState gameState)
         {
@@ -116,7 +98,7 @@ namespace PlatformerSpeedRunner.States.Base
         {
             foreach (var gameObject in gameObjects)
             {
-                gameObject.RenderSprite(spriteBatch);
+                gameObject.Render.RenderObject(spriteBatch, gameObject);
             }
         }
 

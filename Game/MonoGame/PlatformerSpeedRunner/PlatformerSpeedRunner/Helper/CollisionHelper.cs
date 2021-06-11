@@ -22,15 +22,12 @@ namespace PlatformerSpeedRunner.Helper
                 if (IsPlayerOnTop(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y - player.Texture.Height));
-                    player.Movement.yVelocity = 0;
+                    player.Movement.StopVerticalMovement();
                 }
                 else if (IsPlayerBelow(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y + Object.Texture.Height));
-                    if (player.Movement.yVelocity < 0)
-                    {
-                        player.Movement.yVelocity = 0.1f;
-                    }
+                    player.Movement.StopVerticalMovement(true);
                 }
             });
         }
@@ -42,29 +39,29 @@ namespace PlatformerSpeedRunner.Helper
                 if (IsPlayerToRight(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X + Object.Texture.Width, player.Position.position.Y));
-                    if (player.Movement.xVelocity < 0)
-                    {
-                        player.Movement.xVelocity = 0;
-                    }
+                    player.Movement.StopHorizontalMovement();
                 }
                 else if (IsPlayerToLeft(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X - player.Texture.Width, player.Position.position.Y));
-                    if (player.Movement.xVelocity > 0)
-                    {
-                        player.Movement.xVelocity = 0;
-                    }
+                    player.Movement.StopHorizontalMovement();
                 }
             });
         }
 
-        public bool PlayerSpikeHeadDetector(Player playerSprite, List<RenderAbleObject> CollisionList)
+        public bool PlayerBooleanDetector(Player playerSprite, List<RenderAbleObject> CollisionList)
         {
-            if (collisionDetector.DetectCollisions(playerSprite, CollisionList))
+            bool result = false;
+            collisionDetector.DetectCollisions(playerSprite, CollisionList, (player, Object) =>
             {
-                return true;
-            }
-            return false;
+                result = true;
+            });
+            return result;
+        }
+
+        public bool PlayerBooleanDetector(Player playerSprite, RenderAbleObject CollisionObject)
+        {
+            return collisionDetector.DetectCollision(playerSprite, CollisionObject);
         }
 
         public void PlayerRockHeadDetector(Player playerSprite, List<RenderAbleObject> RockHeadCollisionList)
@@ -77,52 +74,24 @@ namespace PlatformerSpeedRunner.Helper
                     rockHead.MakeRockheadMad();
 
                     player.Position.SetPosition(new Vector2(player.Position.position.X + rockHead.Movement.xVelocity, Object.Position.position.Y - player.Texture.Height));
-                    player.Movement.yVelocity = 0;
+                    player.Movement.StopVerticalMovement();
                 }
                 else if (IsPlayerBelow(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(player.Position.position.X, Object.Position.position.Y + Object.Texture.Height));
-                    if (player.Movement.yVelocity < 0)
-                    {
-                        player.Movement.yVelocity = 0.1f;
-                    }
+                    player.Movement.StopVerticalMovement(true);
                 }
                 else if (IsPlayerToRight(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X + Object.Texture.Width, player.Position.position.Y));
-                    if (player.Movement.xVelocity < 0)
-                    {
-                        player.Movement.xVelocity = 0;
-                    }
+                    player.Movement.StopHorizontalMovement();
                 }
                 else if (IsPlayerToLeft(player, Object))
                 {
                     player.Position.SetPosition(new Vector2(Object.Position.position.X - player.Texture.Width, player.Position.position.Y));
-                    if (player.Movement.xVelocity > 0)
-                    {
-                        player.Movement.xVelocity = 0;
-                    }
+                    player.Movement.StopHorizontalMovement();
                 }
             });
-        }
-
-        public bool PlayerCheckPointDetector(Player playerSprite, CheckPoint checkPoint)
-        {
-            if (collisionDetector.DetectCollision(playerSprite, checkPoint) && !checkPoint.activated)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool PlayerEndFlagDetector(Player playerSprite, List<RenderAbleObject> EndFlagCollisionList)
-        {
-            bool result = false;
-            collisionDetector.DetectCollisions(playerSprite, EndFlagCollisionList, (player, Object) =>
-            {
-                result = true;
-            });
-            return result;
         }
 
         private bool IsPlayerOnTop(Player player, RenderAbleObject Object)

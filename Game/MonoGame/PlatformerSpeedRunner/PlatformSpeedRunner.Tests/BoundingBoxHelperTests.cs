@@ -43,7 +43,7 @@ namespace PlatformSpeedRunner.Tests
             boundingBoxHelper.AddBoundingBox(bb);
             boundingBoxHelper.UpdateBoundingBoxes(PositionToAdd);
             //Assert
-            Assert.AreEqual(bbPosition + PositionToAdd, boundingBoxHelper.boundingBoxes[0].position);
+            Assert.AreEqual(bbPosition + PositionToAdd, boundingBoxHelper.boundingBoxes[0].Position.position);
         }
     }
 }

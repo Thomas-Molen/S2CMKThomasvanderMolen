@@ -1,26 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Objects.Base;
+using PlatformerSpeedRunner.States.Base;
 
 namespace PlatformerSpeedRunner.Objects
 {
     public class CheckPoint : RenderAbleObject
     {
-        private const int BBWidth = 38;
-        private const int BBHeight = 72;
+        public bool activated { get; private set; } = false;
 
-        public bool activated = false;
-
-        public CheckPoint(Texture2D Texture, Vector2 Position)
+        public CheckPoint(ContentManager contentManager, Vector2 newPosition)
         {
-            base.Texture.SetTexture(Texture);
-            base.Position.SetPosition(Position);
+            SetTextureContentManager(contentManager);
+            Texture.SetTexture(Texture.GetTexture2D("Terrain\\CheckPoint"));
+            Position.SetPosition(newPosition);
 
-            BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.X, Position.Y), BBWidth, BBHeight));
+            BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.position.X, Position.position.Y), 38, 72));
+        }
+
+        public void Activate()
+        {
+            activated = true;
+            Texture.SetTexture(Texture.GetTexture2D("Terrain\\CheckPointActivated"));
         }
     }
 }

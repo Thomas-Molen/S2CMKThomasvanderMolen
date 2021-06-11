@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Objects.Base;
 
@@ -13,11 +13,12 @@ namespace PlatformerSpeedRunner.Objects
         private const int BBHeight2 = 75;
         public EnemyMovementHelper Movement;
 
-        public MovingSpikeHead(Texture2D Texture, Vector2 Position, int inputMinPosY, int inputMaxPosY)
+        public MovingSpikeHead(ContentManager contentManager, Vector2 newPosition, int inputMinPosY, int inputMaxPosY)
         {
+            SetTextureContentManager(contentManager);
             Movement = new EnemyMovementHelper(3, newMinPosY: inputMinPosY, newMaxPosY: inputMaxPosY );
-            base.Position.SetPosition(Position);
-            base.Texture.SetTexture(Texture);
+            Texture.SetTexture(Texture.GetTexture2D("Enemies\\SpikeHead"));
+            Position.SetPosition(newPosition);
 
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(30, 0), BBWidth1, BBHeight1));
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(0, 30), BBWidth2, BBHeight2));

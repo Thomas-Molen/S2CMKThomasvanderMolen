@@ -1,34 +1,36 @@
 ﻿using Microsoft.Xna.Framework;
+using PlatformerSpeedRunner.Helper;
 
 namespace PlatformerSpeedRunner.Objects
 {
     public class BoundingBoxObject
     {
-        public Vector2 position { get; set; }
-        private float width { get; set; }
-        private float height { get; set; }
+        public PositionHelper Position;
+        private float width;
+        private float height;
 
         public Rectangle rectangle
         {
             get
             {
-                return new Rectangle((int)position.X, (int)position.Y, (int)width, (int)height);
+                return new Rectangle((int)Position.position.X, (int)Position.position.Y, (int)width, (int)height);
             }
         }
 
-        public BoundingBoxObject(Vector2 position, float width, float height)
+        public BoundingBoxObject(Vector2 position, float Width, float Height)
         {
-            this.position = position;
-            this.width = width;
-            this.height = height;
+            Position = new PositionHelper();
+            Position.SetPosition(position);
+            width = Width;
+            height = Height;
         }
 
         public bool CollidesWith(BoundingBoxObject otherBB)
         {
-            if (position.X < otherBB.position.X + otherBB.width &&
-                position.X + width > otherBB.position.X &&
-                position.Y < otherBB.position.Y + otherBB.height &&
-                position.Y + height > otherBB.position.Y)
+            if (Position.position.X < otherBB.Position.position.X + otherBB.width &&
+                Position.position.X + width > otherBB.Position.position.X &&
+                Position.position.Y < otherBB.Position.position.Y + otherBB.height &&
+                Position.position.Y + height > otherBB.Position.position.Y)
             {
                 return true;
             }

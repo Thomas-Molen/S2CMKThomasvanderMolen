@@ -37,7 +37,7 @@ namespace PlatformerSpeedRunner.States
             dataBaseHelper.GetUsername();
             username = dataBaseHelper.GetUsername();
 
-            backgroundImage = new BasicObject(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
+            backgroundImage = new BasicObject(baseContentManager, "Backgrounds\\PinkWallpaper", new Vector2(0, 0));
             AddGameObject(backgroundImage);
             LoadWorld();
         }
@@ -135,7 +135,7 @@ namespace PlatformerSpeedRunner.States
 
         private BasicObject AddButton(int PosX, int PosY, string TextureName)
         {
-            BasicObject buttonObject = new BasicObject(LoadTexture(TextureName), new Vector2(PosX, PosY), true);
+            BasicObject buttonObject = new BasicObject(baseContentManager, TextureName, new Vector2(PosX, PosY), true);
             AddGameObject(buttonObject);
             return buttonObject;
         }

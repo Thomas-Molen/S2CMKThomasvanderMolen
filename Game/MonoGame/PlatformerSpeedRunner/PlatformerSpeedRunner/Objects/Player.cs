@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PlatformerSpeedRunner.Camera;
@@ -27,9 +28,13 @@ namespace PlatformerSpeedRunner.Objects
         private readonly AnimationObject JumpingLeftAnimation;
         private readonly AnimationObject DeathAnimation;
 
-        public Player(Texture2D Texture = null)
+        public Player(ContentManager contentManager = null)
         {
-            base.Texture.SetTexture(Texture);
+            if (contentManager != null)
+            {
+                SetTextureContentManager(contentManager);
+                Texture.SetTexture(Texture.GetTexture2D("Player\\Idle\\IdlePinkMan"));
+            }
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(1, 0), BBWidth, BBHeight));
             AnimationState = Animations.Idle;
 
@@ -57,11 +62,11 @@ namespace PlatformerSpeedRunner.Objects
             }
             else if (timeCharged >= 30)
             {
-                CalculateGrapple(30, camera);
+                Movement.Grapple(30, this, camera);
             }
             else
             {
-                CalculateGrapple(timeCharged, camera);
+                Movement.Grapple(timeCharged, this, camera);
             }
         }
 
@@ -79,22 +84,6 @@ namespace PlatformerSpeedRunner.Objects
                 Animations.JumpingLeft => JumpingLeftAnimation,
                 _ => IdleAnimation,
             };
-        }
-
-        private void CalculateGrapple(int timeCharged, CameraHelper camera)
-        {
-            MouseState mouseState = Mouse.GetState();
-            float yGrappleDistance = mouseState.Y - Position.position.Y;
-
-            if (yGrappleDistance < -700)
-            {
-                Movement.yVelocity += -700 / 135 * timeCharged / 10;
-            }
-            else
-            {
-                Movement.yVelocity += yGrappleDistance / 135 * timeCharged / 10;
-            }
-            Movement.xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (Position.position.X + (Texture.Width / 2))) / 150 * timeCharged / 10;
         }
 
         private void SetCorrectAnimation()

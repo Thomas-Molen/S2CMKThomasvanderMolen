@@ -1,46 +1,21 @@
-﻿namespace PlatformerSpeedRunner.Objects
+﻿using PlatformerSpeedRunner.Helper;
+
+namespace PlatformerSpeedRunner.Objects
 {
     public class AnimationObject
     {
-        private int animationLength;
-        private int animationLoopDuration;
-        private int loopDurationHelper = 0;
-        private string animationPrefix;
-        private int animationSuffix = 1;
+        public string animationPrefix { get; private set; }
+        public int animationLength { get; private set; }
+        public int animationLoopDuration { get; private set; }
+
+        public AnimationHelper Animation;
 
         public AnimationObject(string AnimationPrefix, int AnimationLength, int AnimationloopDuration)
         {
-            animationLength = AnimationLength;
+            Animation = new AnimationHelper();
             animationPrefix = AnimationPrefix;
+            animationLength = AnimationLength;
             animationLoopDuration = AnimationloopDuration;
-        }
-
-        public string GetAnimationSprite()
-        {
-            if (animationLength == 1)
-            {
-                return animationPrefix;
-            }
-            else
-            {
-                if (animationSuffix == animationLength)
-                {
-                    animationSuffix = 1;
-                }
-                else
-                {
-                    if (loopDurationHelper >= animationLoopDuration / animationLength)
-                    {
-                        animationSuffix++;
-                        loopDurationHelper = 0;
-                    }
-                    else
-                    {
-                        loopDurationHelper++;
-                    }
-                }
-            }
-            return animationPrefix + animationSuffix;
         }
     }
 }

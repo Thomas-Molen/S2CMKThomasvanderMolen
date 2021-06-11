@@ -71,13 +71,13 @@ namespace PlatformerSpeedRunner.States
             Animation = new AnimationHelper();
             Database = new DatabaseHelper();
 
-            player = new Player(LoadTexture("Player\\Idle\\IdlePinkMan"));
-            chargeCircle = new BasicObject(LoadTexture("Player\\Charging\\ChargingCircle1"), new Vector2(-50, -50));
-            endFlag = new BasicObject(LoadTexture("Terrain\\EndFlag"), new Vector2(5720, 960), true);
+            player = new Player(baseContentManager);
+            chargeCircle = new BasicObject(baseContentManager, "Player\\Charging\\ChargingCircle1", new Vector2(-50, -50));
+            endFlag = new BasicObject(baseContentManager, "Terrain\\EndFlag", new Vector2(5720, 960), true);
 
             Charge = new ChargeCircleHelper(chargeCircle);
 
-            backgroundImage = new BasicObject(LoadTexture("Backgrounds\\PinkWallpaper"), new Vector2(0, 0));
+            backgroundImage = new BasicObject(baseContentManager, "Backgrounds\\PinkWallpaper", new Vector2(0, 0));
 
             localGameTime = new GameTime();
 
@@ -120,7 +120,7 @@ namespace PlatformerSpeedRunner.States
                 {
                     AddGameObject(chargeCircle);
                     timeCharged++;
-                    Charge.AnimateCharge(timeCharged, player, this);
+                    Charge.AnimateCharge(timeCharged, player);
                 }
                 if (cmd is GameplayInputCommand.PlayerLMBRelease)
                 {
@@ -165,7 +165,7 @@ namespace PlatformerSpeedRunner.States
             }
 
             player.PlayerUpdate();
-            player.Texture.SetTexture(LoadTexture(Animation.GetAnimation(player.GetAnimationState())));
+            player.Texture.SetTexture(player.Texture.GetTexture2D(Animation.GetAnimation(player.GetAnimationState())));
 
             foreach (MovingRockHead rockHead in RockHeadCollisionList)
             {
@@ -196,15 +196,15 @@ namespace PlatformerSpeedRunner.States
             Collision.PlayerTopDetector(player, TopsCollisionList);
             Collision.PlayerSideDetector(player, SidesCollisionList);
             Collision.PlayerRockHeadDetector(player, RockHeadCollisionList);
-            if (Collision.PlayerSpikeHeadDetector(player, SpikeHeadCollisionList) || Collision.PlayerSpikeHeadDetector(player, DeathCollisionList))
+            if (Collision.PlayerBooleanDetector(player, SpikeHeadCollisionList) || Collision.PlayerBooleanDetector(player, DeathCollisionList))
             {
                 RespawnPlayer();
             }
-            if (Collision.PlayerCheckPointDetector(player, checkPoint))
+            if (Collision.PlayerBooleanDetector(player, checkPoint) && !checkPoint.activated)
             {
                 CheckPointActivation(checkPoint);
             }
-            if (Collision.PlayerEndFlagDetector(player, EndFlagCollisionList))
+            if (Collision.PlayerBooleanDetector(player, EndFlagCollisionList))
             {
                 Vector2 submitTextPosition = camera.GetCameraBasedPosition(new Vector2(800, 500));
                 AddText("Submitting run...", (int)submitTextPosition.X, (int)submitTextPosition.Y);
@@ -215,7 +215,7 @@ namespace PlatformerSpeedRunner.States
         //creating objects in world
         private void AddObject(string TextureName, int PosX, int PosY, List<RenderAbleObject> CollisionList)
         {
-            BasicObject Object = new BasicObject(LoadTexture(TextureName), new Vector2(PosX, PosY), true);
+            BasicObject Object = new BasicObject(baseContentManager, TextureName, new Vector2(PosX, PosY), true);
             CollisionList.Add(Object);
             ObjectSpriteList.Add(Object);
             AddGameObject(Object);
@@ -223,14 +223,14 @@ namespace PlatformerSpeedRunner.States
 
         private void AddObject(string TextureName, int PosX, int PosY)
         {
-            BasicObject Object = new BasicObject(LoadTexture(TextureName), new Vector2(PosX, PosY));
+            BasicObject Object = new BasicObject(baseContentManager, TextureName, new Vector2(PosX, PosY));
             ObjectSpriteList.Add(Object);
             AddGameObject(Object);
         }
 
         private void AddRockHead(int PosX, int PosY, int MinPos, int MaxPos)
         {
-            MovingRockHead rockHead = new MovingRockHead(LoadTexture("Enemies\\RockHeadIdle"), LoadTexture("Enemies\\RockHeadMad"), new Vector2(PosX, PosY), MinPos, MaxPos);
+            MovingRockHead rockHead = new MovingRockHead(baseContentManager, new Vector2(PosX, PosY), MinPos, MaxPos);
             RockHeadCollisionList.Add(rockHead);
             RockHeadSpriteList.Add(rockHead);
             AddGameObject(rockHead);
@@ -238,7 +238,7 @@ namespace PlatformerSpeedRunner.States
 
         private void AddSpikeHead(int PosX, int PosY, int MinPosY, int MaxPosY)
         {
-            MovingSpikeHead spikeHead = new MovingSpikeHead(LoadTexture("Enemies\\SpikeHead"), new Vector2(PosX, PosY), MinPosY, MaxPosY);
+            MovingSpikeHead spikeHead = new MovingSpikeHead(baseContentManager, new Vector2(PosX, PosY), MinPosY, MaxPosY);
             SpikeHeadCollisionList.Add(spikeHead);
             SpikeHeadSpriteList.Add(spikeHead);
             AddGameObject(spikeHead);
@@ -246,7 +246,7 @@ namespace PlatformerSpeedRunner.States
 
         private void SetCheckPoint(int PosX, int PosY)
         {
-            checkPoint = new CheckPoint(LoadTexture("Terrain\\CheckPoint"), new Vector2(PosX, PosY));
+            checkPoint = new CheckPoint(baseContentManager, new Vector2(PosX, PosY));
             AddGameObject(checkPoint);
         }
 
@@ -283,9 +283,8 @@ namespace PlatformerSpeedRunner.States
 
         private void CheckPointActivation(CheckPoint checkPoint)
         {
-            checkPoint.Texture.SetTexture(LoadTexture("Terrain\\CheckPointActivated"));
             spawnPoint = new Vector2(checkPoint.Position.position.X, checkPoint.Position.position.Y + (checkPoint.Texture.Height - player.Texture.Height));
-            checkPoint.activated = true;
+            checkPoint.Activate();
             checkPointTime = elapsedTime;
         }
 

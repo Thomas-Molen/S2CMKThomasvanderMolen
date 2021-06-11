@@ -27,7 +27,7 @@ namespace PlatformerSpeedRunner.Helper
 
             foreach (var bb in boundingBoxes)
             {
-                bb.position = new Vector2(bb.position.X + deltaX, bb.position.Y + deltaY);
+                bb.Position.SetPosition(new Vector2(bb.Position.position.X + deltaX, bb.Position.position.Y + deltaY));
             }
         }
     }
