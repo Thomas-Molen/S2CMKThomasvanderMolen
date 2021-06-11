@@ -95,7 +95,7 @@ class CommentController extends Controller
     {
         $this->repository->Delete(Comment::class, $id);
 
-        return redirect()->route('run.show', $this->repository->Find(Comment::class, $id)->user_id)
+        return redirect()->route('run.show', $this->repository->Find(Comment::class, $id)->run_id)
             ->with('success', 'Comment deleted successfully');
     }
 }

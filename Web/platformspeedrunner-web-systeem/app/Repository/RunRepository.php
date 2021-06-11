@@ -52,7 +52,7 @@ class RunRepository
             $repository->Delete(Comment::class, $comment->id);
         }
         foreach ($run->link()->get() as $link) {
-            $repository->Delete(Link::class, $link->id);
+            $link->delete();
         }
         $repository->Delete(Run::class, $id);
     }

@@ -22,7 +22,7 @@ class Repository
 
     public function Delete($model, $id)
     {
-        ($model !== Link::class) ? $this->Find($model, $id)->update(['active' => false]) : $this->Find($model, $id)->delete();
+        $this->Find($model, $id)->update(['active' => false]);
     }
 
     public function Create($model, Request $request = null)

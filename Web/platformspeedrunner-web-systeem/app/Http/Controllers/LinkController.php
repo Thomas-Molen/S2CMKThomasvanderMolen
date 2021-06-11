@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helpers\AuthenticationHelper;
+use App\Repository\LinkRepository;
 use App\Repository\Repository;
 use App\Helpers\TableReadabilityHelper;
 use App\Models\Link;
@@ -86,10 +87,10 @@ class LinkController extends Controller
             ->with('success', 'Link updated successfully');
     }
 
-    public function destroy($id)
+    public function destroy($id, LinkRepository $linkRepository)
     {
         $run_id = $this->query->Find(Link::class, $id)->run_id;
-        $this->query->Delete(Link::class, $id);
+        $linkRepository->Delete($id);
 
         return redirect()->route('run.show', $run_id)
             ->with('success', 'Link deleted successfully');
