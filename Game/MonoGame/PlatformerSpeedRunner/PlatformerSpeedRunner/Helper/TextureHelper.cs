@@ -1,13 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PlatformerSpeedRunner.Helper
 {
     public class TextureHelper
     {
+        TextureList Textures;
         public Texture2D texture { get; private set; }
         public int Width { get { return texture.Width; } }
         public int Height { get { return texture.Height; } }
@@ -16,6 +14,7 @@ namespace PlatformerSpeedRunner.Helper
         public TextureHelper(ContentManager contentManager)
         {
             content = contentManager;
+            Textures = new TextureList();
         }
 
         public void SetTexture(Texture2D Texture)
@@ -36,7 +35,7 @@ namespace PlatformerSpeedRunner.Helper
             }
             catch (ContentLoadException)
             {
-                var texture = content.Load<Texture2D>("ErrorSprite");
+                var texture = content.Load<Texture2D>(Textures.error);
                 return texture;
             }
         }

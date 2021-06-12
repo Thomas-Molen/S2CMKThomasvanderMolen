@@ -6,16 +6,16 @@ using PlatformerSpeedRunner.Input.Base;
 using PlatformerSpeedRunner.Objects;
 using PlatformerSpeedRunner.States.Base;
 using System;
-using System.Diagnostics;
 
 namespace PlatformerSpeedRunner.States
 {
     public class MenuState : BaseGameState
     {
         private ButtonHelper buttonHelper;
-        private SaveDataHelper dataHelper;
-        private DatabaseHelper dataBaseHelper;
+        private SaveDataHelper saveData;
+        private DatabaseHelper dataBase;
 
+        //global objects
         private BasicObject playButton;
         private BasicObject playIcon;
         private BasicObject leaderboardButton;
@@ -31,13 +31,11 @@ namespace PlatformerSpeedRunner.States
         public override void LoadContent()
         {
             buttonHelper = new ButtonHelper();
-            dataHelper = new SaveDataHelper();
-            dataBaseHelper = new DatabaseHelper();
-            dataBaseHelper.GetUsername();
-            username = dataBaseHelper.GetUsername();
+            saveData = new SaveDataHelper();
+            dataBase = new DatabaseHelper();
+            username = dataBase.GetUsername();
 
-            backgroundImage = new BasicObject(baseContentManager, "Backgrounds\\PinkWallpaper", new Vector2(0, 0));
-            AddGameObject(backgroundImage);
+            AddGameObject(new BasicObject(baseContentManager, Textures.pinkBackground, new Vector2(0, 0)));
             LoadWorld();
         }
 
@@ -77,41 +75,31 @@ namespace PlatformerSpeedRunner.States
             {
                 SwitchState(new GameplayState());
             }
+
             if (username != "Could not connect to server")
             {
                 if (buttonHelper.IsMouseOnButton(leaderboardButton, camera) || buttonHelper.IsMouseOnButton(leaderboardIcon, camera))
                 {
-                    OpenUrl("http://platformerspeedrunner/leaderboard");
+                    dataBase.OpenUrl("http://platformerspeedrunner/leaderboard");
                 }
                 if (username == "no user found with such key")
                 {
                     if (buttonHelper.IsMouseOnButton(createButton, camera) || buttonHelper.IsMouseOnButton(createIcon, camera))
                     {
-                        OpenUrl("http://platformerspeedrunner/register/" + dataHelper.GetSaveData());
+                        dataBase.OpenUrl("http://platformerspeedrunner/register/" + saveData.GetSaveData());
                     }
                 }
                 else
                 {
                     if (buttonHelper.IsMouseOnButton(accountButton, camera) || buttonHelper.IsMouseOnButton(accountIcon, camera))
                     {
-                        OpenUrl("http://platformerspeedrunner/personal_runs");
+                        dataBase.OpenUrl("http://platformerspeedrunner/personal_runs");
                     }
                 }
             }
         }
 
-        private void OpenUrl(string url)
-        {
-            Process myProcess = new Process();
-            try
-            {
-                myProcess.StartInfo.UseShellExecute = true;
-                myProcess.StartInfo.FileName = url;
-                myProcess.Start();
-            }
-            catch (Exception)
-            { }
-        }
+        
 
         protected override void SetInputManager()
         {
@@ -144,29 +132,29 @@ namespace PlatformerSpeedRunner.States
             AddText("MAIN MENU", 795, 100);
             AddText("Start Game", 848, 315);
             
-            playButton = AddButton(745, 300, "Menu\\EmptyButton");
-            playIcon = AddButton(645, 300, "Menu\\PlayButton");
+            playButton = AddButton(745, 300, Textures.emptyButton);
+            playIcon = AddButton(645, 300, Textures.playButton);
 
             if (username != "Could not connect to server")
             {
                 AddText("Leaderboard", 825, 515);
-                leaderboardButton = AddButton(745, 500, "Menu\\EmptyButton");
-                leaderboardIcon = AddButton(645, 500, "Menu\\LeaderboardButton");
+                leaderboardButton = AddButton(745, 500, Textures.emptyButton);
+                leaderboardIcon = AddButton(645, 500, Textures.leaderboardButton);
 
                 if (username == "no user found with such key")
                 {
                     AddText("Register Account", 760, 715);
-                    createButton = AddButton(745, 700, "Menu\\EmptyButton");
-                    createIcon = AddButton(645, 700, "Menu\\CreateButton");
+                    createButton = AddButton(745, 700, Textures.emptyButton);
+                    createIcon = AddButton(645, 700, Textures.createButton);
                 }
                 else
                 {
                     AddText("Account", 870, 715);
-                    accountButton = AddButton(745, 700, "Menu\\EmptyButton");
-                    accountIcon = AddButton(645, 700, "Menu\\AccountButton");
+                    accountButton = AddButton(745, 700, Textures.emptyButton);
+                    accountIcon = AddButton(645, 700, Textures.accountButton);
                     AddSmallText("Username: " + username, 10, 10);
 
-                    string bestTime = dataBaseHelper.GetBestTime();
+                    string bestTime = dataBase.GetBestTime();
                     if (bestTime == "no runs found from user" || bestTime == "Could not connect to server")
                     {
                         AddSmallText("Best Time: " + bestTime, 10, 50);
@@ -174,8 +162,7 @@ namespace PlatformerSpeedRunner.States
                     else
                     {
                         string time = TimeSpan.FromMilliseconds(Convert.ToInt32(bestTime)).ToString();
-                        time = time.Substring(0, time.Length - 4);
-                        AddSmallText("Best Time: " + time, 10, 50);
+                        AddSmallText("Best Time: " + time.Substring(0, time.Length - 4), 10, 50);
                     }
                 }
             }

@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
-using PlatformerSpeedRunner.Enum;
-using PlatformerSpeedRunner.Objects.Base;
-using PlatformerSpeedRunner.Input.Base;
-using Microsoft.Xna.Framework;
-using PlatformerSpeedRunner.Objects;
 using PlatformerSpeedRunner.Camera;
+using PlatformerSpeedRunner.Enum;
+using PlatformerSpeedRunner.Helper;
+using PlatformerSpeedRunner.Input.Base;
+using PlatformerSpeedRunner.Objects;
+using PlatformerSpeedRunner.Objects.Base;
+using System;
+using System.Collections.Generic;
 
 namespace PlatformerSpeedRunner.States.Base
 {
@@ -35,6 +33,8 @@ namespace PlatformerSpeedRunner.States.Base
 
         protected abstract void SetInputManager();
 
+        public TextureList Textures = new TextureList();
+
         public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight, CameraHelper inputCamera)
         {
             camera = inputCamera;
@@ -43,8 +43,8 @@ namespace PlatformerSpeedRunner.States.Base
 
             baseContentManager = contentManager;
 
-            calibriBold25 = contentManager.Load<SpriteFont>("Fonts\\GuiFont");
-            calibriBold50 = contentManager.Load<SpriteFont>("Fonts\\MenuFont");
+            calibriBold25 = contentManager.Load<SpriteFont>(Textures.GuiFont);
+            calibriBold50 = contentManager.Load<SpriteFont>(Textures.MenuFont);
 
             SetInputManager();
         }

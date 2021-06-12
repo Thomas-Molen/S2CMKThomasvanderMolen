@@ -5,13 +5,15 @@ namespace PlatformerSpeedRunner.Objects.Base
 {
     public class RenderAbleObject
     {
-        public TextureHelper Texture;
-        public PositionHelper Position;
-        public BoundingBoxHelper BoundingBox;
-        public RenderHelper Render;
+        public TextureList Textures { get; private set; }
+        public TextureHelper Texture { get; private set; }
+        public PositionHelper Position { get; private set; }
+        public BoundingBoxHelper BoundingBox { get; private set; }
+        public RenderHelper Render { get; private set; }
 
         public RenderAbleObject()
         {
+            Textures = new TextureList();
             Position = new PositionHelper();
             BoundingBox = new BoundingBoxHelper();
             Render = new RenderHelper();

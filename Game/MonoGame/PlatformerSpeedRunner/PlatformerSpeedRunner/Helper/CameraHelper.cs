@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.Objects;
-using PlatformerSpeedRunner.States;
 
 namespace PlatformerSpeedRunner.Camera
 {

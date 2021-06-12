@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlatformerSpeedRunner.Camera;
-using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.States;
 using PlatformerSpeedRunner.States.Base;
 

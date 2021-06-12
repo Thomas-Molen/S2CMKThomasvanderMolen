@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,6 +79,19 @@ namespace PlatformerSpeedRunner.Helper
             {
                 return client.GetStringAsync("http://platformerspeedrunner/api/get_unique_key").Result;
             }
+        }
+
+        public void OpenUrl(string url)
+        {
+            Process process = new Process();
+            try
+            {
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.FileName = url;
+                process.Start();
+            }
+            catch (Exception)
+            { }
         }
     }
 }

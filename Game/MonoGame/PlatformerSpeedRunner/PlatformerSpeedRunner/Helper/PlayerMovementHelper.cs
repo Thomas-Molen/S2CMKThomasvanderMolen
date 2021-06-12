@@ -108,20 +108,21 @@ namespace PlatformerSpeedRunner.Helper
             xVelocity = 0;
         }
 
-        public void Grapple(int timeCharged, Player player, CameraHelper camera)
+        public void Grapple(ChargeCircleHelper Charge, Player player, CameraHelper camera)
         {
-            if (timeCharged < 10)
+            if (Charge.timeCharged < 10)
             {
                 return;
             }
-            else if (timeCharged >= 30)
+            else if (Charge.timeCharged >= 30)
             {
                 CalculateGrappleForce(30, player, camera);
             }
             else
             {
-                CalculateGrappleForce(timeCharged, player, camera);
+                CalculateGrappleForce(Charge.timeCharged, player, camera);
             }
+            Charge.ResetCharge();
         }
 
         public void KeepPlayerInbound(Player player, int xGameBorderMin, int xGameBorderMax, int yGameBorderMin)

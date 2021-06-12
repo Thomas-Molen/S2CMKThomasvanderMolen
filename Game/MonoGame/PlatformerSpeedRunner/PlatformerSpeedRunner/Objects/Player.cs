@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using PlatformerSpeedRunner.Camera;
 using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.Helper;
 using PlatformerSpeedRunner.Objects.Base;
@@ -14,6 +11,7 @@ namespace PlatformerSpeedRunner.Objects
         public PlayerMovementHelper Movement = new PlayerMovementHelper();
         private AnimationHelper Animation = new AnimationHelper();
         private Animations AnimationState;
+        private Vector2 spawnPoint;
 
         private const int BBWidth = 45;
         private const int BBHeight = 55;
@@ -29,13 +27,15 @@ namespace PlatformerSpeedRunner.Objects
 
         public Player(ContentManager contentManager = null)
         {
+            spawnPoint = new Vector2(200, 750);
+            Position.SetPosition(spawnPoint);
+            //(4800, 750); //near end of stage
             if (contentManager != null)
             {
                 SetTextureContentManager(contentManager);
                 Texture.SetTexture(Texture.GetTexture2D("Player\\Idle\\PlayerIdle"));
             }
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(1, 0), BBWidth, BBHeight));
-            AnimationState = Animations.Idle;
 
             RunningRightAnimation = Animation.CreateAnimation("Player\\Running\\PlayerRunningRight", 12, 24);
             RunningLeftAnimation = Animation.CreateAnimation("Player\\Running\\PlayerRunningLeft", 12, 24);
@@ -54,7 +54,12 @@ namespace PlatformerSpeedRunner.Objects
             Movement.PlayerPhysics(this);
         }
 
-        public void Respawn(Vector2 spawnPoint)
+        public void SetSpawnPoint(Vector2 newSpawnPoint)
+        {
+            spawnPoint = newSpawnPoint;
+        }
+
+        public void Respawn()
         {
             Movement.ResetVelocity();
             Position.SetPosition(spawnPoint);
