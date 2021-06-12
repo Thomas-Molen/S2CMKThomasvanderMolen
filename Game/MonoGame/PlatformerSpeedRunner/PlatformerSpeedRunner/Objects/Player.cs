@@ -13,7 +13,6 @@ namespace PlatformerSpeedRunner.Objects
     {
         public PlayerMovementHelper Movement = new PlayerMovementHelper();
         private AnimationHelper Animation = new AnimationHelper();
-        public CameraMode cameraState = CameraMode.Horizontal;
         private Animations AnimationState;
 
         private const int BBWidth = 45;
@@ -33,7 +32,7 @@ namespace PlatformerSpeedRunner.Objects
             if (contentManager != null)
             {
                 SetTextureContentManager(contentManager);
-                Texture.SetTexture(Texture.GetTexture2D("Player\\Idle\\IdlePinkMan"));
+                Texture.SetTexture(Texture.GetTexture2D("Player\\Idle\\PlayerIdle"));
             }
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(1, 0), BBWidth, BBHeight));
             AnimationState = Animations.Idle;
@@ -51,23 +50,14 @@ namespace PlatformerSpeedRunner.Objects
         public void PlayerUpdate()
         {
             SetCorrectAnimation();
+            Texture.SetTexture(Texture.GetTexture2D(Animation.GetAnimation(GetAnimationState())));
             Movement.PlayerPhysics(this);
         }
 
-        public void Grapple(int timeCharged, CameraHelper camera)
+        public void Respawn(Vector2 spawnPoint)
         {
-            if (timeCharged < 10)
-            {
-                return;
-            }
-            else if (timeCharged >= 30)
-            {
-                Movement.Grapple(30, this, camera);
-            }
-            else
-            {
-                Movement.Grapple(timeCharged, this, camera);
-            }
+            Movement.ResetVelocity();
+            Position.SetPosition(spawnPoint);
         }
 
         public AnimationObject GetAnimationState()

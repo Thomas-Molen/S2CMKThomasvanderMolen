@@ -8,7 +8,26 @@ namespace PlatformerSpeedRunner.Helper
 {
     public class CollisionHelper
     {
-        private CollisionDetector collisionDetector = new CollisionDetector();
+        public readonly List<RenderAbleObject> TopsCollisionList;
+        public readonly List<RenderAbleObject> SidesCollisionList;
+        public readonly List<RenderAbleObject> FullCollisionList;
+        public readonly List<RenderAbleObject> DeathCollisionList;
+        public readonly List<RenderAbleObject> RockHeadCollisionList;
+        public readonly List<RenderAbleObject> SpikeHeadCollisionList;
+        public readonly List<RenderAbleObject> EndFlagCollisionList;
+        private CollisionDetector collisionDetector;
+
+        public CollisionHelper ()
+        {
+            TopsCollisionList = new List<RenderAbleObject>();
+            SidesCollisionList = new List<RenderAbleObject>();
+            FullCollisionList = new List<RenderAbleObject>();
+            DeathCollisionList = new List<RenderAbleObject>();
+            RockHeadCollisionList = new List<RenderAbleObject>();
+            SpikeHeadCollisionList = new List<RenderAbleObject>();
+            EndFlagCollisionList = new List<RenderAbleObject>();
+            collisionDetector = new CollisionDetector();
+        }
         public void PlayerFullDetector(Player playerSprite, List<RenderAbleObject>FullCollisionList)
         {
             PlayerTopDetector(playerSprite, FullCollisionList);

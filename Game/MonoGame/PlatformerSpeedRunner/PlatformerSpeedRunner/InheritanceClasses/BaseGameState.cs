@@ -16,9 +16,6 @@ namespace PlatformerSpeedRunner.States.Base
 {
     public abstract class BaseGameState
     {
-        public GameState currentState;
-        private protected bool debug = false;
-
         public BasicObject backgroundImage;
 
         public CameraHelper camera { get; private set; }
@@ -100,10 +97,7 @@ namespace PlatformerSpeedRunner.States.Base
             {
                 gameObject.Render.RenderObject(spriteBatch, gameObject);
             }
-        }
 
-        public void RenderText(SpriteBatch spriteBatch)
-        {
             foreach (var textObject in textObjects)
             {
                 switch (textObject.font)

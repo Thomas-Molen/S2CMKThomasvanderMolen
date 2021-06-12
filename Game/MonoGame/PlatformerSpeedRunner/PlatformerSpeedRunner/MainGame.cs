@@ -61,10 +61,6 @@ namespace PlatformerSpeedRunner
         {
             if (currentGameState != null)
             {
-                if (currentGameState.currentState == GameState.MainMenu)
-                {
-
-                }
                 currentGameState.OnStateSwitched -= CurrentGameState_OnStateSwitched;
                 currentGameState.UnloadContent();
             }
@@ -76,11 +72,6 @@ namespace PlatformerSpeedRunner
             currentGameState.LoadContent();
 
             currentGameState.OnStateSwitched += CurrentGameState_OnStateSwitched;
-        }
-
-        protected override void UnloadContent()
-        {
-            currentGameState?.UnloadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -102,7 +93,6 @@ namespace PlatformerSpeedRunner
             spriteBatch.Begin(transformMatrix: camera.transform);
 
             currentGameState.Render(spriteBatch);
-            currentGameState.RenderText(spriteBatch);
 
             spriteBatch.End();
 

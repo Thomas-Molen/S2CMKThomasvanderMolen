@@ -1,15 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using PlatformerSpeedRunner.Enum;
 using PlatformerSpeedRunner.Objects;
+using PlatformerSpeedRunner.States;
 
 namespace PlatformerSpeedRunner.Camera
 {
     public class CameraHelper
     {
         public Matrix transform { get; private set; }
-
         private Matrix position;
         private Matrix offset;
+        public CameraMode cameraState { get; private set; }
         public void Follow(Player playerSprite)
         {
             if (playerSprite != null)
@@ -28,7 +29,7 @@ namespace PlatformerSpeedRunner.Camera
                 }
                 else
                 {
-                    switch (playerSprite.cameraState)
+                    switch (cameraState)
                     {
                         case CameraMode.Free:
                             position = Matrix.CreateTranslation(
@@ -97,6 +98,11 @@ namespace PlatformerSpeedRunner.Camera
         public Vector2 GetCameraBasedPosition(Vector2 BasePosition)
         {
             return new Vector2(-transform.Translation.X + BasePosition.X, -transform.Translation.Y + BasePosition.Y);
+        }
+
+        public void SetCameraMode(CameraMode mode)
+        {
+            cameraState = mode;
         }
     }
 }

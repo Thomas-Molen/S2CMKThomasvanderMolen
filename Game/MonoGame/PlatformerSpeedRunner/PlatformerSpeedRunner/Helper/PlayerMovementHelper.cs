@@ -9,7 +9,7 @@ namespace PlatformerSpeedRunner.Helper
     {
         private const int maxXVelocity = 10;
         private const int maxYVelocity = 15;
-        private const float Gravity = 0.3f;
+        private const float Gravity = 0.4f;
         private const float playerSpeed = 3.0f;
 
         public float xVelocity { get; private set; } = 0.0f;
@@ -110,18 +110,18 @@ namespace PlatformerSpeedRunner.Helper
 
         public void Grapple(int timeCharged, Player player, CameraHelper camera)
         {
-            MouseState mouseState = Mouse.GetState();
-            float yGrappleDistance = mouseState.Y - player.Position.position.Y;
-
-            if (yGrappleDistance < -700)
+            if (timeCharged < 10)
             {
-                yVelocity += -700 / 135 * timeCharged / 10;
+                return;
+            }
+            else if (timeCharged >= 30)
+            {
+                CalculateGrappleForce(30, player, camera);
             }
             else
             {
-                yVelocity += yGrappleDistance / 135 * timeCharged / 10;
+                CalculateGrappleForce(timeCharged, player, camera);
             }
-            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (player.Position.position.X + (player.Texture.Width / 2))) / 150 * timeCharged / 10;
         }
 
         public void KeepPlayerInbound(Player player, int xGameBorderMin, int xGameBorderMax, int yGameBorderMin)
@@ -139,6 +139,22 @@ namespace PlatformerSpeedRunner.Helper
                 player.Position.SetPosition(new Vector2(player.Position.position.X, yGameBorderMin));
                 yVelocity /= 2;
             }
+        }
+
+        private void CalculateGrappleForce(int timeCharged, Player player, CameraHelper camera)
+        {
+            MouseState mouseState = Mouse.GetState();
+            float yGrappleDistance = mouseState.Y - player.Position.position.Y;
+
+            if (yGrappleDistance < -700)
+            {
+                yVelocity += -700 / 135 * timeCharged / 10;
+            }
+            else
+            {
+                yVelocity += yGrappleDistance / 135 * timeCharged / 10;
+            }
+            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (player.Position.position.X + (player.Texture.Width / 2))) / 150 * timeCharged / 10;
         }
     }
 }

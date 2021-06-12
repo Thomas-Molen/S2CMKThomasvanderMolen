@@ -7,10 +7,11 @@ namespace PlatformerSpeedRunner.Helper
     public class BoundingBoxHelper
     {
         public List<BoundingBoxObject> boundingBoxes { get; private set; }
-        private Vector2 basePosition = Vector2.Zero;
+        private PositionHelper basePosition;
 
         public BoundingBoxHelper()
         {
+            basePosition = new PositionHelper();
             boundingBoxes = new List<BoundingBoxObject>();
         }
 
@@ -19,11 +20,11 @@ namespace PlatformerSpeedRunner.Helper
             boundingBoxes.Add(bb);
         }
 
-        public void UpdateBoundingBoxes(Vector2 Position)
+        public void UpdateBoundingBoxes(Vector2 newPosition)
         {
-            var deltaX = Position.X - basePosition.X;
-            var deltaY = Position.Y - basePosition.Y;
-            basePosition = Position;
+            var deltaX = newPosition.X - basePosition.position.X;
+            var deltaY = newPosition.Y - basePosition.position.Y;
+            basePosition.SetPosition(newPosition);
 
             foreach (var bb in boundingBoxes)
             {

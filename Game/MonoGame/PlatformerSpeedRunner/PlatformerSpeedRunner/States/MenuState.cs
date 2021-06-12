@@ -30,7 +30,6 @@ namespace PlatformerSpeedRunner.States
 
         public override void LoadContent()
         {
-            currentState = GameState.MainMenu;
             buttonHelper = new ButtonHelper();
             dataHelper = new SaveDataHelper();
             dataBaseHelper = new DatabaseHelper();
