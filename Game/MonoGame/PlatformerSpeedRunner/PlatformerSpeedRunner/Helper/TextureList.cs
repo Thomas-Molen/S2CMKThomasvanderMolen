@@ -34,5 +34,12 @@
         public string leaderboardButton { get { return "Menu\\LeaderboardButton"; } }
         public string createButton { get { return "Menu\\CreateButton"; } }
         public string accountButton { get { return "Menu\\AccountButton"; } }
+        public string playerIdle { get { return "Player\\Idle\\PlayerIdle"; } }
+        public string playerRunningRight { get { return "Player\\Running\\PlayerRunningRight"; } }
+        public string playerRunningLeft { get { return "Player\\Running\\PlayerRunningLeft"; } }
+        public string playerFallingRight { get { return "Player\\FallingRight"; } }
+        public string playerFallingLeft { get { return "Player\\FallingLeft"; } }
+        public string playerJumpingRight { get { return "Player\\JumpingRight"; } }
+        public string playerJumpingLeft { get { return "Player\\JumpingLeft"; } }
     }
 }

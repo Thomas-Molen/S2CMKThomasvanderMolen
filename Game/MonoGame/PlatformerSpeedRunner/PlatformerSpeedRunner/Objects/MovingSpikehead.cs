@@ -17,7 +17,7 @@ namespace PlatformerSpeedRunner.Objects
         {
             SetTextureContentManager(contentManager);
             Movement = new EnemyMovementHelper(3, newMinPosY: inputMinPosY, newMaxPosY: inputMaxPosY );
-            Texture.SetTexture(Texture.GetTexture2D(Textures.spikeHead));
+            Texture.SetTexture(Textures.spikeHead);
             Position.SetPosition(newPosition);
 
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(30, 0), BBWidth1, BBHeight1));

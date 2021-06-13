@@ -8,89 +8,94 @@ namespace PlatformSpeedRunner.Tests
     public class AnimationHelperTests
     {
         AnimationHelper animationHelper;
+        TextureList textureList;
 
         [TestInitialize]
         public void Setup()
         {
             animationHelper = new AnimationHelper();
+            textureList = new TextureList();
         }
 
         [TestMethod]
-        public void Helper_Can_Generate_Animation_Objects()
+        public void Helper_Can_Generate_Player_Animations_With_Correct_Animation_Prefix()
         {
             //Arrange
-            string prefix = "WalkingLeft";
-            int length = 5;
-            int duration = 15;
+            animationHelper.CreateAnimation(textureList.playerRunningRight);
             //act
-            var animation = animationHelper.CreateAnimation(prefix, length, duration);
-            
+            AnimationObject runningRightAnimation = animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.RunningRight);
             //Assert
-            Assert.IsInstanceOfType(animation, new AnimationObject(prefix, length, duration).GetType());
+            Assert.AreEqual(textureList.playerRunningRight, runningRightAnimation.animationPrefix);
         }
 
         [TestMethod]
-        public void Helper_Can_Return_Correct_Default_Animation()
+        public void Helper_Can_Generate_Player_Animations_With_Correct_Animation_Length()
         {
             //Arrange
-            string prefix = "WalkingLeft";
-            int length = 1;
-            int duration = 5;
+            animationHelper.CreateAnimation(textureList.playerRunningRight, 10);
             //act
-            AnimationObject animation = animationHelper.CreateAnimation(prefix, length, duration);
-            string returnedAnimation = animationHelper.GetAnimation(animation);
-
+            AnimationObject runningRightAnimation = animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.RunningRight);
             //Assert
-            Assert.AreEqual(prefix, returnedAnimation);
+            Assert.AreEqual(10, runningRightAnimation.animationLength);
         }
 
         [TestMethod]
-        public void Animation_Returns_Correct_Animation_In_Order()
+        public void Helper_Can_Generate_Player_Animations_With_Correct_Animation_Loop_Duration()
         {
             //Arrange
-            string prefix = "WalkingLeft";
-            int length = 10;
-            int duration = 1;
-            string returnedAnimation = prefix;
+            animationHelper.CreateAnimation(textureList.playerRunningRight, animationLoopDuration: 5);
             //act
-            AnimationObject animation = animationHelper.CreateAnimation(prefix, length, duration);
-            animationHelper.GetAnimation(animation);
-            returnedAnimation = animationHelper.GetAnimation(animation);
+            AnimationObject runningRightAnimation = animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.RunningRight);
             //Assert
-            Assert.AreEqual(prefix + 3, returnedAnimation);
+            Assert.AreEqual(5, runningRightAnimation.animationLoopDuration);
         }
 
         [TestMethod]
-        public void Animation_Will_Duplicate_Frames_For_Longer_Duration()
+        public void Helper_Returns_Default_Prefix_If_Length_Is_One()
         {
             //Arrange
-            string prefix = "WalkingLeft";
-            int length = 10;
-            int duration = 50;
-            string returnedAnimation = prefix;
+            animationHelper.CreateAnimation(textureList.playerIdle);
             //act
-            AnimationObject animation = animationHelper.CreateAnimation(prefix, length, duration);
-            animationHelper.GetAnimation(animation);
-            returnedAnimation = animationHelper.GetAnimation(animation);
+            string defaultAnimation = animationHelper.GetAnimation(animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.Idle));
             //Assert
-            Assert.AreEqual(prefix + 1, returnedAnimation);
+            Assert.AreEqual(textureList.playerIdle, defaultAnimation);
         }
 
         [TestMethod]
-        public void Animation_Will_Loop_Back_To_Start()
+        public void Helper_Returns_Correct_Animation_In_Order()
         {
             //Arrange
-            string prefix = "WalkingLeft";
-            int length = 3;
-            int duration = 1;
-            string returnedAnimation = prefix;
+            animationHelper.CreateAnimation(textureList.playerRunningLeft, 5);
             //act
-            AnimationObject animation = animationHelper.CreateAnimation(prefix, length, duration);
-            animationHelper.GetAnimation(animation);
-            animationHelper.GetAnimation(animation);
-            returnedAnimation = animationHelper.GetAnimation(animation);
+            animationHelper.GetAnimation(animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.RunningLeft));
+            string animation = animationHelper.GetAnimation(animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.RunningLeft));
             //Assert
-            Assert.AreEqual(prefix + 1, returnedAnimation);
+            Assert.AreEqual(textureList.playerRunningLeft + "3", animation);
+        }
+
+        [TestMethod]
+        public void Helper_Duplicates_Frames_Based_On_Loop_Duration()
+        {
+            //Arrange
+            animationHelper.CreateAnimation(textureList.playerFallingLeft, 5, 10);
+            //act
+            string animation = animationHelper.GetAnimation(animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.FallingLeft));
+            animation = animationHelper.GetAnimation(animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.FallingLeft));
+            //Assert
+            Assert.AreEqual(textureList.playerFallingLeft + "1", animation);
+        }
+
+        [TestMethod]
+        public void Helper_Loops_Back_To_First_Frame()
+        {
+            //Arrange
+            animationHelper.CreateAnimation(textureList.playerFallingRight, 3);
+            //act
+            animationHelper.GetAnimation(animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.FallingRight));
+            animationHelper.GetAnimation(animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.FallingRight));
+            string animation = animationHelper.GetAnimation(animationHelper.GetPlayerAnimation(PlatformerSpeedRunner.Enum.Animations.FallingRight));
+            //Assert
+            Assert.AreEqual(textureList.playerFallingRight + "1", animation);
         }
     }
 }

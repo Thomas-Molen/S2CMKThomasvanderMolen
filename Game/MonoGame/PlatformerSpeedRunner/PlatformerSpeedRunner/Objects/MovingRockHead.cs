@@ -17,7 +17,7 @@ namespace PlatformerSpeedRunner.Objects
             SetTextureContentManager(contentManager);
             Movement = new EnemyMovementHelper(2, inputMinPos, inputMaxPos);
             Position.SetPosition(newPosition);
-            Texture.SetTexture(Texture.GetTexture2D(Textures.rockHead));
+            Texture.SetTexture(Textures.rockHead);
 
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(0, 0), BBWidth, BBHeight));
         }
@@ -26,14 +26,14 @@ namespace PlatformerSpeedRunner.Objects
         {
             if (Texture.texture.ToString() != Textures.rockHead)
             {
-                Texture.SetTexture(Texture.GetTexture2D(Textures.rockHead));
+                Texture.SetTexture(Textures.rockHead);
             }
             Movement.MoveHorizontal(this);
         }
 
         public void MakeRockheadMad()
         {
-            base.Texture.SetTexture(Texture.GetTexture2D(Textures.rockHeadAngry));
+            base.Texture.SetTexture(Textures.rockHeadAngry);
         }
     }
 }

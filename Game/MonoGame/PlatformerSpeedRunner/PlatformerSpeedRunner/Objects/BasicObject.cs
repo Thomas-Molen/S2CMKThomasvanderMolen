@@ -15,7 +15,7 @@ namespace PlatformerSpeedRunner.Objects
 
             if (BoundingBox)
             {
-                this.BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.position.X, Position.position.Y), base.Texture.Width + 1, base.Texture.Height + 1));
+                this.BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.position.X, Position.position.Y), base.Texture.width + 1, base.Texture.height + 1));
             }
         }
     }

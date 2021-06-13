@@ -206,7 +206,7 @@ namespace PlatformerSpeedRunner.States
 
         private void CheckPointActivation(CheckPoint checkPoint)
         {
-            player.SetSpawnPoint(new Vector2(checkPoint.Position.position.X, checkPoint.Position.position.Y + (checkPoint.Texture.Height - player.Texture.Height)));
+            player.SetSpawnPoint(new Vector2(checkPoint.Position.position.X, checkPoint.Position.position.Y + (checkPoint.Texture.height - player.Texture.height)));
             checkPoint.Activate();
             Timer.SetCheckpointTime();
         }

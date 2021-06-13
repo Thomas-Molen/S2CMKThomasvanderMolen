@@ -18,6 +18,16 @@ namespace PlatformSpeedRunner.Tests
         }
 
         [TestMethod]
+        public void Camera_Mode_Gets_Set_Properly()
+        {
+            //Arrange
+            //act
+            camera.SetCameraMode(PlatformerSpeedRunner.Enum.CameraMode.Free);
+            //Assert
+            Assert.AreEqual(PlatformerSpeedRunner.Enum.CameraMode.Free, camera.cameraState);
+        }
+
+        [TestMethod]
         public void Camera_transform_will_Be_Default_With_No_Player()
         {
             //Arrange

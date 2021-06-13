@@ -17,8 +17,8 @@ namespace PlatformerSpeedRunner.Camera
                 if (playerSprite.Position.position.X < Program.width / 2)
                 {
                     position = Matrix.CreateTranslation(
-                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
-                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
+                        -playerSprite.Position.position.X - (playerSprite.Texture.width / 2),
+                        -playerSprite.Position.position.Y - (playerSprite.Texture.height / 2),
                         0);
 
                     offset = Matrix.CreateTranslation(
@@ -32,8 +32,8 @@ namespace PlatformerSpeedRunner.Camera
                     {
                         case CameraMode.Free:
                             position = Matrix.CreateTranslation(
-                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
-                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
+                        -playerSprite.Position.position.X - (playerSprite.Texture.width / 2),
+                        -playerSprite.Position.position.Y - (playerSprite.Texture.height / 2),
                         0);
 
                             offset = Matrix.CreateTranslation(
@@ -44,8 +44,8 @@ namespace PlatformerSpeedRunner.Camera
 
                         case CameraMode.Horizontal:
                             position = Matrix.CreateTranslation(
-                       -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
-                       -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
+                       -playerSprite.Position.position.X - (playerSprite.Texture.width / 2),
+                       -playerSprite.Position.position.Y - (playerSprite.Texture.height / 2),
                        0);
 
                             offset = Matrix.CreateTranslation(
@@ -55,8 +55,8 @@ namespace PlatformerSpeedRunner.Camera
                             break;
                         case CameraMode.Vertical:
                             position = Matrix.CreateTranslation(
-                        -playerSprite.Position.position.X - (playerSprite.Texture.Width / 2),
-                        -playerSprite.Position.position.Y - (playerSprite.Texture.Height / 2),
+                        -playerSprite.Position.position.X - (playerSprite.Texture.width / 2),
+                        -playerSprite.Position.position.Y - (playerSprite.Texture.height / 2),
                         0);
 
                             offset = Matrix.CreateTranslation(

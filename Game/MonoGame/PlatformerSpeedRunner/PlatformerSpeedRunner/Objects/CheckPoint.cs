@@ -11,7 +11,7 @@ namespace PlatformerSpeedRunner.Objects
         public CheckPoint(ContentManager contentManager, Vector2 newPosition)
         {
             SetTextureContentManager(contentManager);
-            Texture.SetTexture(Texture.GetTexture2D(Textures.checkpoint));
+            Texture.SetTexture(Textures.checkpoint);
             Position.SetPosition(newPosition);
 
             BoundingBox.AddBoundingBox(new BoundingBoxObject(new Vector2(Position.position.X, Position.position.Y), 38, 72));
@@ -20,7 +20,7 @@ namespace PlatformerSpeedRunner.Objects
         public void Activate()
         {
             activated = true;
-            Texture.SetTexture(Texture.GetTexture2D(Textures.checkpointActivated));
+            Texture.SetTexture(Textures.checkpointActivated);
         }
     }
 }

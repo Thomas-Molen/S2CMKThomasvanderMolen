@@ -7,8 +7,8 @@ namespace PlatformerSpeedRunner.Helper
     {
         TextureList Textures;
         public Texture2D texture { get; private set; }
-        public int Width { get { return texture.Width; } }
-        public int Height { get { return texture.Height; } }
+        public int width { get { return texture.Width; } }
+        public int height { get { return texture.Height; } }
         private ContentManager content;
 
         public TextureHelper(ContentManager contentManager)

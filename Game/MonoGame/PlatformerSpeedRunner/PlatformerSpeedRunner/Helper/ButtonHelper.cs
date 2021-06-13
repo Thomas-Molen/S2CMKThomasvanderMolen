@@ -12,7 +12,7 @@ namespace PlatformerSpeedRunner.Helper
             MouseState mouseState = Mouse.GetState();
             Vector2 mousePosition = camera.GetCameraBasedPosition(new Vector2(mouseState.X, mouseState.Y));
             Vector2 buttonTopLeftPos = new Vector2(button.Position.position.X, button.Position.position.Y);
-            Vector2 buttonBottomRightPos = new Vector2(buttonTopLeftPos.X + button.Texture.Width, buttonTopLeftPos.Y + button.Texture.Height);
+            Vector2 buttonBottomRightPos = new Vector2(buttonTopLeftPos.X + button.Texture.width, buttonTopLeftPos.Y + button.Texture.height);
             if (IsMouseInPos(mousePosition.X, buttonTopLeftPos.X, buttonBottomRightPos.X) && IsMouseInPos(mousePosition.Y, buttonTopLeftPos.Y, buttonBottomRightPos.Y))
             {
                 return true;

@@ -21,19 +21,19 @@ namespace PlatformerSpeedRunner.Helper
 
             if (timeCharged < 10)
             {
-                chargeCircle.Texture.SetTexture(chargeCircle.Texture.GetTexture2D(Textures.chargingCircle1));
+                chargeCircle.Texture.SetTexture(Textures.chargingCircle1);
             }
             else if (timeCharged < 20)
             {
-                chargeCircle.Texture.SetTexture(chargeCircle.Texture.GetTexture2D(Textures.chargingCircle2));
+                chargeCircle.Texture.SetTexture(Textures.chargingCircle2);
             }
             else if (timeCharged < 30)
             {
-                chargeCircle.Texture.SetTexture(chargeCircle.Texture.GetTexture2D(Textures.chargingCircle3));
+                chargeCircle.Texture.SetTexture(Textures.chargingCircle3);
             }
             else if (timeCharged >= 30)
             {
-                chargeCircle.Texture.SetTexture(chargeCircle.Texture.GetTexture2D(Textures.chargingCircle4));
+                chargeCircle.Texture.SetTexture(Textures.chargingCircle4);
             }
         }
 

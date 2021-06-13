@@ -131,9 +131,9 @@ namespace PlatformerSpeedRunner.Helper
             {
                 player.Position.SetPosition(new Vector2(xGameBorderMin, player.Position.position.Y));
             }
-            if (player.Position.position.X + player.Texture.Width > xGameBorderMax)
+            if (player.Position.position.X + player.Texture.width > xGameBorderMax)
             {
-                player.Position.SetPosition(new Vector2(xGameBorderMax - player.Texture.Width, player.Position.position.Y));
+                player.Position.SetPosition(new Vector2(xGameBorderMax - player.Texture.width, player.Position.position.Y));
             }
             if (player.Position.position.Y < yGameBorderMin)
             {
@@ -155,7 +155,7 @@ namespace PlatformerSpeedRunner.Helper
             {
                 yVelocity += yGrappleDistance / 135 * timeCharged / 10;
             }
-            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (player.Position.position.X + (player.Texture.Width / 2))) / 150 * timeCharged / 10;
+            xVelocity += (-(camera.transform.Translation.X + 23) + mouseState.X - (player.Position.position.X + (player.Texture.width / 2))) / 150 * timeCharged / 10;
         }
     }
 }

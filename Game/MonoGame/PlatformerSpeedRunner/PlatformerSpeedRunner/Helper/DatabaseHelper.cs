@@ -10,7 +10,7 @@ namespace PlatformerSpeedRunner.Helper
 {
     public class DatabaseHelper
     {
-        private SaveDataHelper dataHelper;
+        private SaveDataHelper saveData;
         public class Run
         {
             public string unique_key { get; set; }
@@ -18,7 +18,7 @@ namespace PlatformerSpeedRunner.Helper
         }
         public DatabaseHelper()
         {
-            dataHelper = new SaveDataHelper();
+            saveData = new SaveDataHelper();
         }
 
         [HttpPost]
@@ -26,7 +26,7 @@ namespace PlatformerSpeedRunner.Helper
         {
             Run run = new Run()
             {
-                unique_key = dataHelper.GetSaveData(),
+                unique_key = saveData.GetSaveData(),
                 duration = duration
             };
 
@@ -45,9 +45,9 @@ namespace PlatformerSpeedRunner.Helper
             {
                 try
                 {
-                    return client.GetStringAsync("http://platformerspeedrunner/api/get_username/" + dataHelper.GetSaveData()).Result;
+                    return client.GetStringAsync("http://platformerspeedrunner/api/get_username/" + saveData.GetSaveData()).Result;
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
 
                     return "Could not connect to server";
@@ -62,9 +62,9 @@ namespace PlatformerSpeedRunner.Helper
             {
                 try
                 {
-                    return client.GetStringAsync("http://platformerspeedrunner/api/get_best_time/" + dataHelper.GetSaveData()).Result;
+                    return client.GetStringAsync("http://platformerspeedrunner/api/get_best_time/" + saveData.GetSaveData()).Result;
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
 
                     return "Could not connect to server";

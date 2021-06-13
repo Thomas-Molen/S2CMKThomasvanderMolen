@@ -9,14 +9,6 @@ namespace PlatformerSpeedRunner.Objects
         private float width;
         private float height;
 
-        public Rectangle rectangle
-        {
-            get
-            {
-                return new Rectangle((int)Position.position.X, (int)Position.position.Y, (int)width, (int)height);
-            }
-        }
-
         public BoundingBoxObject(Vector2 position, float Width, float Height)
         {
             Position = new PositionHelper();
