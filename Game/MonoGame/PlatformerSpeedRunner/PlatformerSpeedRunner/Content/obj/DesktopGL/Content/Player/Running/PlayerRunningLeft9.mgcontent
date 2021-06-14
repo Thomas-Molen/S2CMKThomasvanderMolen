@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Running/PlayerRunningLeft9.png</SourceFile>
-  <SourceTime>2021-03-15T14:46:38.3158921+01:00</SourceTime>
-  <DestFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Player/Running/PlayerRunningLeft9.xnb</DestFile>
-  <DestTime>2021-06-10T13:35:22.5823286+02:00</DestTime>
+  <SourceFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Running/PlayerRunningLeft9.png</SourceFile>
+  <SourceTime>2021-03-15T14:46:40+01:00</SourceTime>
+  <DestFile>C:/Stuff/School/SOFT/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Player/Running/PlayerRunningLeft9.xnb</DestFile>
+  <DestTime>2021-06-14T11:11:52.2073256+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
