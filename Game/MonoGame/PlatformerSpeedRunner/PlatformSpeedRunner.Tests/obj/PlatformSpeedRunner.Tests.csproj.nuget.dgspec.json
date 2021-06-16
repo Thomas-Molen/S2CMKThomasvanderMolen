@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\PlatformSpeedRunner.Tests.csproj": {}
+    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\PlatformSpeedRunner.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {
+    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
+        "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
         "projectName": "PlatformerSpeedRunner",
-        "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
-        "packagesPath": "C:\\Users\\Thomas\\.nuget\\packages\\",
-        "outputPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\obj\\",
+        "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj",
+        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
+        "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Thomas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,21 +73,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\PlatformSpeedRunner.Tests.csproj": {
+    "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\PlatformSpeedRunner.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\PlatformSpeedRunner.Tests.csproj",
+        "projectUniqueName": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\PlatformSpeedRunner.Tests.csproj",
         "projectName": "PlatformSpeedRunner.Tests",
-        "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\PlatformSpeedRunner.Tests.csproj",
-        "packagesPath": "C:\\Users\\Thomas\\.nuget\\packages\\",
-        "outputPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\obj\\",
+        "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\PlatformSpeedRunner.Tests.csproj",
+        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
+        "outputPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformSpeedRunner.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Thomas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -102,8 +102,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {
-                "projectPath": "C:\\Stuff\\School\\SOFT\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj"
+              "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj": {
+                "projectPath": "D:\\Stuff\\School\\S2CMKThomasvanderMolen\\Game\\MonoGame\\PlatformerSpeedRunner\\PlatformerSpeedRunner\\PlatformerSpeedRunner.csproj"
               }
             }
           }
@@ -150,7 +150,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
