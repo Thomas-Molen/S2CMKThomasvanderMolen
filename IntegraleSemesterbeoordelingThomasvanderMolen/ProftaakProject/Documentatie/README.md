@@ -1,5 +1,4 @@
-de documentatie van het proftaakproject heb ik (Thomas van der Molen) niet alleen geschreven en
-bevatten ook andere groepsgenoten onderdelen.
+de documentatie van het proftaakproject heb ik (Thomas van der Molen) niet alleen geschreven en bevatten ook andere groepsgenoten hun onderdelen.
 
 De onderdelen die ik onderanderen heb gemaakt en van belang vind om te tonen:
 note: Deze bestanden zijn door meerdere groepsgenoten tegelijkertijd bewerkt en bepaalde onderdelen zullen dus ook meerdere mensen aan gewerkt hebben.
@@ -16,7 +15,6 @@ note: Deze bestanden zijn door meerdere groepsgenoten tegelijkertijd bewerkt en 
 [Programma van Eisen](Programma van Eisen.pdf)
 - "4 Probleemstelling"
 - "6 Lijst met vereisten"
-- "6.2 User stories"
 
 [Projectplan](Projectplan.pdf)
 - "2 Planning per sprint"
