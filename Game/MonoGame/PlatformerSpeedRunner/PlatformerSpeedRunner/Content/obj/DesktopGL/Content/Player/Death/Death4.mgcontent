@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Death/Death4.png</SourceFile>
-  <SourceTime>2021-03-19T13:16:54.9624115+01:00</SourceTime>
-  <DestFile>D:/Stuff/School/S2CMKThomasvanderMolen/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Player/Death/Death4.xnb</DestFile>
-  <DestTime>2021-06-16T21:34:37.8127778+02:00</DestTime>
+  <SourceFile>C:/Stuff/School/SOFT/SugaryEngine/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/Player/Death/Death4.png</SourceFile>
+  <SourceTime>2022-03-18T10:07:05.3985439+01:00</SourceTime>
+  <DestFile>C:/Stuff/School/SOFT/SugaryEngine/Game/MonoGame/PlatformerSpeedRunner/PlatformerSpeedRunner/Content/bin/DesktopGL/Content/Player/Death/Death4.xnb</DestFile>
+  <DestTime>2022-03-18T10:08:53.4313408+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
